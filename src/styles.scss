@@ -1,1 +1,638 @@
-/* You can add global styles to this file, and also import other style files */
+$bg-dark: #1e1e1e;
+$fg-dark: #ffffff;
+$accent-dark: #00bcd4;
+$btn-bg-dark: #2a2a2a;
+$btn-hover-dark: #3a3a3a;
+$btn-active-dark: rgba(0, 188, 212, 0.3);
+
+$bg-light: #f9f9f9;
+$fg-light: #121212;
+$accent-light: #0078d7;
+$btn-bg-light: #ffffff;
+$btn-hover-light: #f1f1f1;
+$btn-active-light: rgba(0, 120, 215, 0.3);
+
+$transition: 0.3s ease;
+$font: "Segoe UI", sans-serif;
+
+:root {
+  --bg: #{$bg-dark};
+  --fg: #{$fg-dark};
+  --accent: #{$accent-dark};
+  --btn-bg: #{$btn-bg-dark};
+  --btn-hover: #{$btn-hover-dark};
+  --btn-active: #{$btn-active-dark};
+  --transition: #{$transition};
+  --font: #{$font};
+}
+
+.light-mode {
+  --bg: #{$bg-light};
+  --fg: #{$fg-light};
+  --accent: #{$accent-light};
+  --btn-bg: #{$btn-bg-light};
+  --btn-hover: #{$btn-hover-light};
+  --btn-active: #{$btn-active-light};
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--fg);
+  transition: background-color var(--transition), color var(--transition);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  animation: fadeInBody 1s ease-in-out;
+  font-family: "Poppins", sans-serif;
+}
+
+@keyframes fadeInBody {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#HeaderContainer {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 1000; /* Damit der Header immer oben bleibt */
+}
+
+header {
+  background: var(--btn-bg);
+  border-bottom: 1px solid var(--btn-hover);
+  padding: 2rem 0;
+  animation: fadeInHeader 1s ease-out 0.3s both;
+
+  .header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    text-align: center;
+
+    #logo {
+      height: 60px;
+      width: auto;
+      transition: transform 0.3s ease;
+
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-align: center;
+      text-align: center;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+  }
+}
+
+@keyframes fadeInHeader {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: var(--btn-bg);
+  border-bottom: 1px solid var(--btn-hover);
+  animation: fadeInNav 0.8s ease-out 0.6s both;
+
+  .nav-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-left: 5px;
+    background: transparent;
+    color: var(--accent) !important;
+    padding: 0.6rem 1.2rem;
+    border-radius: 0.6rem;
+    font-weight: bold;
+    transition: all var(--transition);
+    cursor: pointer;
+
+    &:hover {
+      background: var(--btn-hover);
+      color: var(--accent);
+      transform: scale(1.05);
+      box-shadow: 0 0 10px var(--accent);
+    }
+
+    &.active {
+      background: var(--btn-active);
+      color: var(--accent);
+    }
+  }
+}
+
+@keyframes fadeInNav {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.nav-links {
+  display: flex;
+  flex-direction: row;
+  gap: 2px;
+}
+
+#toggleTheme {
+  position: relative;
+  top: 10px;
+  left: 10%;
+  width: 50px;
+  height: 28px;
+  border-radius: 50px;
+  background-color: var(--btn-bg);
+  border: 1px solid var(--btn-hover);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#toggleTheme .switch {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: var(--fg);
+  transition: transform 0.3s ease;
+}
+
+.light-mode #toggleTheme .switch {
+  transform: translateX(22px);
+}
+
+main {
+  flex: 1;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  animation: fadeInMain 1.2s ease-out 0.8s both;
+}
+
+@keyframes fadeInMain {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+footer {
+  background-color: var(--btn-bg);
+  color: var(--fg);
+  padding: 1.5rem 1rem;
+  text-align: center;
+  border-top: 1px solid var(--btn-hover);
+  width: 100%;
+  position: relative;
+  bottom: 0;
+  margin-top: 0%;
+  animation: fadeInFooter 0.6s ease-in;
+
+  p {
+    margin: 0 auto 0.5rem auto;
+    font-size: 1rem;
+    font-weight: 500;
+  }
+
+  .footer-links {
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      margin: 0 0.75rem;
+      position: relative;
+      font-weight: 500;
+      transition: color 0.3s ease;
+      margin-top: 100px;
+
+      &::after {
+        content: "";
+        position: absolute;
+        width: 0%;
+        height: 2px;
+        left: 0;
+        bottom: -4px;
+        background-color: var(--accent);
+        transition: width 0.3s ease;
+      }
+
+      &:hover {
+        color: var(--fg);
+
+        &::after {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+@keyframes fadeInFooter {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  nav {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .navbar-toggle {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    left: 40%;
+    gap: 0.3rem;
+    cursor: pointer;
+  }
+
+  .navbar-toggle span {
+    width: 25px;
+    height: 3px;
+    background-color: var(--fg);
+    border-radius: 5px;
+  }
+
+  .nav-btn {
+    display: block;
+  }
+
+  .nav-links {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: max-height 0.4s ease, opacity 0.4s ease, transform 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .nav-links.open {
+    max-height: 500px;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .nav-btn {
+    font-size: 1.2rem;
+    padding: 0.8rem 1.5rem;
+  }
+
+  .nav-links a {
+    font-size: 1.2rem;
+    color: var(--fg);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .nav-links a:hover {
+    color: var(--accent);
+  }
+  #toggleTheme {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+  #toggleTheme .switch {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: var(--fg);
+    transition: transform 0.3s ease;
+  }
+}
+
+.auth-buttons {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  gap: 1rem;
+
+  .sign-buttons {
+    padding: 12px 25px;
+    font-size: 1.1rem;
+    font-family: var(--font);
+    border: none;
+    border-radius: 5px;
+    color: var(--fg);
+    cursor: pointer;
+    transition: var(--transition);
+    border-radius: 50px;
+
+    &.outline {
+      background-color: transparent;
+      color: var(--accent);
+      border: 2px solid var(--accent);
+
+      &:hover {
+        background-color: var(--accent);
+        color: var(--btn-bg);
+        border: 2px solid var(--btn-bg);
+      }
+    }
+
+    &:not(.outline) {
+      background-color: var(--accent);
+      border: none;
+      border: 2px solid var(--btn-bg);
+
+      &:hover {
+        background-color: var(--btn-bg);
+        border: 2px solid var(--accent);
+      }
+
+      &:active {
+        background-color: var(--btn-active);
+      }
+    }
+
+    &:hover {
+      transform: translateY(-3px);
+    }
+  }
+}
+
+@media (max-width: 1050px) {
+  .sign-buttons {
+    z-index: 1000;
+  }
+  #loginBtn {
+    position: absolute;
+    position: absolute;
+    top: 1rem;
+    right: 48rem;
+    margin-right: 2rem;
+  }
+  #registerBtn {
+    position: absolute;
+    top: 1rem;
+    right: 3rem;
+  }
+}
+
+@media (max-width: 950px) {
+  .sign-buttons {
+    z-index: 1000;
+  }
+  #loginBtn {
+    position: absolute;
+    position: absolute;
+    top: 1rem;
+    right: 43rem;
+    margin-right: 2rem;
+  }
+  #registerBtn {
+    position: absolute;
+    top: 1rem;
+    right: 0rem;
+  }
+}
+
+@media (max-width: 830px) {
+  .sign-buttons {
+    z-index: 1000;
+  }
+  #loginBtn {
+    position: absolute;
+    position: absolute;
+    top: 1rem;
+    right: 39rem;
+    margin-right: 2rem;
+  }
+  #registerBtn {
+    position: absolute;
+    top: 1rem;
+    right: -1rem;
+  }
+}
+
+@media (max-width: 780px) {
+  .sign-buttons {
+    z-index: 1000;
+  }
+  #loginBtn {
+    position: absolute;
+    position: absolute;
+    top: 3rem;
+    right: 38rem;
+    margin-right: 2rem;
+  }
+  #registerBtn {
+    position: absolute;
+    top: 3rem;
+    right: -2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .sign-buttons {
+    z-index: 1000;
+  }
+  #loginBtn {
+    position: absolute;
+    position: absolute;
+    top: 8rem;
+    right: 28rem;
+    margin-right: 2rem;
+  }
+  #registerBtn {
+    position: absolute;
+    top: 8rem;
+    right: 9rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .sign-buttons {
+    z-index: 1000;
+  }
+  #loginBtn {
+    position: absolute;
+    position: absolute;
+    top: 8rem;
+    right: 13rem;
+    margin-right: 2rem;
+  }
+  #registerBtn {
+    position: absolute;
+    top: 8rem;
+    right: 7rem;
+  }
+}
+
+
+@media (max-width: 527px) {
+  .sign-buttons {
+    z-index: 1000;
+  }
+  #loginBtn {
+    position: absolute;
+    position: absolute;
+    top: 11rem;
+    right: 10rem;
+    margin-right: 2rem;
+  }
+  #registerBtn {
+    position: absolute;
+    top: 11rem;
+    right: 4rem;
+  }
+}
+
+.auth-modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 20px;
+  backdrop-filter: blur(4px);
+
+  .LogButton {
+    background-color: var(--accent);
+    color: var(--fg);
+    padding: 12px 25px;
+    font-size: 1.1rem;
+    font-family: var(--font);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: var(--transition);
+    border-radius: 50px;
+
+    &:hover {
+      background-color: var(--accent);
+      transform: translateY(-3px);
+    }
+
+    &:active {
+      background-color: var(--btn-active);
+    }
+  }
+
+  .auth-modal-content {
+    background-color: var(--btn-bg);
+    padding: 2rem;
+    border-radius: 0.5rem;
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+
+    h2 {
+      color: var(--accent);
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      margin: 1rem 0 0.5rem;
+      color: var(--fg);
+    }
+
+    input {
+      width: 100%;
+      padding: 0.8rem;
+      margin-bottom: 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid var(--accent);
+      background: var(--btn-bg);
+      color: var(--fg);
+    }
+
+    .register-link {
+      text-align: center;
+      margin-top: 1rem;
+
+      a {
+        color: var(--accent);
+        text-decoration: none;
+        font-weight: 600;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 1.5rem;
+      color: var(--fg);
+      cursor: pointer;
+    }
+  }
+}
+
+.light-mode .auth-modal-content {
+  background-color: var(--bg);
+  color: var(--fg-light);
+}

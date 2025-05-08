@@ -1,0 +1,151 @@
+<div id="HeaderContainer">
+  <header>
+    <div class="header-inner">
+      <h1 id="title">KCA Cornhole Tournaments</h1>
+    </div>
+  </header>
+
+  <div class="auth-buttons">
+    <button id="loginBtn" class="sign-buttons" (click)="openLoginModal()">
+      Login
+    </button>
+    <button
+      id="registerBtn"
+      (click)="openRegisterModal()"
+      class="sign-buttons outline"
+    >
+      Register
+    </button>
+  </div>
+
+  <div *ngIf="isAuthModalOpen" class="auth-modal">
+    <div class="auth-modal-content">
+      <span class="close-btn" (click)="closeModal()">&times;</span>
+
+      <h2>{{ isRegisterMode ? "Register" : "Login" }}</h2>
+
+      <form (ngSubmit)="onSubmit()" [formGroup]="authForm">
+        <label for="username">Username</label>
+        <input id="username" formControlName="username" type="text" required />
+
+        <ng-container *ngIf="isRegisterMode">
+          <label for="email">Email</label>
+          <input id="email" formControlName="email" type="email" required />
+        </ng-container>
+
+        <label for="password">Password</label>
+        <input
+          id="password"
+          formControlName="password"
+          type="password"
+          required
+        />
+
+        <ng-container *ngIf="isRegisterMode">
+          <label for="confirmPassword">Confirm Password</label>
+          <input
+            id="confirmPassword"
+            formControlName="confirmPassword"
+            type="password"
+            required
+          />
+        </ng-container>
+
+        <button class="LogButton" type="submit">
+          {{ isRegisterMode ? "Create Account" : "Login" }}
+        </button>
+      </form>
+
+      <div class="register-link">
+        <a href="#" (click)="toggleMode($event)">
+          {{
+            isRegisterMode
+              ? "Already have an account? Login here"
+              : "No account? Register here"
+          }}
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <nav>
+    <div class="navbar-toggle" (click)="toggleNav()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="nav-links" [ngClass]="{ open: isNavOpen }">
+      <button routerLink="/" class="nav-btn">Home</button>
+      <button routerLink="/join" class="nav-btn">Join Tournament</button>
+      <button routerLink="/create" class="nav-btn">Create Tournament</button>
+      <button routerLink="/stats" class="nav-btn">Statistics</button>
+      <button routerLink="/about" class="nav-btn">About</button>
+    </div>
+    <button
+      id="toggleTheme"
+      title="We recommend Darkmode for the best experience"
+      (click)="toggleTheme()"
+    >
+      <span class="switch"></span>
+    </button>
+  </nav>
+</div>
+
+<main class="terms-of-service-page">
+  <section class="terms-header">
+    <h1>Allgemeine Geschäftsbedingungen</h1>
+    <p>
+      Willkommen bei **KCA Cornhole Tournaments**! Bitte lesen Sie unsere
+      Allgemeinen Geschäftsbedingungen sorgfältig durch.
+    </p>
+  </section>
+
+  <section class="terms-content">
+    <h2>1. Einführung</h2>
+    <p>
+      Diese Allgemeinen Geschäftsbedingungen regeln die Nutzung unserer
+      Plattform und die Teilnahme an unseren Cornhole-Turnieren. Indem Sie
+      unsere Dienste nutzen, erklären Sie sich mit diesen Bedingungen
+      einverstanden.
+    </p>
+
+    <h2>2. Teilnahmebedingungen</h2>
+    <p>
+      Um an einem Turnier teilzunehmen, müssen Sie ein registriertes Mitglied
+      sein und die festgelegten Teilnahmebedingungen akzeptieren. Diese
+      beinhalten die Einhaltung der Turnierregeln und den respektvollen Umgang
+      mit anderen Teilnehmern.
+    </p>
+
+    <h2>3. Rechte und Pflichten</h2>
+    <p>
+      Sie erklären sich damit einverstanden, unsere Plattform nicht für illegale
+      oder unzulässige Aktivitäten zu nutzen. Sie sind dafür verantwortlich,
+      Ihre Zugangsdaten sicher zu verwahren und keinen unbefugten Zugang zu
+      Ihrem Konto zu gewähren.
+    </p>
+
+    <h2>4. Haftungsausschluss</h2>
+    <p>
+      Wir übernehmen keine Haftung für Schäden, die durch die Teilnahme an
+      unseren Turnieren entstehen, es sei denn, diese Schäden resultieren aus
+      grober Fahrlässigkeit oder Vorsatz unsererseits.
+    </p>
+
+    <h2>5. Änderungen der Geschäftsbedingungen</h2>
+    <p>
+      Wir behalten uns das Recht vor, diese Allgemeinen Geschäftsbedingungen
+      jederzeit zu ändern. Alle Änderungen werden auf dieser Seite
+      veröffentlicht und treten sofort in Kraft.
+    </p>
+  </section>
+</main>
+
+<footer>
+  <p>&copy; 2025 KCA Cornhole Tournaments | All Rights Reserved</p>
+  <div class="footer-links">
+    <a routerLink="/PrivacyPolicy">Privacy Policy</a> |
+    <a routerLink="/TermsofService">Terms of Service</a> |
+    <a routerLink="/contact">Contact</a>
+  </div>
+</footer>

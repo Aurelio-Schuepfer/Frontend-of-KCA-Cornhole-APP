@@ -1,0 +1,150 @@
+<div id="HeaderContainer">
+  <header>
+    <div class="header-inner">
+      <h1 id="title">KCA Cornhole Tournaments</h1>
+    </div>
+  </header>
+
+  <div class="auth-buttons">
+    <button id="loginBtn" class="sign-buttons" (click)="openLoginModal()">
+      Login
+    </button>
+    <button
+      id="registerBtn"
+      (click)="openRegisterModal()"
+      class="sign-buttons outline"
+    >
+      Register
+    </button>
+  </div>
+
+  <div *ngIf="isAuthModalOpen" class="auth-modal">
+    <div class="auth-modal-content">
+      <span class="close-btn" (click)="closeModal()">&times;</span>
+
+      <h2>{{ isRegisterMode ? "Register" : "Login" }}</h2>
+
+      <form (ngSubmit)="onSubmit()" [formGroup]="authForm">
+        <label for="username">Username</label>
+        <input id="username" formControlName="username" type="text" required />
+
+        <ng-container *ngIf="isRegisterMode">
+          <label for="email">Email</label>
+          <input id="email" formControlName="email" type="email" required />
+        </ng-container>
+
+        <label for="password">Password</label>
+        <input
+          id="password"
+          formControlName="password"
+          type="password"
+          required
+        />
+
+        <ng-container *ngIf="isRegisterMode">
+          <label for="confirmPassword">Confirm Password</label>
+          <input
+            id="confirmPassword"
+            formControlName="confirmPassword"
+            type="password"
+            required
+          />
+        </ng-container>
+
+        <button class="LogButton" type="submit">
+          {{ isRegisterMode ? "Create Account" : "Login" }}
+        </button>
+      </form>
+
+      <div class="register-link">
+        <a href="#" (click)="toggleMode($event)">
+          {{
+            isRegisterMode
+              ? "Already have an account? Login here"
+              : "No account? Register here"
+          }}
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <nav>
+    <div class="navbar-toggle" (click)="toggleNav()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="nav-links" [ngClass]="{ open: isNavOpen }">
+      <button class="nav-btn active">Home</button>
+      <button routerLink="/join" class="nav-btn">Join Tournament</button>
+      <button routerLink="/create" class="nav-btn">Create Tournament</button>
+      <button routerLink="/stats" class="nav-btn">Statistics</button>
+      <button routerLink="/about" class="nav-btn">About</button>
+    </div>
+    <button
+      id="toggleTheme"
+      title="We recommend Darkmode for the best experience"
+      (click)="toggleTheme()"
+    >
+      <span class="switch"></span>
+    </button>
+  </nav>
+</div>
+
+<main>
+  <div class="cornhole-bag">KCA</div>
+  <section class="hero">
+    <h2 class="hero-title">Play. Compete. Win.</h2>
+    <p class="hero-subtitle">
+      Organize or join Cornhole tournaments with ease – powered by KCA.
+    </p>
+    <div class="hero-buttons">
+      <button routerLink="/create" class="cta-btn">Create Tournament</button>
+      <button routerLink="/join" class="cta-btn outline">
+        Join Tournament
+      </button>
+    </div>
+  </section>
+
+  <section class="features">
+    <div class="feature-card">
+      <h3>🏆 Create Your Own Tournament</h3>
+      <p>
+        Customize location, time, rules, teams, and more. Perfect for both
+        casual games and pro brackets.
+      </p>
+    </div>
+    <div class="feature-card">
+      <h3>🤝 Join Tournaments Near You</h3>
+      <p>
+        Find local events or join digital matchups. Team up or go solo – you
+        choose your game.
+      </p>
+    </div>
+    <div class="feature-card">
+      <h3>📊 Track Player Stats</h3>
+      <p>
+        See wins, points, and performance evolve in real time. Your stats, your
+        journey, your story.
+      </p>
+    </div>
+  </section>
+
+  <section class="about-app">
+    <h3>About KCA Cornhole Tournaments</h3>
+    <p>
+      KCA Cornhole Tournaments was built for the community. Whether you're
+      hosting backyard battles or arena-level championships – we give you the
+      tools to make it epic.
+    </p>
+  </section>
+</main>
+
+<footer>
+  <p>&copy; 2025 KCA Cornhole Tournaments | All Rights Reserved</p>
+  <div class="footer-links">
+    <a routerLink="/PrivacyPolicy">Privacy Policy</a> |
+    <a routerLink="/TermsofService">Terms of Service</a> |
+    <a routerLink="/contact">Contact</a>
+  </div>
+</footer>

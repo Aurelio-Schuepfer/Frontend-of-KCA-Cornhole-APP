@@ -1,0 +1,567 @@
+$bg-dark: #1e1e1e;
+$fg-dark: #ffffff;
+$accent-dark: #00bcd4;
+$btn-bg-dark: #2a2a2a;
+$btn-hover-dark: #3a3a3a;
+$btn-active-dark: rgba(0, 188, 212, 0.3);
+
+$bg-light: #f9f9f9;
+$fg-light: #121212;
+$accent-light: #0078d7;
+$btn-bg-light: #ffffff;
+$btn-hover-light: #f1f1f1;
+$btn-active-light: rgba(0, 120, 215, 0.3);
+
+$transition: 0.3s ease;
+$font: 'Poppins', sans-serif;
+
+:root {
+  --bg: #{$bg-dark};
+  --fg: #{$fg-dark};
+  --accent: #{$accent-dark};
+  --btn-bg: #{$btn-bg-dark};
+  --btn-hover: #{$btn-hover-dark};
+  --btn-active: #{$btn-active-dark};
+  --transition: #{$transition};
+  --font: #{$font};
+}
+
+.light-mode {
+  --bg: #{$bg-light};
+  --fg: #{$fg-light};
+  --accent: #{$accent-light};
+  --btn-bg: #{$btn-bg-light};
+  --btn-hover: #{$btn-hover-light};
+  --btn-active: #{$btn-active-light};
+}
+
+main::before {
+  content: "";
+  position: absolute;
+  top: 30%;
+  left: 110%;
+  width: 250px;
+  height: 400px; 
+  background-color: #0ae4f4;
+  border-radius: 10px;
+  transform: translateX(-50%) rotate(-15deg); 
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  z-index: -1;
+  opacity: 0.5;
+  transition: width 0.3s ease, height 0.3s ease; 
+}
+
+main::after {
+  content: "";
+  position: absolute;
+  top: 37.5%;
+  left: 111.3%;
+  width: 80px;
+  height: 80px; 
+  background-color: rgb(0, 0, 0);
+  border-radius: 50%;
+  transform: translateX(-50%) rotate(10deg);
+  z-index: 4;
+  opacity: 0.5;
+}
+
+main::before {
+  content: "KCA";
+  font-size: 3rem; 
+  font-weight: bold;
+  color: var(--fg);
+  position: absolute;
+  top: 30%;
+  left: 110%;
+  transform: translateX(-50%) rotate(10deg);
+  text-align: center;
+  z-index: 2;
+}
+
+@media (max-width: 1750px) {
+  main::before {
+    content: "";
+    position: absolute;
+    top: 30%;
+    left: 105%;
+    width: 250px;
+    height: 400px; 
+    background-color: #0ae4f4;
+    border-radius: 10px;
+    transform: translateX(-50%) rotate(-15deg); 
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    z-index: -1;
+    opacity: 0.5;
+    transition: width 0.3s ease, height 0.3s ease; 
+  }
+  main::after {
+    content: "";
+    position: absolute;
+    top: 37.5%;
+    left: 106%;
+    width: 80px;
+    height: 80px; 
+    background-color: rgb(0, 0, 0);
+    border-radius: 50%;
+    transform: translateX(-50%) rotate(10deg);
+    z-index: 4;
+    opacity: 0.5;
+  }
+  main::before {
+    content: "KCA";
+    font-size: 3rem; 
+    font-weight: bold;
+    color: var(--fg);
+    position: absolute;
+    top: 30%;
+    left: 105%;
+    transform: translateX(-50%) rotate(10deg);
+    text-align: center;
+    z-index: 2;
+  }
+}
+
+@media (max-width: 1750px) {
+  main::before {
+    content: "";
+    position: absolute;
+    top: 30%;
+    left: 95%;
+    width: 250px;
+    height: 400px; 
+    background-color: #0ae4f4;
+    border-radius: 10px;
+    transform: translateX(-50%) rotate(-15deg); 
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    z-index: -10;
+    opacity: 0.5;
+    transition: width 0.3s ease, height 0.3s ease; 
+  }
+  main::after {
+    content: "";
+    position: absolute;
+    top: 37.5%;
+    left: 96%;
+    width: 80px;
+    height: 80px; 
+    background-color: rgb(0, 0, 0);
+    border-radius: 50%;
+    transform: translateX(-50%) rotate(10deg);
+    z-index: -2;
+    opacity: 0.5;
+  }
+  main::before {
+    content: "KCA";
+    font-size: 3rem; 
+    font-weight: bold;
+    color: var(--fg);
+    position: absolute;
+    top: 30%;
+    left: 95%;
+    transform: translateX(-50%) rotate(10deg);
+    text-align: center;
+    z-index: -3;
+  }
+}
+
+@media (max-width: 1750px) {
+  main::before {
+    content: "";
+    position: absolute;
+    top: 30%;
+    left: 95%;
+    width: 250px;
+    height: 400px; 
+    background-color: #0ae4f4;
+    border-radius: 10px;
+    transform: translateX(-50%) rotate(-15deg); 
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    z-index: -10;
+    opacity: 0.5;
+    transition: width 0.3s ease, height 0.3s ease; 
+  }
+  main::after {
+    content: "";
+    position: absolute;
+    top: 37.5%;
+    left: 96%;
+    width: 80px;
+    height: 80px; 
+    background-color: rgb(0, 0, 0);
+    border-radius: 50%;
+    transform: translateX(-50%) rotate(10deg);
+    z-index: -2;
+    opacity: 0.5;
+  }
+  main::before {
+    content: "KCA";
+    font-size: 3rem; 
+    font-weight: bold;
+    color: var(--fg);
+    position: absolute;
+    top: 30%;
+    left: 95%;
+    transform: translateX(-50%) rotate(10deg);
+    text-align: center;
+    z-index: -3;
+  }
+}
+
+@media (max-width: 1600px) {
+  main::before {
+    content: "";
+    position: absolute;
+    top: 15%;
+    left: 90%;
+    width: 250px;
+    height: 400px; 
+    background-color: #0ae4f4;
+    border-radius: 10px;
+    transform: translateX(-50%) rotate(-15deg); 
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    z-index: -10;
+    opacity: 0.5;
+    transition: width 0.3s ease, height 0.3s ease; 
+  }
+  main::after {
+    content: "";
+    position: absolute;
+    top: 17.5%;
+    left: 91%;
+    width: 80px;
+    height: 80px; 
+    background-color: rgb(0, 0, 0);
+    border-radius: 50%;
+    transform: translateX(-50%) rotate(10deg);
+    z-index: -2;
+    opacity: 0.5;
+  }
+  main::before {
+    content: "KCA";
+    font-size: 3rem; 
+    font-weight: bold;
+    color: var(--fg);
+    position: absolute;
+    top: 10%;
+    left: 90%;
+    transform: translateX(-50%) rotate(10deg);
+    text-align: center;
+    z-index: -3;
+  }
+}
+
+@media (max-width: 1300px) {
+  main::before {
+    content: "";
+    position: absolute;
+    top: 15%;
+    left: 90%;
+    width: 200px;
+    height: 325px; 
+    background-color: #0ae4f4;
+    border-radius: 10px;
+    transform: translateX(-50%) rotate(-15deg); 
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    z-index: -10;
+    opacity: 0.5;
+    transition: width 0.3s ease, height 0.3s ease; 
+  }
+  main::after {
+    content: "";
+    position: absolute;
+    top: 17.5%;
+    left: 87%;
+    width: 60px;
+    height: 60px; 
+    background-color: rgb(0, 0, 0);
+    border-radius: 50%;
+    transform: translateX(-50%) rotate(10deg);
+    z-index: -2;
+    opacity: 0.5;
+  }
+  main::before {
+    content: "KCA";
+    font-size: 3rem; 
+    font-weight: bold;
+    color: var(--fg);
+    position: absolute;
+    top: 10%;
+    left: 86%;
+    transform: translateX(-50%) rotate(10deg);
+    text-align: center;
+    z-index: -3;
+  }
+}
+
+@media (max-width: 1175px) {
+  main::before {
+    display: none; 
+  }
+  main::after {
+    display: none; 
+  }
+}
+
+.cornhole-bag {
+  position: absolute;
+  top: 15%;
+  left: -20%;
+  width: 190px;
+  height: 180px;
+  background: #0ae4f4;
+  border-radius: 35% 38% 33% 36% / 40% 30% 38% 35%;
+  transform: translate(0, 0) rotate(12deg);
+  box-shadow: inset -8px -8px 15px rgba(255, 255, 255, 0.15),
+              inset 8px 8px 15px rgba(0, 0, 0, 0.2),
+              0 8px 15px rgba(0, 0, 0, 0.3);
+  opacity: 0.5;
+  z-index: 1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--fg);
+}
+
+.cornhole-bag::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 28px;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.3) 0%, transparent 80%);
+  border-radius: 50%;
+  filter: blur(6px);
+  z-index: -1;
+}
+
+@media (max-width: 1700px) {
+  .cornhole-bag {
+  position: absolute;
+  top: 15%;
+  left: 0%;
+  }
+}
+
+@media (max-width: 1175px) {
+  .cornhole-bag {
+    display: none;
+  }
+}
+
+html, body {
+  font-weight: 700;
+  background: var(--bg);
+  color: var(--fg);
+  transition: background $transition, color $transition;
+  height: 100%;
+
+  &.light-mode {
+    background: var(--bg);
+    color: var(--fg);
+  }
+
+  body.light-mode {
+    background: var(--bg);
+    color: var(--fg);
+  }
+}
+
+.hero {
+  text-align: center;
+  padding: 4rem 1rem;
+  animation: fadeInHero $transition ease-in-out both;
+
+  .hero-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--accent);
+    animation: fadeInTitle $transition ease-in-out both;
+  }
+
+  .hero-subtitle {
+    font-size: 1.2rem;
+    max-width: 700px;
+    margin: 0 auto 2rem auto;
+    line-height: 1.6;
+    color: var(--fg);
+    animation: fadeInSubtitle $transition ease-in-out both;
+  }
+
+  .hero-buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+
+    .cta-btn {
+      background: var(--accent);
+      color: #fff;
+      padding: 0.8rem 1.6rem;
+      border: none;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background $transition, color $transition, transform $transition, box-shadow $transition;
+      animation: fadeInButtons $transition ease-in-out both;
+  
+      &:hover {
+        background: var(--accent); 
+        color: var(--bg); 
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px var(--btn-active);
+      }
+    }
+  
+    .outline {
+      background: transparent;
+      border: 2px solid var(--accent);
+      color: var(--accent);
+  
+      &:hover {
+        background: var(--accent); 
+        color: var(--fg);
+      }
+    }
+  }
+}
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  padding: 3rem 1rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  animation: fadeInFeatures $transition ease-in-out both;
+
+  .feature-card {
+    background: var(--btn-bg);
+    border-radius: 1rem;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 188, 212, 0.05);
+    transition: transform $transition, box-shadow $transition;
+    animation: fadeInCard $transition ease-in-out both;
+
+    h3 {
+      color: var(--accent);
+      margin-bottom: 1rem;
+      animation: fadeInTitle $transition ease-in-out both;
+    }
+
+    p {
+      line-height: 1.6;
+      color: var(--fg);
+    }
+
+    &:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 20px var(--btn-active);
+    }
+  }
+}
+
+.about-app {
+  padding: 3rem 1rem 5rem 1rem;
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+  animation: fadeInAbout $transition ease-in-out both;
+
+  h3 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: var(--accent);
+    animation: fadeInTitle $transition ease-in-out both;
+  }
+
+  p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: var(--fg);
+  }
+}
+
+@keyframes fadeInHero {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInTitle {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInSubtitle {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInButtons {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInCard {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInFeatures {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInAbout {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

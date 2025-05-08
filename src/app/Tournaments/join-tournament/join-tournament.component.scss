@@ -1,0 +1,103 @@
+@use 'sass:color';
+
+.join-tournament-container {
+  padding: 2rem;
+  max-width: 1100px;
+  margin: auto;
+  font-family: var(--font);
+  background-color: var(--bg);
+  color: var(--fg);
+  transition: background-color var(--transition), color var(--transition);
+}
+
+.tournament-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.tournament-card {
+  background: var(--btn-bg);
+  border: 2px solid var(--accent);
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  color: var(--fg);
+  transition: transform var(--transition), box-shadow var(--transition);
+  box-shadow: 0 0 10px (var--accent);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.tournament-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 20px var(--accent);
+}
+
+#tournamentTitle {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.card-header h2 {
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.date {
+  font-size: 0.95rem;
+  color: #aaa;
+  margin-top: 0.2rem;
+}
+
+.card-body {
+  margin: 1rem 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.details-section {
+    height: 0;
+    overflow: hidden;
+    opacity: 0;
+    padding: 0 1rem;
+    margin-top: 1rem;
+    background: var(--btn-bg);
+    border-radius: 0.8rem;
+    color: var(--fg);
+    transition: height 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
+  }
+  
+  .details-section.expanded {
+    height: auto;  
+    opacity: 1;
+    padding: 1rem;
+  }    
+
+  .tButton
+  {
+  background: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 0.5rem;
+  width: 25%;
+  height: 150%;
+  font-size: 1rem;
+  color: var(--accent);
+  border-radius: 1rem;
+  transition: all 0.2s ease;
+  }
+  .tButton:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px var(--accent);
+  }

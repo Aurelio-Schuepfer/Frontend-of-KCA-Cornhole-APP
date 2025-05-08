@@ -1,0 +1,63 @@
+@use 'sass:color';
+
+.privacy-policy-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: var(--bg);
+  color: var(--fg);
+
+  .title {
+    text-align: center;
+    font-size: 2.5rem;
+    color: var(--accent);
+    margin-bottom: 2rem;
+  }
+
+  .intro,
+  .section {
+    margin-bottom: 2rem;
+
+    h2 {
+      font-size: 1.8rem;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    p,
+    ul {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--fg);
+    }
+
+    ul {
+      padding-left: 1.5rem;
+
+      li {
+        margin-bottom: 0.5rem;
+      }
+    }
+  }
+
+  footer {
+    text-align: center;
+    margin-top: 3rem;
+    font-size: 1rem;
+    color: var(--fg);
+  }
+}
+
+@media (max-width: 768px) {
+  .privacy-policy-container {
+    padding: 1.5rem;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .section h2 {
+    font-size: 1.6rem;
+  }
+}

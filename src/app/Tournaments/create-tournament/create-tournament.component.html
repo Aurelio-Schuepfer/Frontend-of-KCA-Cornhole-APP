@@ -1,0 +1,147 @@
+<div id="HeaderContainer">
+  <header>
+    <div class="header-inner">
+      <h1 id="title">KCA Cornhole Tournaments</h1>
+    </div>
+  </header>
+
+  <div class="auth-buttons">
+    <button id="loginBtn" class="sign-buttons" (click)="openLoginModal()">
+      Login
+    </button>
+    <button
+      id="registerBtn"
+      (click)="openRegisterModal()"
+      class="sign-buttons outline"
+    >
+      Register
+    </button>
+  </div>
+
+  <div *ngIf="isAuthModalOpen" class="auth-modal">
+    <div class="auth-modal-content">
+      <span class="close-btn" (click)="closeModal()">&times;</span>
+
+      <h2>{{ isRegisterMode ? "Register" : "Login" }}</h2>
+
+      <form id="authForm" (ngSubmit)="onSubmit()" [formGroup]="authForm">
+        <label for="username">Username</label>
+        <input id="username" formControlName="username" type="text" required />
+
+        <ng-container *ngIf="isRegisterMode">
+          <label for="email">Email</label>
+          <input id="email" formControlName="email" type="email" required />
+        </ng-container>
+
+        <label for="password">Password</label>
+        <input
+          id="password"
+          formControlName="password"
+          type="password"
+          required
+        />
+
+        <ng-container *ngIf="isRegisterMode">
+          <label for="confirmPassword">Confirm Password</label>
+          <input
+            id="confirmPassword"
+            formControlName="confirmPassword"
+            type="password"
+            required
+          />
+        </ng-container>
+
+        <button class="LogButton" type="submit">
+          {{ isRegisterMode ? "Create Account" : "Login" }}
+        </button>
+      </form>
+
+      <div class="register-link">
+        <a href="#" (click)="toggleMode($event)">
+          {{
+            isRegisterMode
+              ? "Already have an account? Login here"
+              : "No account? Register here"
+          }}
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <nav>
+    <div class="navbar-toggle" (click)="toggleNav()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="nav-links" [ngClass]="{ open: isNavOpen }">
+      <button routerLink="/" class="nav-btn">Home</button>
+      <button routerLink="/join" class="nav-btn">Join Tournament</button>
+      <button routerLink="/create" class="nav-btn active">
+        Create Tournament
+      </button>
+      <button routerLink="/stats" class="nav-btn">Statistics</button>
+      <button routerLink="/about" class="nav-btn">About</button>
+    </div>
+    <button id="toggleTheme" title="We recommend Darkmode for the best experience" (click)="toggleTheme()">
+      <span class="switch"></span>
+    </button>
+  </nav>
+</div>
+
+<main>
+  <section class="create-tournament-container">
+    <h1 id="tournamentTitle">Create a Tournament</h1>
+
+    <form id="createTournamentForm" [formGroup]="tournamentForm">
+      <div class="form-grid">
+        <input
+          type="text"
+          formControlName="name"
+          placeholder="Tournament Name - required"
+          class="form-input"
+          required
+        />
+        <input
+          type="text"
+          formControlName="location"
+          placeholder="Location - required"
+          class="form-input"
+          required
+        />
+        <input type="date" formControlName="date" class="form-input" required />
+        <input type="time" formControlName="time" class="form-input" required />
+        <input type="text" formControlName="rules" placeholder="Rules" class="form-input" />
+        <input
+          type="text"
+          formControlName="meetingPoint"
+          placeholder="Meeting Point"
+          class="form-input"
+        />
+        <textarea formControlName="notes" placeholder="Notes" class="form-textarea"></textarea>
+        <input
+          type="number"
+          formControlName="participantLimit"
+          placeholder="Participant Limit"
+          class="form-input"
+        />
+      </div>
+
+      <div class="form-footer">
+        <button type="submit" class="tButton" [disabled]="">Create</button>
+      </div>
+    </form>
+  </section>
+  <div class="kca-decoration">
+    <div class="kca-hole"></div>
+  </div>
+</main>
+
+<footer>
+  <p>&copy; 2025 KCA Cornhole Tournaments | All Rights Reserved</p>
+  <div class="footer-links">
+    <a routerLink="/PrivacyPolicy">Privacy Policy</a> |
+    <a routerLink="/TermsofService">Terms of Service</a> |
+    <a routerLink="/contact">Contact</a>
+  </div>
+</footer>

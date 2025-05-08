@@ -1,0 +1,103 @@
+<div id="HeaderContainer">
+    <header>
+        <div class="header-inner">
+            <h1 id="title">KCA Cornhole Tournaments</h1>
+        </div>
+    </header>
+
+    <nav>
+        <div class="navbar-toggle" (click)="toggleNav()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="nav-links" [ngClass]="{ open: isNavOpen }">
+            <button routerLink="/" class="nav-btn">Home</button>
+            <button routerLink="/join" class="nav-btn">Join Tournament</button>
+            <button routerLink="/create" class="nav-btn">Create Tournament</button>
+            <button routerLink="/stats" class="nav-btn active">Statistics</button>
+            <button routerLink="/about" class="nav-btn">About</button>
+        </div>
+        <button id="toggleTheme" title="We recommend Darkmode for the best experience" (click)="toggleTheme()">
+            <span class="switch"></span>
+        </button>
+    </nav>
+</div>
+
+<main class="website-insights">
+    <section class="insight-header">
+        <h2 class="section-title">Website Insights</h2>
+        <p>Discover key statistics and insights into KCA Cornhole tournaments, player activity, and more!</p>
+    </section>
+
+    <section class="insight-cards">
+        <!-- Total Players -->
+        <div class="insight-card total-players">
+            <div class="icon">
+                <i class="fa fa-users"></i>
+            </div>
+            <span class="label">Total Players</span>
+            <span class="value">{{ totalPlayers }}</span>
+            <p class="description">The total number of players registered on our platform.</p>
+        </div>
+
+        <!-- Total Tournaments -->
+        <div class="insight-card total-tournaments">
+            <div class="icon">
+                <i class="fa fa-trophy"></i>
+            </div>
+            <span class="label">Total Tournaments</span>
+            <span class="value">{{ totalTournaments }}</span>
+            <p class="description">The number of tournaments held on our platform so far.</p>
+        </div>
+
+        <!-- Matches Played -->
+        <div class="insight-card matches-played">
+            <div class="icon">
+                <i class="fa fa-gamepad"></i>
+            </div>
+            <span class="label">Matches Played</span>
+            <span class="value">{{ matchesPlayed }}</span>
+            <p class="description">The total number of matches played in all tournaments.</p>
+        </div>
+
+        <!-- Top Player -->
+        <div class="insight-card top-player">
+            <div class="icon">
+                <i class="fa fa-star"></i>
+            </div>
+            <span class="label">Top Player</span>
+            <span class="value">{{ topPlayer }}</span>
+            <p class="description">The player with the highest number of victories.</p>
+        </div>
+
+        <!-- Avg Participants -->
+        <div class="insight-card avg-participants">
+            <div class="icon">
+                <i class="fa fa-users"></i>
+            </div>
+            <span class="label">Avg. Participants per Tournament</span>
+            <span class="value">{{ avgParticipants }}</span>
+            <p class="description">The average number of participants per tournament.</p>
+        </div>
+
+        <!-- New Insight: Trusted Users -->
+        <div class="insight-card trusted-users">
+            <div class="icon">
+                <i class="fa fa-thumbs-up"></i>
+            </div>
+            <span class="label">Trusted Users</span>
+            <span class="value">{{ trustedUsers }}</span>
+            <p class="description">Users who trust and regularly log in to our platform.</p>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>&copy; 2025 KCA Cornhole Tournaments | All Rights Reserved</p>
+    <div class="footer-links">
+        <a routerLink="/PrivacyPolicy">Privacy Policy</a> |
+        <a routerLink="/TermsofService">Terms of Service</a> |
+        <a routerLink="/contact">Contact</a>
+    </div>
+</footer>

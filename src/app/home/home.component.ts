@@ -1,0 +1,105 @@
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+@Component({
+  selector: 'app-home',
+  standalone: false,
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss']
+})
+export class HomeComponent implements OnInit {
+  isNavOpen: boolean = false;
+  isAuthModalOpen = false;
+  authForm!: FormGroup;
+  isRegisterMode = false;
+
+  constructor(private fb: FormBuilder) {}
+
+  ngOnInit(): void {
+    this.setInitialTheme();
+    this.initForm();
+  }
+
+  initForm(): void {
+    this.authForm = this.fb.group({
+      username: ['', Validators.required],
+      email: [''],
+      password: ['', Validators.required],
+      confirmPassword: ['']
+    });
+  }
+
+  openLoginModal(): void {
+    this.isRegisterMode = false;
+    this.isAuthModalOpen = true;
+    this.updateValidators();
+  }
+
+  openRegisterModal(): void {
+    this.isRegisterMode = true;
+    this.isAuthModalOpen = true;
+    this.updateValidators();
+  }
+
+  private updateValidators(): void {
+    const emailControl = this.authForm.get('email');
+    const confirmPasswordControl = this.authForm.get('confirmPassword');
+
+    if (this.isRegisterMode) {
+      emailControl?.setValidators([Validators.required, Validators.email]);
+      confirmPasswordControl?.setValidators([Validators.required]);
+    } else {
+      emailControl?.clearValidators();
+      confirmPasswordControl?.clearValidators();
+    }
+
+    emailControl?.updateValueAndValidity();
+    confirmPasswordControl?.updateValueAndValidity();
+  }
+
+  toggleMode(event: Event): void {
+    event.preventDefault();
+    this.isRegisterMode = !this.isRegisterMode;
+    this.updateValidators();
+  }
+
+  onSubmit(): void {
+    if (this.authForm.invalid) return;
+
+    const { password, confirmPassword } = this.authForm.value;
+
+    if (this.isRegisterMode && password !== confirmPassword) {
+      alert('Passwords do not match');
+      return;
+    }
+
+    if (this.isRegisterMode) {
+      console.log('Registering user:', this.authForm.value);
+    } else {
+      console.log('Logging in user:', this.authForm.value);
+    }
+  }
+
+  closeModal(): void {
+    this.isAuthModalOpen = false;
+  }
+
+  toggleTheme(): void {
+    const body = document.body;
+    const theme = body.classList.contains('light-mode') ? 'dark' : 'light';
+
+    body.classList.toggle('light-mode');
+    localStorage.setItem('theme', theme);
+  }
+
+  setInitialTheme(): void {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') {
+      document.body.classList.add('light-mode');
+    }
+  }
+
+  toggleNav(): void {
+    this.isNavOpen = !this.isNavOpen;
+  }
+}
