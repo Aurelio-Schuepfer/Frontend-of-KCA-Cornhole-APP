@@ -13,6 +13,7 @@ import { AboutComponent } from './about/about.component';
 import { PrivacyPolicyComponent } from './Details/privacy-policy/privacy-policy.component';
 import { TermsOfServiceComponent } from './Details/terms-of-service/terms-of-service.component';
 import { ContactComponent } from './Details/contact/contact.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -31,8 +32,8 @@ import { ContactComponent } from './Details/contact/contact.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ReactiveFormsModule
-  ],
+    ReactiveFormsModule,
+    HttpClientModule  ],
   providers: [],
   bootstrap: [AppComponent]
 })

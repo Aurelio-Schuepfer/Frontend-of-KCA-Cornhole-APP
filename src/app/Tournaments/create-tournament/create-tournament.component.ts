@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { AuthService } from '../../auth.service';
 @Component({
   selector: 'app-create-tournament',
   templateUrl: './create-tournament.component.html',
@@ -14,8 +14,25 @@ export class CreateTournamentComponent implements OnInit {
   authForm!: FormGroup;
   isRegisterMode = false;
   tournamentForm!: FormGroup;
+  isLoggedIn = false;
+  username: string | null = null;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private authService: AuthService) {}
+
+  ngOnInit(): void {
+    this.setInitialTheme();
+    this.initForm();
+    this.isLoggedIn = !!localStorage.getItem('token');
+  }
+
+  initForm(): void {
+    this.authForm = this.fb.group({
+      username: ['', Validators.required],
+      email: [''],
+      password: ['', Validators.required],
+      confirmPassword: [''],
+    });
+  }
 
   openLoginModal(): void {
     this.isRegisterMode = false;
@@ -43,7 +60,7 @@ export class CreateTournamentComponent implements OnInit {
     } else {
       emailControl?.clearValidators();
       confirmPasswordControl?.clearValidators();
-    }
+   }
 
     emailControl?.updateValueAndValidity();
     confirmPasswordControl?.updateValueAndValidity();
@@ -66,10 +83,37 @@ export class CreateTournamentComponent implements OnInit {
     }
 
     if (this.isRegisterMode) {
-      console.log('Registering user:', this.authForm.value);
+      this.authService.register(this.authForm.value).subscribe({
+        next: (res) => {
+          console.log('Register success:', res);
+          alert('Account created successfully');
+          this.username = res.username;
+          this.closeModal();
+        },
+        error: (err) => {
+          console.error('Register error:', err);
+          alert('Registration failed');
+        },
+      });
     } else {
-      console.log('Logging in user:', this.authForm.value);
+      this.authService.login(this.authForm.value).subscribe({
+        next: (res) => {
+          console.log('Login success:', res);
+          localStorage.setItem('token', res.token);
+          this.isLoggedIn = true;
+          this.closeModal();
+        },
+        error: (err) => {
+          console.error('Login error:', err);
+          alert('Login failed');
+        },
+      });
     }
+  }
+
+  logout(): void {
+    localStorage.removeItem('token');
+    this.isLoggedIn = false;
   }
 
   toggleTheme() {
@@ -94,12 +138,6 @@ export class CreateTournamentComponent implements OnInit {
 
   toggleNav(): void {
     this.isNavOpen = !this.isNavOpen;
-  }
-
-  ngOnInit(): void {
-    this.setInitialTheme();
-    this.initAuthForm();
-    this.initTournamentForm();
   }
 
   initAuthForm(): void {

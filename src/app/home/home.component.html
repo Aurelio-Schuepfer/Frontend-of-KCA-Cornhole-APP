@@ -5,64 +5,60 @@
     </div>
   </header>
 
-  <div class="auth-buttons">
-    <button id="loginBtn" class="sign-buttons" (click)="openLoginModal()">
-      Login
-    </button>
-    <button
-      id="registerBtn"
-      (click)="openRegisterModal()"
-      class="sign-buttons outline"
-    >
-      Register
-    </button>
-  </div>
+<div class="auth-buttons">
+  <ng-container *ngIf="isLoggedIn">
+    <div class="auth-row">
+      <div class="user-info">
+        <p id="username">{{username}}</p>
+        <span class="status-icon fas fa-user-circle"></span>
+      </div>
+      <button id="registerBtn" class="sign-buttons outline" (click)="logout()">Logout</button>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="!isLoggedIn">
+    <div class="auth-row">
+      <div class="user-info">
+        <span class="status-icon fas fa-sign-in-alt" (click)="openLoginModal()"></span>
+      </div>
+        <button id="loginBtn" class="sign-buttons" (click)="openLoginModal()">Login</button>
+        <button id="registerBtn" class="sign-buttons outline" (click)="openRegisterModal()">Register</button>
+    </div>
+  </ng-container>
+</div>
+
+
 
   <div *ngIf="isAuthModalOpen" class="auth-modal">
     <div class="auth-modal-content">
       <span class="close-btn" (click)="closeModal()">&times;</span>
+      <h2>{{ isRegisterMode ? 'Register' : 'Login' }}</h2>
 
-      <h2>{{ isRegisterMode ? "Register" : "Login" }}</h2>
-
-      <form (ngSubmit)="onSubmit()" [formGroup]="authForm">
-        <label for="username">Username</label>
-        <input id="username" formControlName="username" type="text" required />
+      <form [formGroup]="authForm" (ngSubmit)="onSubmit()">
+        <label for="username">{{ isRegisterMode ? 'Username' : 'Username / Email' }}</label>
+        <input id="username" type="text" formControlName="username" required />
 
         <ng-container *ngIf="isRegisterMode">
           <label for="email">Email</label>
-          <input id="email" formControlName="email" type="email" required />
+          <input id="email" type="email" formControlName="email" required />
         </ng-container>
 
         <label for="password">Password</label>
-        <input
-          id="password"
-          formControlName="password"
-          type="password"
-          required
-        />
+        <input id="password" type="password" formControlName="password" required />
 
         <ng-container *ngIf="isRegisterMode">
           <label for="confirmPassword">Confirm Password</label>
-          <input
-            id="confirmPassword"
-            formControlName="confirmPassword"
-            type="password"
-            required
-          />
+          <input id="confirmPassword" type="password" formControlName="confirmPassword" required />
         </ng-container>
 
         <button class="LogButton" type="submit">
-          {{ isRegisterMode ? "Create Account" : "Login" }}
+          {{ isRegisterMode ? 'Create Account' : 'Login' }}
         </button>
       </form>
 
       <div class="register-link">
         <a href="#" (click)="toggleMode($event)">
-          {{
-            isRegisterMode
-              ? "Already have an account? Login here"
-              : "No account? Register here"
-          }}
+          {{ isRegisterMode ? 'Already have an account? Login here' : 'No account? Register here' }}
         </a>
       </div>
     </div>
@@ -70,9 +66,7 @@
 
   <nav>
     <div class="navbar-toggle" (click)="toggleNav()">
-      <span></span>
-      <span></span>
-      <span></span>
+      <span></span><span></span><span></span>
     </div>
     <div class="nav-links" [ngClass]="{ open: isNavOpen }">
       <button class="nav-btn active">Home</button>
@@ -81,11 +75,7 @@
       <button routerLink="/stats" class="nav-btn">Statistics</button>
       <button routerLink="/about" class="nav-btn">About</button>
     </div>
-    <button
-      id="toggleTheme"
-      title="We recommend Darkmode for the best experience"
-      (click)="toggleTheme()"
-    >
+    <button id="toggleTheme" (click)="toggleTheme()" title="We recommend Darkmode for the best experience">
       <span class="switch"></span>
     </button>
   </nav>
@@ -100,42 +90,30 @@
     </p>
     <div class="hero-buttons">
       <button routerLink="/create" class="cta-btn">Create Tournament</button>
-      <button routerLink="/join" class="cta-btn outline">
-        Join Tournament
-      </button>
+      <button routerLink="/join" class="cta-btn outline">Join Tournament</button>
     </div>
   </section>
 
   <section class="features">
     <div class="feature-card">
       <h3>🏆 Create Your Own Tournament</h3>
-      <p>
-        Customize location, time, rules, teams, and more. Perfect for both
-        casual games and pro brackets.
-      </p>
+      <p>Customize location, time, rules, teams, and more. Perfect for both casual games and pro brackets.</p>
     </div>
     <div class="feature-card">
       <h3>🤝 Join Tournaments Near You</h3>
-      <p>
-        Find local events or join digital matchups. Team up or go solo – you
-        choose your game.
-      </p>
+      <p>Find local events or join digital matchups. Team up or go solo – you choose your game.</p>
     </div>
     <div class="feature-card">
       <h3>📊 Track Player Stats</h3>
-      <p>
-        See wins, points, and performance evolve in real time. Your stats, your
-        journey, your story.
-      </p>
+      <p>See wins, points, and performance evolve in real time. Your stats, your journey, your story.</p>
     </div>
   </section>
 
   <section class="about-app">
     <h3>About KCA Cornhole Tournaments</h3>
     <p>
-      KCA Cornhole Tournaments was built for the community. Whether you're
-      hosting backyard battles or arena-level championships – we give you the
-      tools to make it epic.
+      KCA Cornhole Tournaments was built for the community. Whether you're hosting backyard battles or
+      arena-level championships – we give you the tools to make it epic.
     </p>
   </section>
 </main>

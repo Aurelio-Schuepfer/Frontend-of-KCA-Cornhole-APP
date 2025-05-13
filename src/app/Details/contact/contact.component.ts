@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../../auth.service';
 @Component({
   selector: 'app-contact',
   standalone: false,
@@ -12,11 +13,14 @@ export class ContactComponent {
   isAuthModalOpen = false;
   authForm!: FormGroup;
   isRegisterMode = false;
+  isLoggedIn = false;
+  username: string | null = null;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private authService: AuthService) {}
   ngOnInit(): void {
     this.setInitialTheme();
     this.initForm();
+    this.isLoggedIn = !!localStorage.getItem('token');
   }
 
   initForm(): void {
@@ -97,10 +101,37 @@ export class ContactComponent {
     }
 
     if (this.isRegisterMode) {
-      console.log('Registering user:', this.authForm.value);
+      this.authService.register(this.authForm.value).subscribe({
+        next: (res) => {
+          console.log('Register success:', res);
+          alert('Account created successfully');
+          this.username = res.username;
+          this.closeModal();
+        },
+        error: (err) => {
+          console.error('Register error:', err);
+          alert('Registration failed');
+        },
+      });
     } else {
-      console.log('Logging in user:', this.authForm.value);
+      this.authService.login(this.authForm.value).subscribe({
+        next: (res) => {
+          console.log('Login success:', res);
+          localStorage.setItem('token', res.token);
+          this.isLoggedIn = true;
+          this.closeModal();
+        },
+        error: (err) => {
+          console.error('Login error:', err);
+          alert('Login failed');
+        },
+      });
     }
+  }
+
+  logout(): void {
+    localStorage.removeItem('token');
+    this.isLoggedIn = false;
   }
 
   closeModal(): void {

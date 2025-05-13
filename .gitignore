@@ -1,15 +1,18 @@
-# Compiled output
+# === Angular ===
 /dist
 /tmp
 /out-tsc
 /bazel-out
-
-# Node
 /node_modules
-npm-debug.log
-yarn-error.log
+/.angular/cache
 
-# IDEs and editors
+# === .NET Core ===
+bin/
+obj/
+*.user
+*.suo
+
+# === IDEs ===
 .idea/
 .project
 .classpath
@@ -18,23 +21,24 @@ yarn-error.log
 .settings/
 *.sublime-workspace
 
-# Visual Studio Code
+# === VSCode ===
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-.history/*
 
-# Miscellaneous
-/.angular/cache
-.sass-cache/
-/connect.lock
-/coverage
+# === Logs ===
+npm-debug.log
+yarn-error.log
+connect.lock
 /libpeerconnection.log
 testem.log
-/typings
 
-# System files
+# === Sonstiges ===
+.sass-cache/
+/coverage
+/typings
 .DS_Store
 Thumbs.db
+.history/
