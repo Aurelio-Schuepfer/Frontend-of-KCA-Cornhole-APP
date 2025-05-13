@@ -15,6 +15,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 2rem;
+}
   }
 
   .player-card {
@@ -26,6 +27,11 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
+
+     .highlighted {
+    border-color: lime;
+    box-shadow: 0 0 15px lime;
+  }
 
     .player-image {
       width: 100px;
@@ -50,4 +56,7 @@
       }
     }
   }
-}
+
+
+
+

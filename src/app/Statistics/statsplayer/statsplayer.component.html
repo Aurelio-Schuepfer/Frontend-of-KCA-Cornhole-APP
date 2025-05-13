@@ -5,68 +5,38 @@
     </div>
   </header>
 
-  <div class="auth-buttons">
-    <button id="loginBtn" class="sign-buttons" (click)="openLoginModal()">
-      Login
-    </button>
-    <button
-      id="registerBtn"
-      (click)="openRegisterModal()"
-      class="sign-buttons outline"
-    >
-      Register
-    </button>
-  </div>
+<div *ngIf="globalAuth.isAuthModalOpen" class="auth-modal">
+  <div class="auth-modal-content">
+    <span class="close-btn" (click)="globalAuth.closeModal()">&times;</span>
+    <h2>{{ globalAuth.isRegisterMode ? 'Registrieren' : 'Login' }}</h2>
+    <form #authForm="ngForm" (ngSubmit)="globalAuth.onSubmit()">
+      <label for="username">{{ globalAuth.isRegisterMode ? 'Benutzername' : 'Benutzername / E-Mail' }}</label>
+      <input id="username" type="text" name="username" [(ngModel)]="globalAuth.loginModel.username" required />
 
-  <div *ngIf="isAuthModalOpen" class="auth-modal">
-    <div class="auth-modal-content">
-      <span class="close-btn" (click)="closeModal()">&times;</span>
+      <ng-container *ngIf="globalAuth.isRegisterMode">
+        <label for="email">E-Mail</label>
+        <input id="email" type="email" name="email" [(ngModel)]="globalAuth.loginModel.email" required />
+      </ng-container>
 
-      <h2>{{ isRegisterMode ? "Register" : "Login" }}</h2>
+      <label for="password">Passwort</label>
+      <input id="password" type="password" name="password" [(ngModel)]="globalAuth.loginModel.password" required />
 
-      <form (ngSubmit)="onSubmit()" [formGroup]="authForm">
-        <label for="username">Username</label>
-        <input id="username" formControlName="username" type="text" required />
+      <ng-container *ngIf="globalAuth.isRegisterMode">
+        <label for="confirmPassword">Passwort wiederholen</label>
+        <input id="confirmPassword" type="password" name="confirmPassword" [(ngModel)]="globalAuth.loginModel.confirmPassword" required />
+      </ng-container>
 
-        <ng-container *ngIf="isRegisterMode">
-          <label for="email">Email</label>
-          <input id="email" formControlName="email" type="email" required />
-        </ng-container>
-
-        <label for="password">Password</label>
-        <input
-          id="password"
-          formControlName="password"
-          type="password"
-          required
-        />
-
-        <ng-container *ngIf="isRegisterMode">
-          <label for="confirmPassword">Confirm Password</label>
-          <input
-            id="confirmPassword"
-            formControlName="confirmPassword"
-            type="password"
-            required
-          />
-        </ng-container>
-
-        <button class="LogButton" type="submit">
-          {{ isRegisterMode ? "Create Account" : "Login" }}
-        </button>
-      </form>
-
-      <div class="register-link">
-        <a href="#" (click)="toggleMode($event)">
-          {{
-            isRegisterMode
-              ? "Already have an account? Login here"
-              : "No account? Register here"
-          }}
-        </a>
-      </div>
+      <button type="submit">
+        {{ globalAuth.isRegisterMode ? 'Account erstellen' : 'Login' }}
+      </button>
+    </form>
+    <div class="register-link">
+      <a href="#" (click)="globalAuth.toggleMode($event)">
+        {{ globalAuth.isRegisterMode ? 'Schon registriert? Hier einloggen' : 'Kein Account? Hier registrieren' }}
+      </a>
     </div>
   </div>
+</div>
 
   <nav>
     <div class="navbar-toggle" (click)="toggleNav()">
@@ -92,28 +62,36 @@
 </div>
 
 <main>
-  <main>
-    <div class="player-stats-container">
-      <h2>Player Statistics</h2>
+  <div class="player-stats-container">
+    <h2>Player Statistics</h2>
 
-      <div class="player-cards">
-        <div class="player-card" *ngFor="let player of players">
-          <img
-            [src]="player.image || 'assets/images/default-profile.jpg'"
-            alt="Player"
-            class="player-image"
-          />
-          <div class="player-info">
-            <h3>{{ player.name }}</h3>
-            <p><strong>Wins:</strong> {{ player.wins }}</p>
-            <p><strong>Losses:</strong> {{ player.losses }}</p>
-            <p><strong>Matches Played:</strong> {{ player.matchesPlayed }}</p>
-            <p><strong>Total Points:</strong> {{ player.points }}</p>
-          </div>
+    <div class="search-container">
+      <input
+        type="text"
+        name="playerSearch"
+        [(ngModel)]="searchTerm"
+        placeholder="Search for players"
+        (input)="onSearch()"
+      />
+    </div>
+
+    <div class="player-cards">
+      <div class="player-card" *ngFor="let player of players">
+        <img
+          [src]="player.image || 'assets/images/default-profile.jpg'"
+          alt="Player"
+          class="player-image"
+        />
+        <div class="player-info">
+          <h3>{{ player.name }}</h3>
+          <p><strong>Wins:</strong> {{ player.wins }}</p>
+          <p><strong>Losses:</strong> {{ player.losses }}</p>
+          <p><strong>Matches Played:</strong> {{ player.matchesPlayed }}</p>
+          <p><strong>Total Points:</strong> {{ player.points }}</p>
         </div>
       </div>
     </div>
-  </main>
+  </div>
 </main>
 
 <footer>

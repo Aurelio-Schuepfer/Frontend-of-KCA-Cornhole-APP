@@ -5,64 +5,38 @@
     </div>
   </header>
 
-<div class="auth-buttons">
-  <ng-container *ngIf="isLoggedIn">
-    <div class="auth-row">
-      <div class="user-info">
-        <p id="username">{{username}}</p>
-        <span class="status-icon fas fa-user-circle"></span>
-      </div>
-      <button id="registerBtn" class="sign-buttons outline" (click)="logout()">Logout</button>
-    </div>
-  </ng-container>
+<div *ngIf="globalAuth.isAuthModalOpen" class="auth-modal">
+  <div class="auth-modal-content">
+    <span class="close-btn" (click)="globalAuth.closeModal()">&times;</span>
+    <h2>{{ globalAuth.isRegisterMode ? 'Registrieren' : 'Login' }}</h2>
+    <form #authForm="ngForm" (ngSubmit)="globalAuth.onSubmit()">
+      <label for="auth-username">{{ globalAuth.isRegisterMode ? 'Benutzername' : 'Benutzername / E-Mail' }}</label>
+      <input id="auth-username" type="text" name="auth-username" [(ngModel)]="globalAuth.loginModel.username" required />
 
-  <ng-container *ngIf="!isLoggedIn">
-    <div class="auth-row">
-      <div class="user-info">
-        <span class="status-icon fas fa-sign-in-alt" (click)="openLoginModal()"></span>
-      </div>
-        <button id="loginBtn" class="sign-buttons" (click)="openLoginModal()">Login</button>
-        <button id="registerBtn" class="sign-buttons outline" (click)="openRegisterModal()">Register</button>
-    </div>
-  </ng-container>
-</div>
+      <ng-container *ngIf="globalAuth.isRegisterMode">
+        <label for="auth-email">E-Mail</label>
+        <input id="auth-email" type="email" name="auth-email" [(ngModel)]="globalAuth.loginModel.email" required />
+      </ng-container>
 
+      <label for="auth-password">Passwort</label>
+      <input id="auth-password" type="password" name="auth-password" [(ngModel)]="globalAuth.loginModel.password" required />
 
+      <ng-container *ngIf="globalAuth.isRegisterMode">
+        <label for="auth-confirmPassword">Passwort wiederholen</label>
+        <input id="auth-confirmPassword" type="password" name="auth-confirmPassword" [(ngModel)]="globalAuth.loginModel.confirmPassword" required />
+      </ng-container>
 
-  <div *ngIf="isAuthModalOpen" class="auth-modal">
-    <div class="auth-modal-content">
-      <span class="close-btn" (click)="closeModal()">&times;</span>
-      <h2>{{ isRegisterMode ? 'Register' : 'Login' }}</h2>
-
-      <form [formGroup]="authForm" (ngSubmit)="onSubmit()">
-        <label for="username">{{ isRegisterMode ? 'Username' : 'Username / Email' }}</label>
-        <input id="username" type="text" formControlName="username" required />
-
-        <ng-container *ngIf="isRegisterMode">
-          <label for="email">Email</label>
-          <input id="email" type="email" formControlName="email" required />
-        </ng-container>
-
-        <label for="password">Password</label>
-        <input id="password" type="password" formControlName="password" required />
-
-        <ng-container *ngIf="isRegisterMode">
-          <label for="confirmPassword">Confirm Password</label>
-          <input id="confirmPassword" type="password" formControlName="confirmPassword" required />
-        </ng-container>
-
-        <button class="LogButton" type="submit">
-          {{ isRegisterMode ? 'Create Account' : 'Login' }}
-        </button>
-      </form>
-
-      <div class="register-link">
-        <a href="#" (click)="toggleMode($event)">
-          {{ isRegisterMode ? 'Already have an account? Login here' : 'No account? Register here' }}
-        </a>
-      </div>
+      <button type="submit">
+        {{ globalAuth.isRegisterMode ? 'Account erstellen' : 'Login' }}
+      </button>
+    </form>
+    <div class="register-link">
+      <a href="#" (click)="globalAuth.toggleMode($event)">
+        {{ globalAuth.isRegisterMode ? 'Schon registriert? Hier einloggen' : 'Kein Account? Hier registrieren' }}
+      </a>
     </div>
   </div>
+</div>
 
   <nav>
     <div class="navbar-toggle" (click)="toggleNav()">
@@ -87,50 +61,22 @@
 
 <main>
   <section class="create-tournament-container">
-    <h1 id="tournamentTitle">Create a Tournament</h1>
+    <h1>Create a Tournament</h1>
+    <form #tournamentForm="ngForm" (ngSubmit)="onCreateTournament()">
+      <label for="tournamentName">Name</label>
+      <input id="tournamentName" name="name" [(ngModel)]="tournament.name" required />
 
-    <form id="createTournamentForm" [formGroup]="tournamentForm">
-      <div class="form-grid">
-        <input
-          type="text"
-          formControlName="name"
-          placeholder="Tournament Name - required"
-          class="form-input"
-          required
-        />
-        <input
-          type="text"
-          formControlName="location"
-          placeholder="Location - required"
-          class="form-input"
-          required
-        />
-        <input type="date" formControlName="date" class="form-input" required />
-        <input type="time" formControlName="time" class="form-input" required />
-        <input type="text" formControlName="rules" placeholder="Rules" class="form-input" />
-        <input
-          type="text"
-          formControlName="meetingPoint"
-          placeholder="Meeting Point"
-          class="form-input"
-        />
-        <textarea formControlName="notes" placeholder="Notes" class="form-textarea"></textarea>
-        <input
-          type="number"
-          formControlName="participantLimit"
-          placeholder="Participant Limit"
-          class="form-input"
-        />
-      </div>
+      <label for="tournamentDate">Date</label>
+      <input id="tournamentDate" name="date" type="date" [(ngModel)]="tournament.date" required />
 
-      <div class="form-footer">
-        <button type="submit" class="tButton" [disabled]="">Create</button>
-      </div>
+      <label for="tournamentLocation">Location</label>
+      <input id="tournamentLocation" name="location" [(ngModel)]="tournament.location" required />
+
+      <button type="submit">Create Tournament</button>
     </form>
+    <button (click)="globalAuth.openLoginModal()">Login</button>
+    <button (click)="globalAuth.openRegisterModal()">Registrieren</button>
   </section>
-  <div class="kca-decoration">
-    <div class="kca-hole"></div>
-  </div>
 </main>
 
 <footer>

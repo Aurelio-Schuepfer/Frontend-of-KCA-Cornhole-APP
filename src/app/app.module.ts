@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms'; // FormsModule importieren
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -32,8 +33,10 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ReactiveFormsModule,
-    HttpClientModule  ],
+    FormsModule, // Nur noch FormsModule
+    HttpClientModule,
+    CommonModule,
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

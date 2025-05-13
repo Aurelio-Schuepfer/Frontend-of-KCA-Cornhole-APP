@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../../auth.service';
+import { GlobalAuth } from '../../global-auth';
+
 @Component({
   selector: 'app-join-tournament',
   standalone: false,
@@ -10,27 +10,17 @@ import { AuthService } from '../../auth.service';
 export class JoinTournamentComponent implements OnInit {
   isNavOpen: boolean = false;
   expandedId: number | null = null;
-  isAuthModalOpen = false;
-  authForm!: FormGroup;
-  isRegisterMode = false;
-  isLoggedIn = false;
   username: string | null = null;
+  selectedTournamentId: number | null = null;
+  selectedTournament: any = null;
+  detailsModalVisible: boolean = false;
+  joinStatus: string = "join";
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {}
+  constructor(public globalAuth: GlobalAuth) {}
 
   ngOnInit(): void {
     this.setInitialTheme();
-    this.initForm();
-    this.isLoggedIn = !!localStorage.getItem('token');
-  }
-
-  initForm(): void {
-    this.authForm = this.fb.group({
-      username: ['', Validators.required],
-      email: [''],
-      password: ['', Validators.required],
-      confirmPassword: ['']
-    });
+    this.loadJoinedTournaments();
   }
 
   toggleTheme() {
@@ -81,7 +71,7 @@ export class JoinTournamentComponent implements OnInit {
       notes: 'Snacks will be provided.'
     },
     {
-      id: 1,
+      id: 3,
       name: 'Spring Clash',
       date: '2025-05-20',
       location: 'Berlin',
@@ -92,117 +82,7 @@ export class JoinTournamentComponent implements OnInit {
       notes: 'Bring your own bags.'
     },
     {
-      id: 2,
-      name: 'Summer Showdown',
-      date: '2025-06-15',
-      location: 'Hamburg',
-      meetingPoint: 'Hauptbahnhof',
-      maxTeams: 20,
-      currentTeams: 19,
-      rules: 'Double elimination format.',
-      notes: 'Snacks will be provided.'
-    },
-    {
-      id: 1,
-      name: 'Spring Clash',
-      date: '2025-05-20',
-      location: 'Berlin',
-      meetingPoint: 'Alexanderplatz',
-      maxTeams: 16,
-      currentTeams: 10,
-      rules: 'Standard Cornhole rules apply.',
-      notes: 'Bring your own bags.'
-    },
-    {
-      id: 2,
-      name: 'Summer Showdown',
-      date: '2025-06-15',
-      location: 'Hamburg',
-      meetingPoint: 'Hauptbahnhof',
-      maxTeams: 20,
-      currentTeams: 19,
-      rules: 'Double elimination format.',
-      notes: 'Snacks will be provided.'
-    },
-    {
-      id: 1,
-      name: 'Spring Clash',
-      date: '2025-05-20',
-      location: 'Berlin',
-      meetingPoint: 'Alexanderplatz',
-      maxTeams: 16,
-      currentTeams: 10,
-      rules: 'Standard Cornhole rules apply.',
-      notes: 'Bring your own bags.'
-    },
-    {
-      id: 2,
-      name: 'Summer Showdown',
-      date: '2025-06-15',
-      location: 'Hamburg',
-      meetingPoint: 'Hauptbahnhof',
-      maxTeams: 20,
-      currentTeams: 19,
-      rules: 'Double elimination format.',
-      notes: 'Snacks will be provided.'
-    },
-    {
-      id: 1,
-      name: 'Spring Clash',
-      date: '2025-05-20',
-      location: 'Berlin',
-      meetingPoint: 'Alexanderplatz',
-      maxTeams: 16,
-      currentTeams: 10,
-      rules: 'Standard Cornhole rules apply.',
-      notes: 'Bring your own bags.'
-    },
-    {
-      id: 2,
-      name: 'Summer Showdown',
-      date: '2025-06-15',
-      location: 'Hamburg',
-      meetingPoint: 'Hauptbahnhof',
-      maxTeams: 20,
-      currentTeams: 19,
-      rules: 'Double elimination format.',
-      notes: 'Snacks will be provided.'
-    },
-    {
-      id: 1,
-      name: 'Spring Clash',
-      date: '2025-05-20',
-      location: 'Berlin',
-      meetingPoint: 'Alexanderplatz',
-      maxTeams: 16,
-      currentTeams: 10,
-      rules: 'Standard Cornhole rules apply.',
-      notes: 'Bring your own bags.'
-    },
-    {
-      id: 2,
-      name: 'Summer Showdown',
-      date: '2025-06-15',
-      location: 'Hamburg',
-      meetingPoint: 'Hauptbahnhof',
-      maxTeams: 20,
-      currentTeams: 19,
-      rules: 'Double elimination format.',
-      notes: 'Snacks will be provided.'
-    },
-    {
-      id: 1,
-      name: 'Spring Clash',
-      date: '2025-05-20',
-      location: 'Berlin',
-      meetingPoint: 'Alexanderplatz',
-      maxTeams: 16,
-      currentTeams: 10,
-      rules: 'Standard Cornhole rules apply.',
-      notes: 'Bring your own bags.'
-    },
-    {
-      id: 2,
+      id: 4,
       name: 'Summer Showdown',
       date: '2025-06-15',
       location: 'Hamburg',
@@ -214,92 +94,51 @@ export class JoinTournamentComponent implements OnInit {
     },
   ];
 
-  joinTournament(id: number) {
-    // Logic to join tournament
-  }
+  joinTournament(tournamentId: number, currentTeams: number, maxTeams: number) {
+    let joinedTournaments = this.getJoinedTournaments();
 
-  toggleDetails(id: number) {
-    this.expandedId = this.expandedId === id ? null : id;
-  }
-
-  openLoginModal(): void {
-    this.isRegisterMode = false;
-    this.isAuthModalOpen = true;
-    this.updateValidators();
-  }
-
-  openRegisterModal(): void {
-    this.isRegisterMode = true;
-    this.isAuthModalOpen = true;
-    this.updateValidators();
-  }
-
-  private updateValidators(): void {
-    const emailControl = this.authForm.get('email');
-    const confirmPasswordControl = this.authForm.get('confirmPassword');
-
-    if (this.isRegisterMode) {
-      emailControl?.setValidators([Validators.required, Validators.email]);
-      confirmPasswordControl?.setValidators([Validators.required]);
+    if (joinedTournaments.includes(tournamentId)) {
+      joinedTournaments = joinedTournaments.filter(id => id !== tournamentId);
+      localStorage.setItem('joinedTournaments', JSON.stringify(joinedTournaments));
+      alert("You left the tournament");
+    } else if (currentTeams < maxTeams) {
+      joinedTournaments.push(tournamentId);
+      localStorage.setItem('joinedTournaments', JSON.stringify(joinedTournaments));
+      alert("Successfully joined tournament");
     } else {
-      emailControl?.clearValidators();
-      confirmPasswordControl?.clearValidators();
+      alert("The tournament is full");
     }
 
-    emailControl?.updateValueAndValidity();
-    confirmPasswordControl?.updateValueAndValidity();
+    this.loadJoinedTournaments();
   }
 
-  toggleMode(event: Event): void {
-    event.preventDefault();
-    this.isRegisterMode = !this.isRegisterMode;
-    this.updateValidators();
-  }
-
-  onSubmit(): void {
-    if (this.authForm.invalid) return;
-
-    const { password, confirmPassword } = this.authForm.value;
-
-    if (this.isRegisterMode && password !== confirmPassword) {
-      alert('Passwords do not match');
-      return;
-    }
-
-    if (this.isRegisterMode) {
-      this.authService.register(this.authForm.value).subscribe({
-        next: (res) => {
-          console.log('Register success:', res);
-          alert('Account created successfully');
-          this.username = res.username;
-          this.closeModal();
-        },
-        error: (err) => {
-          console.error('Register error:', err);
-          alert('Registration failed');
-        },
-      });
-    } else {
-      this.authService.login(this.authForm.value).subscribe({
-        next: (res) => {
-          console.log('Login success:', res);
-          localStorage.setItem('token', res.token);
-          this.isLoggedIn = true;
-          this.closeModal();
-        },
-        error: (err) => {
-          console.error('Login error:', err);
-          alert('Login failed');
-        },
-      });
+  openDetails(tournamentId: number): void {
+    const found = this.tournaments.find(t => t.id === tournamentId);
+    if (found) {
+      this.selectedTournamentId = tournamentId;
+      this.selectedTournament = found;
+      this.detailsModalVisible = true;
     }
   }
 
-  logout(): void {
-    localStorage.removeItem('token');
-    this.isLoggedIn = false;
+  closeDetails(): void {
+    this.detailsModalVisible = false;
+    this.selectedTournament = null;
   }
-  closeModal(): void {
-    this.isAuthModalOpen = false;
+
+  isTournamentJoined(tournamentId: number): boolean {
+  const joinedTournaments = this.getJoinedTournaments();
+  return joinedTournaments.includes(tournamentId);
+}
+
+
+  private loadJoinedTournaments(): void {
+    const joinedTournaments = this.getJoinedTournaments();
+    this.selectedTournamentId = joinedTournaments.length > 0 ? joinedTournaments[0] : null;
+  }
+
+  private getJoinedTournaments(): number[] {
+    const joinedTournaments = localStorage.getItem('joinedTournaments');
+    return joinedTournaments ? JSON.parse(joinedTournaments) : [];
   }
 }

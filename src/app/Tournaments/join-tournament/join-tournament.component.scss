@@ -27,11 +27,16 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-}
 
 .tournament-card:hover {
   transform: scale(1.02);
   box-shadow: 0 0 20px var(--accent);
+}
+ &.active {
+    border-color: lime;
+    background: #1f1f1f;
+    box-shadow: 0 0 15px lime;
+  }
 }
 
 #tournamentTitle {
@@ -46,6 +51,7 @@
 .card-header h2 {
   font-size: 1.5rem;
   margin: 0;
+   color: var(--accent)
 }
 
 .date {
@@ -65,39 +71,72 @@
   justify-content: flex-end;
 }
 
-.details-section {
-    height: 0;
-    overflow: hidden;
-    opacity: 0;
-    padding: 0 1rem;
-    margin-top: 1rem;
-    background: var(--btn-bg);
-    border-radius: 0.8rem;
-    color: var(--fg);
-    transition: height 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
-  }
-  
-  .details-section.expanded {
-    height: auto;  
-    opacity: 1;
-    padding: 1rem;
-  }    
-
-  .tButton
-  {
-  background: transparent;
+  .tButton {
+  background: rgba(255, 255, 255, 0.05);
   display: flex;
   justify-content: center;
   align-items: center;
   margin-left: 0.5rem;
-  width: 25%;
-  height: 150%;
   font-size: 1rem;
   color: var(--accent);
+  border: 1px solid var(--accent);
   border-radius: 1rem;
-  transition: all 0.2s ease;
+  padding: 0.6rem 1.2rem;
+  backdrop-filter: blur(5px);
+  transition: all 0.25s ease;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+
+.tButton:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px var(--accent), 0 0 5px var(--accent) inset;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.details-modal {
+  position: fixed;
+  top: -10%;
+  left: -37%;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  display: none; 
+  background-color: transparent;
+  overflow: hidden;
+
+  &.visible {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
-  .tButton:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 20px var(--accent);
-  }
+}
+
+.details-overlay {
+   position: fixed;  
+  top: 0;
+  left: -37%;
+  width: 200%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 1;  
+}
+
+.details-content {
+  position: relative;
+  z-index: 2;
+  background-color: var(--bg);
+  color: var(--fg);
+  padding: 2rem;
+  border-radius: 1rem;
+  max-width: 600px;
+  width: 90%;
+  box-shadow: 0 0 20px var(--accent);
+  transition: all 0.3s ease;
+  overflow-y: auto;
+  max-height: 90vh;
+}
+
+
+
+

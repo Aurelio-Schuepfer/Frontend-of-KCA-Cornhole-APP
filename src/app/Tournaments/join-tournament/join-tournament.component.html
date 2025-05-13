@@ -5,64 +5,38 @@
     </div>
   </header>
 
-<div class="auth-buttons">
-  <ng-container *ngIf="isLoggedIn">
-    <div class="auth-row">
-      <div class="user-info">
-        <p id="username">{{username}}</p>
-        <span class="status-icon fas fa-user-circle"></span>
-      </div>
-      <button id="registerBtn" class="sign-buttons outline" (click)="logout()">Logout</button>
-    </div>
-  </ng-container>
+<div *ngIf="globalAuth.isAuthModalOpen" class="auth-modal">
+  <div class="auth-modal-content">
+    <span class="close-btn" (click)="globalAuth.closeModal()">&times;</span>
+    <h2>{{ globalAuth.isRegisterMode ? 'Registrieren' : 'Login' }}</h2>
+    <form #authForm="ngForm" (ngSubmit)="globalAuth.onSubmit()">
+      <label for="username">{{ globalAuth.isRegisterMode ? 'Benutzername' : 'Benutzername / E-Mail' }}</label>
+      <input id="username" type="text" name="username" [(ngModel)]="globalAuth.loginModel.username" required />
 
-  <ng-container *ngIf="!isLoggedIn">
-    <div class="auth-row">
-      <div class="user-info">
-        <span class="status-icon fas fa-sign-in-alt" (click)="openLoginModal()"></span>
-      </div>
-        <button id="loginBtn" class="sign-buttons" (click)="openLoginModal()">Login</button>
-        <button id="registerBtn" class="sign-buttons outline" (click)="openRegisterModal()">Register</button>
-    </div>
-  </ng-container>
-</div>
+      <ng-container *ngIf="globalAuth.isRegisterMode">
+        <label for="email">E-Mail</label>
+        <input id="email" type="email" name="email" [(ngModel)]="globalAuth.loginModel.email" required />
+      </ng-container>
 
+      <label for="password">Passwort</label>
+      <input id="password" type="password" name="password" [(ngModel)]="globalAuth.loginModel.password" required />
 
+      <ng-container *ngIf="globalAuth.isRegisterMode">
+        <label for="confirmPassword">Passwort wiederholen</label>
+        <input id="confirmPassword" type="password" name="confirmPassword" [(ngModel)]="globalAuth.loginModel.confirmPassword" required />
+      </ng-container>
 
-  <div *ngIf="isAuthModalOpen" class="auth-modal">
-    <div class="auth-modal-content">
-      <span class="close-btn" (click)="closeModal()">&times;</span>
-      <h2>{{ isRegisterMode ? 'Register' : 'Login' }}</h2>
-
-      <form [formGroup]="authForm" (ngSubmit)="onSubmit()">
-        <label for="username">{{ isRegisterMode ? 'Username' : 'Username / Email' }}</label>
-        <input id="username" type="text" formControlName="username" required />
-
-        <ng-container *ngIf="isRegisterMode">
-          <label for="email">Email</label>
-          <input id="email" type="email" formControlName="email" required />
-        </ng-container>
-
-        <label for="password">Password</label>
-        <input id="password" type="password" formControlName="password" required />
-
-        <ng-container *ngIf="isRegisterMode">
-          <label for="confirmPassword">Confirm Password</label>
-          <input id="confirmPassword" type="password" formControlName="confirmPassword" required />
-        </ng-container>
-
-        <button class="LogButton" type="submit">
-          {{ isRegisterMode ? 'Create Account' : 'Login' }}
-        </button>
-      </form>
-
-      <div class="register-link">
-        <a href="#" (click)="toggleMode($event)">
-          {{ isRegisterMode ? 'Already have an account? Login here' : 'No account? Register here' }}
-        </a>
-      </div>
+      <button type="submit">
+        {{ globalAuth.isRegisterMode ? 'Account erstellen' : 'Login' }}
+      </button>
+    </form>
+    <div class="register-link">
+      <a href="#" (click)="globalAuth.toggleMode($event)">
+        {{ globalAuth.isRegisterMode ? 'Schon registriert? Hier einloggen' : 'Kein Account? Hier registrieren' }}
+      </a>
     </div>
   </div>
+</div>
 
   <nav>
     <div class="navbar-toggle" (click)="toggleNav()">
@@ -91,31 +65,44 @@
   <h1 id="tournamentTitle">Join a Tournament</h1>
 
   <div class="tournament-list">
-    <div class="tournament-card" *ngFor="let t of tournaments">
-      <div class="card-header">
-        <h2>{{ t.name }}</h2>
-        <div class="date">{{ t.date }}</div>
-      </div>
+  <div class="tournament-card" [class.active]="isTournamentJoined(t.id)" *ngFor="let t of tournaments">
+    <div class="card-header">
+      <h2>{{ t.name }}</h2>
+      <div class="date">{{ t.date }}</div>
+    </div>
 
-      <div class="card-body">
-        <div><strong>Location:</strong> {{ t.location }}</div>
-        <div><strong>Meeting Point:</strong> {{ t.meetingPoint }}</div>
-        <div>
-          <strong>Teams:</strong> {{ t.currentTeams }} / {{ t.maxTeams }}
-        </div>
-      </div>
-
-      <div class="card-footer">
-        <button class="tButton" (click)="joinTournament(t.id)">Join</button>
-        <button class="tButton" (click)="toggleDetails(t.id)">Details</button>
-      </div>
-
-      <div class="details-section" [class.expanded]="expandedId === t.id">
-        <div><strong>Rules:</strong> {{ t.rules }}</div>
-        <div><strong>Notes:</strong> {{ t.notes }}</div>
+    <div class="card-body">
+      <div><strong>Location:</strong> {{ t.location }}</div>
+      <div><strong>Meeting Point:</strong> {{ t.meetingPoint }}</div>
+      <div>
+        <strong>Teams:</strong> {{ t.currentTeams }} / {{ t.maxTeams }}
       </div>
     </div>
+
+    <div class="card-footer">
+      <button class="tButton" (click)="joinTournament(t.id, t.currentTeams, t.maxTeams)">
+        {{ isTournamentJoined(t.id) ? 'Leave' : 'Join' }}
+      </button>
+      <button class="tButton" (click)="openDetails(t.id)">Details</button>
+    </div>
   </div>
+</div>
+
+<div id="detailsModal" class="details-modal" [class.visible]="detailsModalVisible">
+  <div class="details-overlay"></div>
+  <div class="details-content">
+    <div id="DetailsPage">
+    <h2 id="DetailsTitle">Details for {{ selectedTournament?.name }}</h2>
+    <h3 id="RulesTitle">Rules</h3>
+    <ul>
+    <li>{{ selectedTournament?.rules }}</li>
+    </ul>
+    <h3 id="NotesTitle">Notes</h3>
+    <p>{{ selectedTournament?.notes }}</p>
+      <button class="tButton" (click)="closeDetails()">Close</button>
+    </div>
+  </div>
+</div>
 </main>
 
 <footer>

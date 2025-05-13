@@ -374,20 +374,19 @@ footer {
     font-family: var(--font);
     border: none;
     border-radius: 5px;
-    color: var(--fg);
+    color: white;
     cursor: pointer;
     transition: var(--transition);
     border-radius: 50px;
 
     &.outline {
-      background-color: transparent;
-      color: var(--accent);
-      border: 2px solid var(--accent);
+     background-color: var(--accent);
+      border: none;
+      border: 2px solid var(--btn-bg);
 
       &:hover {
         background-color: var(--accent);
-        color: var(--btn-bg);
-        border: 2px solid var(--btn-bg);
+        border: 2px solid var(--accent);
       }
     }
 
@@ -397,7 +396,7 @@ footer {
       border: 2px solid var(--btn-bg);
 
       &:hover {
-        background-color: var(--btn-bg);
+        background-color: var(--accent);
         border: 2px solid var(--accent);
       }
 
