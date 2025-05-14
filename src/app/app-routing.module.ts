@@ -17,7 +17,7 @@ const routes: Routes = [
   { path: 'create', component: CreateTournamentComponent},
   { path: 'stats', component: StatshomeComponent},
   { path: 'stats/player', component: StatsplayerComponent},
-  { path: 'website', component: StatssiteComponent},
+  { path: 'stats/website', component: StatssiteComponent},
   { path: 'about', component: AboutComponent},
   { path: 'TermsofService', component: TermsOfServiceComponent},
   { path: 'PrivacyPolicy', component: PrivacyPolicyComponent},

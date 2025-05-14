@@ -379,6 +379,7 @@ html, body {
   .hero-title {
     font-size: 2.5rem;
     font-weight: 700;
+    margin-top: -3rem;
     margin-bottom: 1rem;
     color: var(--accent);
     animation: fadeInTitle $transition ease-in-out both;

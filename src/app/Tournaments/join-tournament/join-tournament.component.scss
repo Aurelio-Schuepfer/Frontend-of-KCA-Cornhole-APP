@@ -37,6 +37,11 @@
     background: #1f1f1f;
     box-shadow: 0 0 15px lime;
   }
+  &:hover {
+    border-color: var(--accent);
+    box-shadow: 0 0 15px var(--accent);
+    transform: scale(1.02);
+  }
 }
 
 #tournamentTitle {
@@ -136,7 +141,35 @@
   overflow-y: auto;
   max-height: 90vh;
 }
+.search-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
 
+  input {
+    width: 100%;
+    max-width: 400px;
+    padding: 0.75rem 1.25rem;
+    border-radius: 999px;
+    border: 2px solid var(--accent);
+    background-color: var(--card-bg);
+    color: var(--fg);
+    font-family: var(--font);
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+
+    &::placeholder {
+      color: var(--fg);
+      opacity: 0.6;
+    }
+
+    &:focus {
+      border-color: lime;
+      box-shadow: 0 0 10px lime;
+    }
+  }
+}
 
 
 

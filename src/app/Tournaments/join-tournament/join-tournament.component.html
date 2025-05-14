@@ -3,40 +3,19 @@
     <div class="header-inner">
       <h1 id="title">KCA Cornhole Tournaments</h1>
     </div>
-  </header>
-
-<div *ngIf="globalAuth.isAuthModalOpen" class="auth-modal">
-  <div class="auth-modal-content">
-    <span class="close-btn" (click)="globalAuth.closeModal()">&times;</span>
-    <h2>{{ globalAuth.isRegisterMode ? 'Registrieren' : 'Login' }}</h2>
-    <form #authForm="ngForm" (ngSubmit)="globalAuth.onSubmit()">
-      <label for="username">{{ globalAuth.isRegisterMode ? 'Benutzername' : 'Benutzername / E-Mail' }}</label>
-      <input id="username" type="text" name="username" [(ngModel)]="globalAuth.loginModel.username" required />
-
-      <ng-container *ngIf="globalAuth.isRegisterMode">
-        <label for="email">E-Mail</label>
-        <input id="email" type="email" name="email" [(ngModel)]="globalAuth.loginModel.email" required />
-      </ng-container>
-
-      <label for="password">Passwort</label>
-      <input id="password" type="password" name="password" [(ngModel)]="globalAuth.loginModel.password" required />
-
-      <ng-container *ngIf="globalAuth.isRegisterMode">
-        <label for="confirmPassword">Passwort wiederholen</label>
-        <input id="confirmPassword" type="password" name="confirmPassword" [(ngModel)]="globalAuth.loginModel.confirmPassword" required />
-      </ng-container>
-
-      <button type="submit">
-        {{ globalAuth.isRegisterMode ? 'Account erstellen' : 'Login' }}
+    <div class="lang-dropdown-global" [class.open]="langDropdownOpen" (mouseleave)="langDropdownOpen = false">
+      <button class="lang-btn" (click)="toggleLangDropdown()" aria-label="Sprache wählen">
+        <img [src]="getFlagUrl(selectedLang)" [alt]="selectedLang" style="height: 1em; vertical-align: middle;" />
+        <span class="arrow">&#9662;</span>
       </button>
-    </form>
-    <div class="register-link">
-      <a href="#" (click)="globalAuth.toggleMode($event)">
-        {{ globalAuth.isRegisterMode ? 'Schon registriert? Hier einloggen' : 'Kein Account? Hier registrieren' }}
-      </a>
+      <ul class="lang-list" *ngIf="langDropdownOpen">
+  <li *ngFor="let lang of languages" (click)="setLang(lang.code)">
+    <img [src]="getFlagUrl(lang.code)" [alt]="lang.label" style="height: 1em; vertical-align: middle;" />
+    {{ lang.label }}
+  </li>
+</ul>
     </div>
-  </div>
-</div>
+  </header>
 
   <nav>
     <div class="navbar-toggle" (click)="toggleNav()">
@@ -45,12 +24,27 @@
       <span></span>
     </div>
     <div class="nav-links" [ngClass]="{ open: isNavOpen }">
-      <button routerLink="/" class="nav-btn">Home</button>
-      <button routerLink="/join" class="nav-btn active">Join Tournament</button>
-      <button routerLink="/create" class="nav-btn">Create Tournament</button>
-      <button routerLink="/stats" class="nav-btn">Statistics</button>
-      <button routerLink="/about" class="nav-btn">About</button>
+      <button routerLink="/" class="nav-btn">{{ t.home }}</button>
+      <button routerLink="/join" class="nav-btn active">{{ t.joinTournament }}</button>
+      <button routerLink="/create" class="nav-btn">{{ t.createTournament }}</button>
+      <button routerLink="/stats" class="nav-btn">{{ t.statistics }}</button>
+      <button routerLink="/about" class="nav-btn">{{ t.about }}</button>
     </div>
+    <div class="auth-buttons">
+  <ng-container *ngIf="!globalAuth.isLoggedIn">
+    <button id="loginBtn" class="sign-buttons" (click)="globalAuth.openLoginModal()">{{ t.login }}</button>
+    <button id="registerBtn" class="sign-buttons outline" (click)="globalAuth.openRegisterModal()">{{ t.register }}</button>
+  </ng-container>
+  <ng-container *ngIf="globalAuth.isLoggedIn">
+    <div class="auth-row">
+      <div class="user-info">
+        <p id="username">{{globalAuth.username}}</p>
+        <span class="status-icon fas fa-user-circle"></span>
+      </div>
+      <button id="logoutBtn" class="sign-buttons outline" (click)="globalAuth.logout()">{{ t.logout }}</button>
+    </div>
+  </ng-container>
+</div>
     <button
       id="toggleTheme"
       title="We recommend Darkmode for the best experience"
@@ -59,57 +53,100 @@
       <span class="switch"></span>
     </button>
   </nav>
+
+  <div *ngIf="globalAuth.isAuthModalOpen" class="auth-modal">
+    <div class="auth-modal-content">
+      <span class="close-btn" (click)="globalAuth.closeModal()">&times;</span>
+      <h2 class="auth-title">{{ globalAuth.isRegisterMode ? t.register : t.login }}</h2>
+      <form #authForm="ngForm" (ngSubmit)="globalAuth.onSubmit()">
+        <label for="username" class="auth-label">{{ globalAuth.isRegisterMode ? t.username : t.usernameOrEmail }}</label>
+        <input id="username" type="text" name="username" [(ngModel)]="globalAuth.loginModel.username" required />
+
+        <ng-container *ngIf="globalAuth.isRegisterMode">
+          <label for="email" class="auth-label">{{ t.email }}</label>
+          <input id="email" type="email" name="email" [(ngModel)]="globalAuth.loginModel.email" required />
+        </ng-container>
+
+        <label for="password" class="auth-label">{{ t.password }}</label>
+        <input id="password" type="password" name="password" [(ngModel)]="globalAuth.loginModel.password" required />
+
+        <ng-container *ngIf="globalAuth.isRegisterMode">
+          <label for="confirmPassword" class="auth-label">{{ t.confirmPassword }}</label>
+          <input id="confirmPassword" type="password" name="confirmPassword" [(ngModel)]="globalAuth.loginModel.confirmPassword" required />
+        </ng-container>
+
+        <button type="submit">
+          {{ globalAuth.isRegisterMode ? t.createAccount : t.login }}
+        </button>
+      </form>
+      <div class="register-link">
+        <a href="#" (click)="globalAuth.toggleMode($event)">
+          {{ globalAuth.isRegisterMode ? t.alreadyAccount : t.noAccount }}
+        </a>
+      </div>
+    </div>
+  </div>
 </div>
 
 <main class="join-tournament-container">
-  <h1 id="tournamentTitle">Join a Tournament</h1>
+  <h1 id="tournamentTitle">{{ t.tournamentTitle }}</h1>
+
+  <div class="search-container">
+      <input
+        type="text"
+        name="tournamentSearch"
+        [(ngModel)]="searchTerm"
+        [placeholder]="t.searchPlaceholder"
+        (input)="onSearch()"
+      />
+    </div>
 
   <div class="tournament-list">
-  <div class="tournament-card" [class.active]="isTournamentJoined(t.id)" *ngFor="let t of tournaments">
-    <div class="card-header">
-      <h2>{{ t.name }}</h2>
-      <div class="date">{{ t.date }}</div>
-    </div>
+    <div class="tournament-card" [class.active]="isTournamentJoined(tour.id)" *ngFor="let tour of filteredTournaments">
+      <div class="card-header">
+        <h2>{{ tour.name }}</h2>
+        <div class="date">{{ tour.date }}</div>
+      </div>
 
-    <div class="card-body">
-      <div><strong>Location:</strong> {{ t.location }}</div>
-      <div><strong>Meeting Point:</strong> {{ t.meetingPoint }}</div>
-      <div>
-        <strong>Teams:</strong> {{ t.currentTeams }} / {{ t.maxTeams }}
+      <div class="card-body">
+        <div><strong>{{ t.location }}:</strong> {{ tour.location }}</div>
+        <div><strong>{{ t.meetingPoint }}:</strong> {{ tour.meetingPoint }}</div>
+        <div>
+          <strong>{{ t.teams }}:</strong> {{ tour.currentTeams }} / {{ tour.maxTeams }}
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <button class="tButton" (click)="joinTournament(tour.id, tour.currentTeams, tour.maxTeams)">
+          {{ isTournamentJoined(tour.id) ? t.leave : t.join }}
+        </button>
+        <button class="tButton" (click)="openDetails(tour.id)">{{ t.details }}</button>
       </div>
     </div>
+  </div>
 
-    <div class="card-footer">
-      <button class="tButton" (click)="joinTournament(t.id, t.currentTeams, t.maxTeams)">
-        {{ isTournamentJoined(t.id) ? 'Leave' : 'Join' }}
-      </button>
-      <button class="tButton" (click)="openDetails(t.id)">Details</button>
+  <div id="detailsModal" class="details-modal" [class.visible]="detailsModalVisible">
+    <div class="details-overlay"></div>
+    <div class="details-content">
+      <div id="DetailsPage">
+        <h2 id="DetailsTitle">{{ t.detailsFor }} {{ selectedTournament?.name }}</h2>
+        <h3 id="RulesTitle">{{ t.rules }}</h3>
+        <ul>
+          <li>{{ selectedTournament?.rules }}</li>
+        </ul>
+        <h3 id="NotesTitle">{{ t.notes }}</h3>
+        <p>{{ selectedTournament?.notes }}</p>
+        <button class="tButton" (click)="closeDetails()">{{ t.close }}</button>
+      </div>
     </div>
   </div>
-</div>
-
-<div id="detailsModal" class="details-modal" [class.visible]="detailsModalVisible">
-  <div class="details-overlay"></div>
-  <div class="details-content">
-    <div id="DetailsPage">
-    <h2 id="DetailsTitle">Details for {{ selectedTournament?.name }}</h2>
-    <h3 id="RulesTitle">Rules</h3>
-    <ul>
-    <li>{{ selectedTournament?.rules }}</li>
-    </ul>
-    <h3 id="NotesTitle">Notes</h3>
-    <p>{{ selectedTournament?.notes }}</p>
-      <button class="tButton" (click)="closeDetails()">Close</button>
-    </div>
-  </div>
-</div>
 </main>
 
 <footer>
   <p>&copy; 2025 KCA Cornhole Tournaments | All Rights Reserved</p>
   <div class="footer-links">
-    <a routerLink="/PrivacyPolicy">Privacy Policy</a> |
-    <a routerLink="/TermsofService">Terms of Service</a> |
-    <a routerLink="/contact">Contact</a>
+    <a routerLink="/PrivacyPolicy">{{ t.privacyPolicy }}</a> |
+    <a routerLink="/TermsofService">{{ t.termsOfService }}</a> |
+    <a routerLink="/contact">{{ t.contact }}</a>
   </div>
 </footer>

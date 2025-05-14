@@ -17,7 +17,6 @@ export class GlobalAuth {
   }
 
   openLoginModal() {
-    // Nur zurücksetzen, wenn Modal geschlossen ist oder im Register-Modus
     if (!this.isAuthModalOpen || this.isRegisterMode) {
       this.isRegisterMode = false;
       this.resetModel();
@@ -26,7 +25,6 @@ export class GlobalAuth {
   }
 
   openRegisterModal() {
-    // Nur zurücksetzen, wenn Modal geschlossen ist oder im Login-Modus
     if (!this.isAuthModalOpen || !this.isRegisterMode) {
       this.isRegisterMode = true;
       this.resetModel();
@@ -43,17 +41,17 @@ export class GlobalAuth {
   onSubmit(successCallback?: () => void, errorCallback?: () => void) {
     if (!this.loginModel.username || !this.loginModel.password ||
       (this.isRegisterMode && (!this.loginModel.email || !this.loginModel.confirmPassword))) {
-      alert('Bitte alle Felder ausfüllen');
+      alert('Every field is required');
       return;
     }
     if (this.isRegisterMode && this.loginModel.password !== this.loginModel.confirmPassword) {
-      alert('Passwörter stimmen nicht überein');
+      alert('Passwords dont match');
       return;
     }
     if (this.isRegisterMode) {
       this.authService.register(this.loginModel).subscribe({
         next: (res) => {
-          alert('Account erfolgreich erstellt');
+          alert('Account succesfully created');
           this.username = res.username;
           this.isLoggedIn = true;
           localStorage.setItem('username', res.username);

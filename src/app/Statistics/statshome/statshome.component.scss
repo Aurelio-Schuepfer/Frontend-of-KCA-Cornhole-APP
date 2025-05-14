@@ -16,6 +16,7 @@
   justify-content: center;
   align-items: center;
   margin-bottom: 2rem;
+  margin-top: -1rem;
 }
 
 .statistics-options {
@@ -51,6 +52,11 @@
     transform: scale(1.03);
     box-shadow: 0 0 20px var(--accent);
   }
+}
+
+footer
+{
+margin-top: 1rem;
 }
 
 .kca-decoration {

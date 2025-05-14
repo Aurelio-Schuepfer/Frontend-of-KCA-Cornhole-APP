@@ -3,40 +3,19 @@
     <div class="header-inner">
       <h1 id="title">KCA Cornhole Tournaments</h1>
     </div>
-  </header>
-
-<div *ngIf="globalAuth.isAuthModalOpen" class="auth-modal">
-  <div class="auth-modal-content">
-    <span class="close-btn" (click)="globalAuth.closeModal()">&times;</span>
-    <h2>{{ globalAuth.isRegisterMode ? 'Registrieren' : 'Login' }}</h2>
-    <form #authForm="ngForm" (ngSubmit)="globalAuth.onSubmit()">
-      <label for="username">{{ globalAuth.isRegisterMode ? 'Benutzername' : 'Benutzername / E-Mail' }}</label>
-      <input id="username" type="text" name="username" [(ngModel)]="globalAuth.loginModel.username" required />
-
-      <ng-container *ngIf="globalAuth.isRegisterMode">
-        <label for="email">E-Mail</label>
-        <input id="email" type="email" name="email" [(ngModel)]="globalAuth.loginModel.email" required />
-      </ng-container>
-
-      <label for="password">Passwort</label>
-      <input id="password" type="password" name="password" [(ngModel)]="globalAuth.loginModel.password" required />
-
-      <ng-container *ngIf="globalAuth.isRegisterMode">
-        <label for="confirmPassword">Passwort wiederholen</label>
-        <input id="confirmPassword" type="password" name="confirmPassword" [(ngModel)]="globalAuth.loginModel.confirmPassword" required />
-      </ng-container>
-
-      <button type="submit">
-        {{ globalAuth.isRegisterMode ? 'Account erstellen' : 'Login' }}
+    <div class="lang-dropdown-global" [class.open]="langDropdownOpen" (mouseleave)="langDropdownOpen = false">
+      <button class="lang-btn" (click)="toggleLangDropdown()" aria-label="Sprache wählen">
+        <img [src]="getFlagUrl(selectedLang)" [alt]="selectedLang" style="height: 1em; vertical-align: middle;" />
+        <span class="arrow">&#9662;</span>
       </button>
-    </form>
-    <div class="register-link">
-      <a href="#" (click)="globalAuth.toggleMode($event)">
-        {{ globalAuth.isRegisterMode ? 'Schon registriert? Hier einloggen' : 'Kein Account? Hier registrieren' }}
-      </a>
+      <ul class="lang-list" *ngIf="langDropdownOpen">
+  <li *ngFor="let lang of languages" (click)="setLang(lang.code)">
+    <img [src]="getFlagUrl(lang.code)" [alt]="lang.label" style="height: 1em; vertical-align: middle;" />
+    {{ lang.label }}
+  </li>
+</ul>
     </div>
-  </div>
-</div>
+  </header>
 
   <nav>
     <div class="navbar-toggle" (click)="toggleNav()">
@@ -45,12 +24,27 @@
       <span></span>
     </div>
     <div class="nav-links" [ngClass]="{ open: isNavOpen }">
-      <button routerLink="/" class="nav-btn">Home</button>
-      <button routerLink="/join" class="nav-btn">Join Tournament</button>
-      <button routerLink="/create" class="nav-btn">Create Tournament</button>
-      <button routerLink="/stats" class="nav-btn">Statistics</button>
-      <button routerLink="/about" class="nav-btn active">About</button>
+      <button routerLink="/" class="nav-btn">{{ t.home || 'Home' }}</button>
+      <button routerLink="/join" class="nav-btn">{{ t.joinTournament || 'Join Tournament' }}</button>
+      <button routerLink="/create" class="nav-btn">{{ t.createTournament || 'Create Tournament' }}</button>
+      <button routerLink="/stats" class="nav-btn">{{ t.statistics || 'Statistics' }}</button>
+      <button routerLink="/about" class="nav-btn active">{{ t.about || 'About' }}</button>
     </div>
+    <div class="auth-buttons">
+  <ng-container *ngIf="!globalAuth.isLoggedIn">
+    <button id="loginBtn" class="sign-buttons" (click)="globalAuth.openLoginModal()">{{ t.login }}</button>
+    <button id="registerBtn" class="sign-buttons outline" (click)="globalAuth.openRegisterModal()">{{ t.register }}</button>
+  </ng-container>
+  <ng-container *ngIf="globalAuth.isLoggedIn">
+    <div class="auth-row">
+      <div class="user-info">
+        <p id="username">{{globalAuth.username}}</p>
+        <span class="status-icon fas fa-user-circle"></span>
+      </div>
+      <button id="logoutBtn" class="sign-buttons outline" (click)="globalAuth.logout()">{{ t.logout }}</button>
+    </div>
+  </ng-container>
+</div>
     <button
       id="toggleTheme"
       title="We recommend Darkmode for the best experience"
@@ -59,62 +53,100 @@
       <span class="switch"></span>
     </button>
   </nav>
+
+  <div *ngIf="globalAuth.isAuthModalOpen" class="auth-modal">
+    <div class="auth-modal-content">
+      <span class="close-btn" (click)="globalAuth.closeModal()">&times;</span>
+      <h2 class="auth-title">{{ globalAuth.isRegisterMode ? t.register : t.login }}</h2>
+      <form #authForm="ngForm" (ngSubmit)="globalAuth.onSubmit()">
+        <label for="username" class="auth-label">{{ globalAuth.isRegisterMode ? t.username : t.usernameOrEmail }}</label>
+        <input
+          id="username"
+          class="auth-input"
+          name="username"
+          type="text"
+          [(ngModel)]="globalAuth.loginModel.username"
+          required
+        />
+
+        <ng-container *ngIf="globalAuth.isRegisterMode">
+          <label for="email" class="auth-label">{{ t.email }}</label>
+          <input
+            id="email"
+            class="auth-input"
+            name="email"
+            type="email"
+            [(ngModel)]="globalAuth.loginModel.email"
+            required
+          />
+        </ng-container>
+
+        <label for="password" class="auth-label">{{ t.password }}</label>
+        <input
+          id="password"
+          class="auth-input"
+          name="password"
+          type="password"
+          [(ngModel)]="globalAuth.loginModel.password"
+          required
+        />
+
+        <ng-container *ngIf="globalAuth.isRegisterMode">
+          <label for="confirmPassword" class="auth-label">{{ t.confirmPassword }}</label>
+          <input
+            id="confirmPassword"
+            class="auth-input"
+            name="confirmPassword"
+            type="password"
+            [(ngModel)]="globalAuth.loginModel.confirmPassword"
+            required
+          />
+        </ng-container>
+
+        <button class="LogButton" type="submit">
+          {{ globalAuth.isRegisterMode ? t.createAccount : t.login }}
+        </button>
+      </form>
+      <div class="register-link">
+        <a href="#" id="toggleAuthMode" (click)="globalAuth.toggleMode($event)">
+          {{ globalAuth.isRegisterMode ? t.alreadyAccount : t.noAccount }}
+        </a>
+      </div>
+    </div>
+  </div>
 </div>
 
 <main class="about-page">
   <section class="about-header">
-    <h1>Über KCA Cornhole Tournaments</h1>
-    <p>
-      Willkommen bei <strong>KCA Cornhole Tournaments</strong> – deine
-      Anlaufstelle für spannende und gut organisierte Cornhole-Turniere!
-    </p>
+    <h1>{{ t.aboutTitle }}</h1>
+    <p>{{ t.aboutText }}</p>
   </section>
 
   <section class="founders">
-    <h2>Die Gründer</h2>
+    <h2>{{ t.founders }}</h2>
     <p>
-      <strong>Christian und Andreas Kiefer</strong> sind die Gründer von KCA
-      Cornhole Tournaments. Ihre Leidenschaft für Cornhole führte sie zur
-      Gründung dieses Projekts, um ein echtes Turniererlebnis für alle Spieler
-      zu schaffen. Die beiden Gründer betreiben zudem eine weitere Plattform,
-      die sich auf hochwertige Cornhole-Produkte konzentriert:
-      <a
-        href="https://kca-cornhole.ch"
-        target="_blank"
-        rel="noopener noreferrer"
-        >KCA Cornhole Pro</a
-      >.
+      {{ t.foundersText }}
+      <a href="https://kca-cornhole.ch" target="_blank" rel="noopener noreferrer">{{ t.proLink }}</a>.
     </p>
   </section>
 
   <section class="mission">
-    <h2>Unsere Mission</h2>
-    <p>
-      Unsere Vision ist es, eine lebendige Community rund um das Cornhole-Spiel
-      zu schaffen, in der sich Spieler austauschen, messen und zusammen Spaß
-      haben können. Wir setzen auf einfache, benutzerfreundliche
-      Turnierverwaltung und spannende Events.
-    </p>
+    <h2>{{ t.mission }}</h2>
+    <p>{{ t.missionText }}</p>
   </section>
 
   <section class="community">
-    <h2>Engagement für die Community</h2>
-    <p>
-      Wir sind stolz darauf, zahlreiche Events zu unterstützen und die
-      Cornhole-Szene durch unsere Turniere zu bereichern. Unsere Plattform ist
-      für alle Spieler, ob Anfänger oder Profi, ein Ort der Begegnung und des
-      Wettbewerbs.
-    </p>
+    <h2>{{ t.community }}</h2>
+    <p>{{ t.communityText }}</p>
   </section>
-
   <div class="kca-decoration"></div>
 </main>
 
 <footer>
   <p>&copy; 2025 KCA Cornhole Tournaments | All Rights Reserved</p>
   <div class="footer-links">
-    <a routerLink="/PrivacyPolicy">Privacy Policy</a> |
-    <a routerLink="/TermsofService">Terms of Service</a> |
-    <a routerLink="/contact">Contact</a>
+    <a routerLink="/PrivacyPolicy">{{ t.privacyPolicy || 'Privacy Policy' }}</a> |
+    <a routerLink="/TermsofService">{{ t.termsOfService || 'Terms of Service' }}</a> |
+    <a routerLink="/contact">{{ t.contact || 'Contact' }}</a>
   </div>
 </footer>

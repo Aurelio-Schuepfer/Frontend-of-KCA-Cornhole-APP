@@ -3,40 +3,19 @@
     <div class="header-inner">
       <h1 id="title">KCA Cornhole Tournaments</h1>
     </div>
-  </header>
-
-<div *ngIf="globalAuth.isAuthModalOpen" class="auth-modal">
-  <div class="auth-modal-content">
-    <span class="close-btn" (click)="globalAuth.closeModal()">&times;</span>
-    <h2>{{ globalAuth.isRegisterMode ? 'Registrieren' : 'Login' }}</h2>
-    <form #authForm="ngForm" (ngSubmit)="globalAuth.onSubmit()">
-      <label for="username">{{ globalAuth.isRegisterMode ? 'Benutzername' : 'Benutzername / E-Mail' }}</label>
-      <input id="username" type="text" name="username" [(ngModel)]="globalAuth.loginModel.username" required />
-
-      <ng-container *ngIf="globalAuth.isRegisterMode">
-        <label for="email">E-Mail</label>
-        <input id="email" type="email" name="email" [(ngModel)]="globalAuth.loginModel.email" required />
-      </ng-container>
-
-      <label for="password">Passwort</label>
-      <input id="password" type="password" name="password" [(ngModel)]="globalAuth.loginModel.password" required />
-
-      <ng-container *ngIf="globalAuth.isRegisterMode">
-        <label for="confirmPassword">Passwort wiederholen</label>
-        <input id="confirmPassword" type="password" name="confirmPassword" [(ngModel)]="globalAuth.loginModel.confirmPassword" required />
-      </ng-container>
-
-      <button type="submit">
-        {{ globalAuth.isRegisterMode ? 'Account erstellen' : 'Login' }}
+    <div class="lang-dropdown-global" [class.open]="langDropdownOpen" (mouseleave)="langDropdownOpen = false">
+      <button class="lang-btn" (click)="toggleLangDropdown()" aria-label="Sprache wählen">
+        <img [src]="getFlagUrl(selectedLang)" [alt]="selectedLang" style="height: 1em; vertical-align: middle;" />
+        <span class="arrow">&#9662;</span>
       </button>
-    </form>
-    <div class="register-link">
-      <a href="#" (click)="globalAuth.toggleMode($event)">
-        {{ globalAuth.isRegisterMode ? 'Schon registriert? Hier einloggen' : 'Kein Account? Hier registrieren' }}
-      </a>
+      <ul class="lang-list" *ngIf="langDropdownOpen">
+  <li *ngFor="let lang of languages" (click)="setLang(lang.code)">
+    <img [src]="getFlagUrl(lang.code)" [alt]="lang.label" style="height: 1em; vertical-align: middle;" />
+    {{ lang.label }}
+  </li>
+</ul>
     </div>
-  </div>
-</div>
+  </header>
 
   <nav>
     <div class="navbar-toggle" (click)="toggleNav()">
@@ -45,12 +24,27 @@
       <span></span>
     </div>
     <div class="nav-links" [ngClass]="{ open: isNavOpen }">
-      <button routerLink="/" class="nav-btn">Home</button>
-      <button routerLink="/join" class="nav-btn">Join Tournament</button>
-      <button routerLink="/create" class="nav-btn">Create Tournament</button>
-      <button routerLink="/stats" class="nav-btn">Statistics</button>
-      <button routerLink="/about" class="nav-btn">About</button>
+      <button routerLink="/" class="nav-btn">{{ t.home }}</button>
+      <button routerLink="/join" class="nav-btn">{{ t.joinTournament }}</button>
+      <button routerLink="/create" class="nav-btn">{{ t.createTournament }}</button>
+      <button routerLink="/stats" class="nav-btn">{{ t.statistics }}</button>
+      <button routerLink="/about" class="nav-btn">{{ t.about }}</button>
     </div>
+    <div class="auth-buttons">
+  <ng-container *ngIf="!globalAuth.isLoggedIn">
+    <button id="loginBtn" class="sign-buttons" (click)="globalAuth.openLoginModal()">{{ t.login }}</button>
+    <button id="registerBtn" class="sign-buttons outline" (click)="globalAuth.openRegisterModal()">{{ t.register }}</button>
+  </ng-container>
+  <ng-container *ngIf="globalAuth.isLoggedIn">
+    <div class="auth-row">
+      <div class="user-info">
+        <p id="username">{{globalAuth.username}}</p>
+        <span class="status-icon fas fa-user-circle"></span>
+      </div>
+      <button id="logoutBtn" class="sign-buttons outline" (click)="globalAuth.logout()">{{ t.logout }}</button>
+    </div>
+  </ng-container>
+</div>
     <button
       id="toggleTheme"
       title="We recommend Darkmode for the best experience"
@@ -59,177 +53,169 @@
       <span class="switch"></span>
     </button>
   </nav>
+
+  <div *ngIf="globalAuth.isAuthModalOpen" class="auth-modal">
+    <div class="auth-modal-content">
+      <span class="close-btn" (click)="globalAuth.closeModal()">&times;</span>
+      <h2 class="auth-title">{{ globalAuth.isRegisterMode ? t.register : t.login }}</h2>
+      <form #authForm="ngForm" (ngSubmit)="globalAuth.onSubmit()">
+        <label for="username" class="auth-label">{{ globalAuth.isRegisterMode ? t.username : t.usernameOrEmail }}</label>
+        <input
+          id="username"
+          class="auth-input"
+          name="username"
+          type="text"
+          [(ngModel)]="globalAuth.loginModel.username"
+          required
+        />
+
+        <ng-container *ngIf="globalAuth.isRegisterMode">
+          <label for="email" class="auth-label">{{ t.email }}</label>
+          <input
+            id="email"
+            class="auth-input"
+            name="email"
+            type="email"
+            [(ngModel)]="globalAuth.loginModel.email"
+            required
+          />
+        </ng-container>
+
+        <label for="password" class="auth-label">{{ t.password }}</label>
+        <input
+          id="password"
+          class="auth-input"
+          name="password"
+          type="password"
+          [(ngModel)]="globalAuth.loginModel.password"
+          required
+        />
+
+        <ng-container *ngIf="globalAuth.isRegisterMode">
+          <label for="confirmPassword" class="auth-label">{{ t.confirmPassword }}</label>
+          <input
+            id="confirmPassword"
+            class="auth-input"
+            name="confirmPassword"
+            type="password"
+            [(ngModel)]="globalAuth.loginModel.confirmPassword"
+            required
+          />
+        </ng-container>
+
+        <button class="LogButton" type="submit">
+          {{ globalAuth.isRegisterMode ? t.createAccount : t.login }}
+        </button>
+      </form>
+      <div class="register-link">
+        <a href="#" id="toggleAuthMode" (click)="globalAuth.toggleMode($event)">
+          {{ globalAuth.isRegisterMode ? t.alreadyAccount : t.noAccount }}
+        </a>
+      </div>
+    </div>
+  </div>
 </div>
 
 <main>
   <div class="privacy-policy-container">
-    <h1 class="title">Privacy Policy</h1>
+    <h1 class="title">{{ t.privacyTitle }}</h1>
 
     <section class="intro">
       <p>
-        Effective Date: <strong>{{ effectiveDate }}</strong>
+        {{ t.privacyEffective }}<strong>{{ effectiveDate }}</strong>
       </p>
       <p>
-        At <strong>{{ websiteName }}</strong
-        >, your privacy is of paramount importance to us. This Privacy Policy
-        outlines the types of personal information we collect, how we use it,
-        and the steps we take to protect your data.
+        {{ t.privacyIntro }}
       </p>
     </section>
 
     <section class="section">
-      <h2>1. Information We Collect</h2>
+      <h2>{{ t.privacySection1 }}</h2>
       <p>
-        We collect personal information when you interact with our website,
-        register for tournaments, or create an account. This includes:
+        {{ t.privacySection1Text }}
       </p>
       <ul>
-        <li>
-          <strong>Personal Information:</strong> Name, email address, phone
-          number, and profile details.
-        </li>
-        <li>
-          <strong>Automatic Data Collection:</strong> IP address, browser type,
-          device information, and usage data through cookies and analytics
-          tools.
-        </li>
-        <li>
-          <strong>Payment Information:</strong> Payment details for tournament
-          registration or purchases (processed via third-party payment
-          processors).
-        </li>
+        <li>{{ t.privacySection1List1 }}</li>
+        <li>{{ t.privacySection1List2 }}</li>
+        <li>{{ t.privacySection1List3 }}</li>
       </ul>
     </section>
 
     <section class="section">
-      <h2>2. How We Use Your Data</h2>
-      <p>We use the information we collect for the following purposes:</p>
+      <h2>{{ t.privacySection2 }}</h2>
+      <p>{{ t.privacySection2Text }}</p>
       <ul>
-        <li>
-          <strong>To provide and improve our services:</strong> Organize and
-          manage Cornhole tournaments, create and manage user profiles, send
-          important updates.
-        </li>
-        <li>
-          <strong>For Communication:</strong> To respond to customer service
-          requests, send newsletters or promotional materials (you can opt-out
-          at any time).
-        </li>
-        <li>
-          <strong>For Analytics:</strong> To understand user preferences and
-          improve the website experience.
-        </li>
+        <li>{{ t.privacySection2List1 }}</li>
+        <li>{{ t.privacySection2List2 }}</li>
+        <li>{{ t.privacySection2List3 }}</li>
       </ul>
     </section>
 
     <section class="section">
-      <h2>3. Sharing Your Information</h2>
+      <h2>{{ t.privacySection3 }}</h2>
       <p>
-        We may share your personal data with third-party service providers who
-        assist in the operation of our website and tournaments, including:
+        {{ t.privacySection3Text }}
       </p>
       <ul>
-        <li>
-          <strong>Payment Processors:</strong> For handling tournament
-          registrations and payments.
-        </li>
-        <li>
-          <strong>Analytics Services:</strong> We may use services like Google
-          Analytics to track user behavior on the website.
-        </li>
+        <li>{{ t.privacySection3List1 }}</li>
+        <li>{{ t.privacySection3List2 }}</li>
       </ul>
       <p>
-        We do not sell or rent your personal data to third parties. However, we
-        may disclose your data if required by law or to protect our legal
-        rights.
+        {{ t.privacySection3Text2 }}
       </p>
     </section>
 
     <section class="section">
-      <h2>4. Cookies and Tracking Technologies</h2>
+      <h2>{{ t.privacySection4 }}</h2>
       <p>
-        Our website uses cookies and other tracking technologies to improve user
-        experience. Cookies are small files stored on your device that allow us
-        to track your preferences, login status, and analytics.
+        {{ t.privacySection4Text }}
       </p>
-      <p><strong>Types of Cookies Used:</strong></p>
+      <p><strong>{{ t.privacySection4ListTitle }}</strong></p>
       <ul>
-        <li>Essential cookies for website functionality.</li>
-        <li>Performance cookies for analytics.</li>
-        <li>Functional cookies for remembering user preferences.</li>
+        <li>{{ t.privacySection4List1 }}</li>
+        <li>{{ t.privacySection4List2 }}</li>
+        <li>{{ t.privacySection4List3 }}</li>
       </ul>
       <p>
-        You can disable cookies in your browser settings, but doing so may
-        affect your ability to use some features of the website.
+        {{ t.privacySection4Text2 }}
       </p>
     </section>
 
     <section class="section">
-      <h2>5. Data Security</h2>
+      <h2>{{ t.privacySection5 }}</h2>
       <p>
-        We implement appropriate security measures to protect your personal
-        information from unauthorized access, alteration, or disclosure.
-        However, no data transmission over the internet can be guaranteed to be
-        100% secure. By using our website, you acknowledge that you understand
-        and accept these risks.
+        {{ t.privacySection5Text }}
       </p>
     </section>
 
     <section class="section">
-      <h2>6. Your Rights</h2>
-      <p>You have the following rights regarding your personal data:</p>
+      <h2>{{ t.privacySection6 }}</h2>
+      <p>{{ t.privacySection6Text }}</p>
       <ul>
-        <li>
-          <strong>Access:</strong> You can request access to the personal data
-          we hold about you.
-        </li>
-        <li>
-          <strong>Correction:</strong> You can request corrections to any
-          inaccurate or incomplete data.
-        </li>
-        <li>
-          <strong>Deletion:</strong> You can request that we delete your
-          personal data, subject to any legal obligations we may have to retain
-          it.
-        </li>
-        <li>
-          <strong>Opt-Out:</strong> You can opt out of marketing emails and
-          communications at any time.
-        </li>
+        <li>{{ t.privacySection6List1 }}</li>
+        <li>{{ t.privacySection6List2 }}</li>
+        <li>{{ t.privacySection6List3 }}</li>
+        <li>{{ t.privacySection6List4 }}</li>
       </ul>
+      <p [innerHTML]="t.privacySection6Text2"></p>
+    </section>
+
+    <section class="section">
+      <h2>{{ t.privacySection7 }}</h2>
       <p>
-        To exercise these rights, please contact us at
-        <strong>{{ contactEmail }}</strong
-        >.
+        {{ t.privacySection7Text }}
       </p>
     </section>
 
     <section class="section">
-      <h2>7. Changes to This Privacy Policy</h2>
+      <h2>{{ t.privacySection8 }}</h2>
       <p>
-        We may update this Privacy Policy from time to time to reflect changes
-        in our practices or legal obligations. Any changes will be posted on
-        this page with an updated effective date. Please review this policy
-        periodically for any updates.
-      </p>
-    </section>
-
-    <section class="section">
-      <h2>8. Contact Us</h2>
-      <p>
-        If you have any questions or concerns about this Privacy Policy or how
-        we handle your personal data, please contact us at:
+        {{ t.privacySection8Text }}
       </p>
       <ul>
-        <li>
-          Email: <strong>{{ contactEmail }}</strong>
-        </li>
-        <li>
-          Phone: <strong>{{ contactPhone }}</strong>
-        </li>
-        <li>
-          Address: <strong>{{ contactAddress }}</strong>
-        </li>
+        <li [innerHTML]="t.privacySection8List1"></li>
+        <li [innerHTML]="t.privacySection8List2"></li>
+        <li [innerHTML]="t.privacySection8List3"></li>
       </ul>
     </section>
   </div>
@@ -238,8 +224,8 @@
 <footer>
   <p>&copy; 2025 KCA Cornhole Tournaments | All Rights Reserved</p>
   <div class="footer-links">
-    <a routerLink="/PrivacyPolicy">Privacy Policy</a> |
-    <a routerLink="/TermsofService">Terms of Service</a> |
-    <a routerLink="/contact">Contact</a>
+    <a routerLink="/PrivacyPolicy">{{ t.privacyPolicy }}</a> |
+    <a routerLink="/TermsofService">{{ t.termsOfService }}</a> |
+    <a routerLink="/contact">{{ t.contact }}</a>
   </div>
 </footer>

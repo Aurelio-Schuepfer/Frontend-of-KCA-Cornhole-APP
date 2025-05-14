@@ -1,38 +1,5 @@
 @use 'sass:color';
 
-header {
-  background-color: var(--bg);
-  color: var(--fg);
-  padding: 20px;
-  text-align: center;
-}
-
-#title {
-  margin: 0;
-  font-size: 2.5rem;
-  font-weight: 700;
-}
-
-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: var(--bg);
-  padding: 10px;
-}
-
-.nav-btn {
-  background-color: transparent;
-  color: var(--fg);
-  border: none;
-  padding: 10px 15px;
-  cursor: pointer;
-}
-
-.nav-btn.active {
-  color: var(--accent);
-}
-
 .website-insights {
   padding: 50px 20px;
   text-align: center;
