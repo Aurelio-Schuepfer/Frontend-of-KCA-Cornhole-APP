@@ -323,6 +323,7 @@ main::before {
   font-size: 2rem;
   font-weight: bold;
   color: var(--fg);
+   transition: all 0.3s ease-in-out;
 }
 
 .cornhole-bag::after {
@@ -449,6 +450,7 @@ html, body {
     box-shadow: 0 0 10px rgba(0, 188, 212, 0.05);
     transition: transform $transition, box-shadow $transition;
     animation: fadeInCard $transition ease-in-out both;
+    cursor: pointer;
 
     h3 {
       color: var(--accent);
@@ -463,7 +465,7 @@ html, body {
 
     &:hover {
       transform: scale(1.03);
-      box-shadow: 0 0 20px var(--btn-active);
+      box-shadow: 0 0 20px var(--accent);
     }
   }
 }

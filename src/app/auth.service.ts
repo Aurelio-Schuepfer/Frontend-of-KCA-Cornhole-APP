@@ -17,4 +17,10 @@ export class AuthService {
   register(data: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/Auth/register`, data);
   }
+
+  requestPasswordReset(email: string) {
+    return this.http.post(`${this.baseUrl}/Auth/request-password-reset`, { email });
+  }
 }
+
+

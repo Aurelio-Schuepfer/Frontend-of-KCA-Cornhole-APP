@@ -33,11 +33,9 @@
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              {
-                "glob": "**/*",
-                "input": "src/assets"
-              }
-            ],
+            "src/favicon.ico",
+            "src/assets"
+          ],
             "styles": [
             "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
             "src/styles.scss"
@@ -93,11 +91,9 @@
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              {
-                "glob": "**/*",
-                "input": "src/assets"
-              }
-            ],
+            "src/favicon.ico",
+            "src/assets"
+          ],
             "styles": [
             "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
             "src/styles.scss"

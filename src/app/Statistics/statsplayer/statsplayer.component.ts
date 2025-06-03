@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GlobalAuth } from '../../global-auth';
-
+import { UserProfileService } from '../../user-profile.service'; 
+import { Router } from '@angular/router';
 type LanguageCode = 'de' | 'en' | 'fr' | 'es';
 
 @Component({
@@ -20,7 +21,7 @@ export class StatsplayerComponent implements OnInit {
     { name: 'Tom Wagner', wins: 8, losses: 7, matchesPlayed: 15, points: 198, image: 'https://randomuser.me/api/portraits/men/45.jpg' },
     { name: 'Julia Becker', wins: 15, losses: 0, matchesPlayed: 15, points: 300, image: 'https://randomuser.me/api/portraits/women/32.jpg' },
     { name: 'Kevin Braun', wins: 5, losses: 10, matchesPlayed: 15, points: 145, image: 'https://randomuser.me/api/portraits/men/12.jpg' },
-    { name: 'Sarah Neumann', wins: 10, losses: 5, matchesPlayed: 15, points: 220 },
+    { name: 'Sarah Neumann', wins: 10, losses: 5, matchesPlayed: 15, points: 220,},
     { name: 'Chris Müller', wins: 7, losses: 8, matchesPlayed: 15, points: 174, image: 'https://randomuser.me/api/portraits/men/27.jpg' }
   ];
 
@@ -62,7 +63,18 @@ export class StatsplayerComponent implements OnInit {
       points: 'Punkte',
       privacyPolicy: 'Datenschutz',
       termsOfService: 'Nutzungsbedingungen',
-      contact: 'Kontakt'
+      contact: 'Kontakt',
+      rememberMe: 'Angemeldet bleiben',
+      passwordReset: 'Passwort vergessen?',
+      resetEmailLabel: 'E-Mail für Passwort-Reset',
+      resetSend: 'Reset-Link senden',
+      resetBack: 'Zurück',
+      resetSuccess: 'Bitte prüfe dein E-Mail-Postfach!',
+      passwordChange: 'Passwort ändern',
+      newPassword: 'Neues Passwort',
+      save: 'Speichern',
+      cancel: 'Abbrechen',
+      passwordChanged: 'Passwort geändert!',
     },
     en: {
       home: 'Home',
@@ -89,7 +101,18 @@ export class StatsplayerComponent implements OnInit {
       points: 'Total Points',
       privacyPolicy: 'Privacy Policy',
       termsOfService: 'Terms of Service',
-      contact: 'Contact'
+      contact: 'Contact',
+      rememberMe: 'Remember Me',
+      passwordReset: 'Forgot password?',
+      resetEmailLabel: 'Email for password reset',
+      resetSend: 'Send reset link',
+      resetBack: 'Back',
+      resetSuccess: 'Please check your email inbox!',
+      passwordChange: 'Change password',
+      newPassword: 'New password',
+      save: 'Save',
+      cancel: 'Cancel',
+      passwordChanged: 'Password changed!',
     },
     fr: {
       home: 'Accueil',
@@ -116,7 +139,18 @@ export class StatsplayerComponent implements OnInit {
       points: 'Points',
       privacyPolicy: 'Politique de confidentialité',
       termsOfService: 'Conditions d\'utilisation',
-      contact: 'Contact'
+      contact: 'Contact',
+      rememberMe: 'Se souvenir de moi',
+      passwordReset: 'Mot de passe oublié ?',
+      resetEmailLabel: 'E-mail pour réinitialiser le mot de passe',
+      resetSend: 'Envoyer le lien',
+      resetBack: 'Retour',
+      resetSuccess: 'Veuillez vérifier votre boîte mail !',
+      passwordChange: 'Changer le mot de passe',
+      newPassword: 'Nouveau mot de passe',
+      save: 'Enregistrer',
+      cancel: 'Annuler',
+      passwordChanged: 'Mot de passe changé !',
     },
     es: {
       home: 'Inicio',
@@ -143,20 +177,96 @@ export class StatsplayerComponent implements OnInit {
       points: 'Puntos',
       privacyPolicy: 'Política de privacidad',
       termsOfService: 'Términos de servicio',
-      contact: 'Contacto'
+      contact: 'Contacto',
+      rememberMe: 'Recuérdame',
+      passwordReset: 'Olvidaste tu contraseña?',
+      resetEmailLabel: 'Correo electrónico para restablecer la contraseña',
+      resetSend: 'Enviar enlace',
+      resetBack: 'Atrás',
+      resetSuccess: '¡Por favor revisa tu correo!',
+      passwordChange: 'Cambiar contraseña',
+      newPassword: 'Nueva contraseña',
+      save: 'Guardar',
+      cancel: 'Cancelar',
+      passwordChanged: 'Contraseña cambiada!',
     }
   };
 
   t = this.translations[this.selectedLang];
-  constructor(public globalAuth: GlobalAuth) {}
+ userProfile: any = null;
+  isProfileLoading = false;
+
+  showResetForm = false;
+  resetEmail = '';
+  resetRequested = false;
+
+  constructor(
+    public globalAuth: GlobalAuth,
+    private userProfileService: UserProfileService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
+    // Set default image for players without an image
+    this.players = this.players.map(player => ({
+      ...player,
+      image: player.image || 'assets/images/default-profile.png'
+    }));
+    this.filteredPlayers = this.players;
+
     this.setInitialTheme();
     const saved = localStorage.getItem('lang');
     if (saved && ['de', 'en', 'fr', 'es'].includes(saved)) {
       this.selectedLang = saved as LanguageCode;
     }
     this.applyTranslations();  
+      this.loadUserProfile(); 
+  }
+
+  // Profil laden
+  loadUserProfile() {
+    this.isProfileLoading = true;
+    this.userProfileService.getProfile().subscribe({
+      next: data => {
+        this.userProfile = data;
+        this.isProfileLoading = false;
+      },
+      error: () => {
+        this.isProfileLoading = false;
+      }
+    });
+  }
+
+  // Profil speichern (z.B. nach Bearbeitung)
+  saveUserProfile(updated: { name: string; email: string; image?: File }) {
+    this.isProfileLoading = true;
+    this.userProfileService.updateProfile(updated).subscribe({
+      next: data => {
+        this.userProfile = data;
+        this.isProfileLoading = false;
+        alert('Profil saved!');
+      },
+      error: () => {
+        this.isProfileLoading = false;
+        alert('Error Saving!');
+      }
+    });
+  }
+
+   goToProfile() {
+    this.router.navigate(['/profile']);
+  }
+
+  requestReset() {
+    if (!this.resetEmail) return;
+    this.userProfileService.requestPasswordReset(this.resetEmail).subscribe({
+      next: () => {
+        this.resetRequested = true;
+      },
+      error: () => {
+        alert('Error sending the request link please check the Email');
+      }
+    });
   }
 
   toggleTheme() {
@@ -170,6 +280,10 @@ export class StatsplayerComponent implements OnInit {
     } else {
       body.classList.remove('light-mode');
     }
+  }
+
+  get isDarkMode(): boolean {
+    return !document.body.classList.contains('light-mode');
   }
 
   setInitialTheme() {

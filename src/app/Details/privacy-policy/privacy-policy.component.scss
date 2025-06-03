@@ -9,7 +9,7 @@
 
   .title {
     text-align: center;
-    font-size: 2.5rem;
+    font-size: clamp(1.7rem, 5vw, 2.5rem);
     color: var(--accent);
     margin-bottom: 2rem;
   }
@@ -19,14 +19,14 @@
     margin-bottom: 2rem;
 
     h2 {
-      font-size: 1.8rem;
+      font-size: clamp(1.1rem, 4vw, 1.8rem);
       color: var(--accent);
       margin-bottom: 1rem;
     }
 
     p,
     ul {
-      font-size: 1rem;
+      font-size: clamp(0.97rem, 2.5vw, 1.1rem);
       line-height: 1.6;
       color: var(--fg);
     }
@@ -43,21 +43,80 @@
   footer {
     text-align: center;
     margin-top: 3rem;
-    font-size: 1rem;
+    font-size: clamp(0.9rem, 2vw, 1rem);
     color: var(--fg);
   }
 }
 
-@media (max-width: 768px) {
+// Verbesserte Skalierung für Tablets und kleine Geräte
+@media (max-width: 900px) {
   .privacy-policy-container {
-    padding: 1.5rem;
+    padding: 1.2rem;
+    max-width: 98vw;
+  }
+}
+
+@media (max-width: 700px) {
+  .privacy-policy-container {
+    padding: 1rem 0.5rem;
+    max-width: 100vw;
   }
 
   .title {
-    font-size: 2rem;
+    font-size: clamp(1.1rem, 6vw, 1.7rem);
+    margin-bottom: 1.2rem;
   }
 
-  .section h2 {
-    font-size: 1.6rem;
+  .intro,
+  .section {
+    margin-bottom: 1.2rem;
+
+    h2 {
+      font-size: clamp(1rem, 6vw, 1.2rem);
+      margin-bottom: 0.7rem;
+    }
+
+    p,
+    ul {
+      font-size: clamp(0.9rem, 3vw, 1rem);
+    }
+  }
+
+  footer {
+    margin-top: 2rem;
+    font-size: clamp(0.85rem, 2vw, 0.95rem);
+  }
+}
+
+// Extra für sehr kleine Geräte (z.B. 520px und kleiner)
+@media (max-width: 520px) {
+  .privacy-policy-container {
+    padding: 0.5rem 0.1rem;
+    max-width: 100vw;
+  }
+
+  .title {
+    font-size: clamp(1rem, 8vw, 1.3rem);
+    margin-bottom: 1rem;
+  }
+
+  .intro,
+  .section {
+    margin-bottom: 0.8rem;
+
+    h2 {
+      font-size: clamp(0.95rem, 7vw, 1.1rem);
+      margin-bottom: 0.5rem;
+    }
+
+    p,
+    ul {
+      font-size: clamp(0.85rem, 4vw, 0.97rem);
+    }
+  }
+
+  footer {
+    margin-top: 1.2rem;
+    font-size: clamp(0.8rem, 3vw, 0.9rem);
   }
 }

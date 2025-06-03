@@ -34,7 +34,7 @@
 }
  &.active {
     border-color: lime;
-    background: #1f1f1f;
+    background: var(--bg);
     box-shadow: 0 0 15px lime;
   }
   &:hover {
@@ -118,13 +118,14 @@
 }
 
 .details-overlay {
-   position: fixed;  
+  position: fixed;  
   top: 0;
-  left: -37%;
+  left: -35%;
   width: 200%;
   height: 100%;
   background: rgba(0, 0, 0, 0.7);
-  z-index: 1;  
+  z-index: 1;
+  display: flex;
 }
 
 .details-content {
@@ -140,6 +141,7 @@
   transition: all 0.3s ease;
   overflow-y: auto;
   max-height: 90vh;
+  left: 4%;
 }
 .search-container {
   display: flex;
@@ -170,6 +172,301 @@
     }
   }
 }
+
+#DetailsTitle {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: var(--accent);
+}
+
+#RuleList {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  color: var(--fg);
+}
+
+.TournamentRegister
+{
+  margin-top: 10rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-size: 1.2rem;
+  color: var(--fg);
+  gap: 1rem;
+  margin-bottom: 24rem;
+}
+
+.info-icon {
+  display: inline-block;
+  margin-left: 0.4rem;
+  color: var(--accent);
+  position: relative;
+  cursor: pointer;
+  font-size: 1.1em;
+  vertical-align: middle;
+
+  i {
+    pointer-events: none;
+  }
+
+  .privacy-tooltip {
+    display: none;
+    position: absolute;
+    left: 120%;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--btn-bg);
+    color: var(--fg);
+    border: 1px solid var(--accent);
+    border-radius: 0.7rem;
+    padding: 0.6rem 1rem;
+    font-size: 0.97rem;
+    min-width: 180px;
+    max-width: 260px;
+    z-index: 10;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.13);
+    white-space: normal;
+    line-height: 1.4;
+  }
+
+  .privacy-tooltip.small {
+    min-width: 200px;
+    max-width: 300px;
+    padding: 0.5rem 0.7rem;
+    font-size: 0.93rem;
+  }
+
+  &:hover .privacy-tooltip,
+  &:focus .privacy-tooltip {
+    display: block;
+  }
+}
+
+.form-input {
+  width: 100%;
+  max-width: 400px;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+  background-color: var(--bg);
+  color: var(--accent);
+  border: 2px solid var(--accent);
+  border-radius: 0.5rem;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+
+  &::placeholder {
+    color: var(--fg);
+  }
+
+  &:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px var(--accent);
+  }
+}
+
+#JoinTournamentButton {
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--fg);
+  background-color: var(--accent);
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.single-tournament-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 70vh;
+  padding: 2rem 0 6rem 0;
+  background: var(--bg);
+  color: var(--fg);
+  animation: fadeIn 0.4s;
+}
+
+.single-tournament-card {
+  background: var(--btn-bg);
+  border: 2px solid var(--accent);
+  border-radius: 1.5rem;
+  box-shadow: 0 0 20px var(--accent);
+  padding: 2.5rem 2rem 2rem 2rem;
+  max-width: 600px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  position: relative;
+}
+
+.tournament-image {
+  width: 100%;
+  max-width: 420px;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 1rem;
+  border: 2px solid var(--accent);
+  box-shadow: 0 0 10px var(--accent);
+  margin-bottom: 1rem;
+}
+
+.single-tournament-info {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  font-size: 1.1rem;
+}
+
+.single-tournament-info h1 {
+  font-size: 2.2rem;
+  color: var(--accent);
+  margin-bottom: 0.2rem;
+}
+
+.single-tournament-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.2rem;
+  width: 100%;
+  justify-content: flex-end;
+}
+
+.back-btn {
+  align-self: flex-start;
+  margin-bottom: 1.5rem;
+  background: none;
+  border: none;
+  color: var(--accent);
+  font-size: 1.1rem;
+  cursor: pointer;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.back-btn:hover {
+  color: lime;
+}
+
+.fade-in {
+  animation: fadeIn 0.8s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.participants-section {
+  width: 100%;
+  margin-top: 2.5rem;
+  background: none;
+  padding: 0;
+}
+.participants-title {
+  color: var(--accent);
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  letter-spacing: 1px;
+}
+.participants-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+  justify-content: flex-start;
+}
+.participant {
+  display: flex;
+  align-items: center;
+  background: var(--btn-bg);
+  border-radius: 0.7rem;
+  padding: 0.5rem 1.1rem 0.5rem 0.5rem;
+  box-shadow: 0 0 6px var(--accent);
+  min-width: 170px;
+  max-width: 220px;
+  margin-bottom: 0.5rem;
+}
+.participant-image {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--accent);
+  margin-right: 0.7rem;
+  background: #e3f2fd;
+}
+.participant-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+.participant-name {
+  font-weight: 600;
+  color: var(--fg);
+  font-size: 1rem;
+}
+.participant-team {
+  font-size: 0.95rem;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.image-modal {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.image-modal-backdrop {
+  position: absolute;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.7);
+  z-index: 1;
+}
+.image-modal-content {
+  position: relative;
+  z-index: 2;
+  background: var(--bg);
+  border-radius: 1.2rem;
+  padding: 2rem;
+  box-shadow: 0 0 30px var(--accent);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.image-modal-content img {
+  max-width: 80vw;
+  max-height: 70vh;
+  border-radius: 1rem;
+  box-shadow: 0 0 20px var(--accent);
+}
+.close-image-btn {
+  position: absolute;
+  top: 1.2rem;
+  right: 1.2rem;
+  font-size: 2.2rem;
+  background: none;
+  border: none;
+  color: var(--accent);
+  cursor: pointer;
+  font-weight: bold;
+  z-index: 3;
+  transition: color 0.2s;
+}
+.close-image-btn:hover {
+  color: var(--accent);
+}
+
 
 
 

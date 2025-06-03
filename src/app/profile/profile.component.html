@@ -30,6 +30,7 @@
 </ul>
     </div>
   </header>
+
   <nav>
     <div class="navbar-toggle" (click)="toggleNav()">
       <span></span>
@@ -37,8 +38,8 @@
       <span></span>
     </div>
     <div class="nav-links" [ngClass]="{ open: isNavOpen }">
-      <button routerLink="/" class="nav-btn">{{ t.home }}</button>
-      <button routerLink="/join" class="nav-btn  active">{{ t.joinTournament }}</button>
+      <button routerLink="/" class="nav-btn active">{{ t.home }}</button>
+      <button routerLink="/join" class="nav-btn">{{ t.joinTournament }}</button>
       <button routerLink="/create" class="nav-btn">{{ t.createTournament }}</button>
       <button routerLink="/stats" class="nav-btn">{{ t.statistics }}</button>
       <button routerLink="/about" class="nav-btn">{{ t.about }}</button>
@@ -189,122 +190,114 @@
 </div>
 
 <main>
-  <section *ngIf="showTournamentView && selectedTournament" class="single-tournament-view">
-    <button class="back-btn tButton" (click)="closeTournamentView()">&larr; {{ t.back || 'Back' }}</button>
-    <div class="single-tournament-card">
-      <img class="tournament-image" [src]="selectedTournamentImage" alt="Tournament Image" (click)="openImageModal()" style="cursor:pointer" />
-      <div class="single-tournament-info">
-        <h1>{{ selectedTournament.name }}</h1>
-        <div class="date">{{ selectedTournament.date }}</div>
-        <div><strong>{{ t.location }}:</strong> {{ selectedTournament.location }}</div>
-        <div><strong>{{ t.meetingPoint }}:</strong> {{ selectedTournament.meetingPoint }}</div>
-        <div><strong>{{ t.teams }}:</strong> {{ selectedTournament.currentTeams }} / {{ selectedTournament.maxTeams }}</div>
-        <div><strong>{{ t.Formattitle }}:</strong> {{ selectedTournament.format }}</div>
-        <div><strong>{{ t.rules }}:</strong> {{ selectedTournament.rules }}</div>
-        <div><strong>{{ t.notes }}:</strong> {{ selectedTournament.notes }}</div>
-      </div>
-      <div class="single-tournament-actions">
-        <button *ngIf="globalAuth.isLoggedIn" class="tButton" (click)="joinTournament(selectedTournament.id, selectedTournament.currentTeams, selectedTournament.maxTeams)">
-          {{ isTournamentJoined(selectedTournament.id) ? t.leave : t.join }}
+  <div class="profile-container" *ngIf="userProfile">
+    <div class="profile-main">
+      <div class="profile-avatar-block">
+        <img
+          class="profile-avatar"
+          [src]="userProfile.imageUrl || 'assets/images/default-profile.png'"
+          alt="Profilbild"
+        />
+        <button class="edit-btn" title="{{ t.changeProfileImage || 'Profilbild ändern' }}" (click)="avatarInput.click()">
+          <span class="material-icons">edit</span>
         </button>
-        <button *ngIf="!globalAuth.isLoggedIn" class="tButton outline" (click)="globalAuth.openLoginModal()">
-          {{ t.loginToJoin }}
-        </button>
+        <input #avatarInput type="file" accept="image/*" (change)="onImageChange($event)" hidden />
       </div>
-      <div class="participants-section">
-        <h3 class="participants-title">t.Particitant</h3>
-        <div class="participants-list">
-          <div class="participant" *ngFor="let player of players">
-            <img [src]="player.image" alt="{{player.name}}" class="participant-image" />
-            <div class="participant-info">
-              <span class="participant-name">{{player.name}}</span>
-              <span class="participant-team">{{player.team}}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="image-modal" *ngIf="showImageModal">
-      <div class="image-modal-backdrop" (click)="closeImageModal()"></div>
-      <div class="image-modal-content">
-        <img [src]="selectedTournamentImage" alt="Tournament Large" />
-        <button class="close-image-btn tButton" (click)="closeImageModal()">&times;</button>
-      </div>
-    </div>
-  </section>
-  <section class="join-tournament-container" *ngIf="!isTournamentRegisterOpen && !showTournamentView"
-    [class.fade-in]="showTournamentListFade">
-    <h1 id="tournamentTitle">{{ t.tournamentTitle }}</h1>
-    <div class="search-container">
-      <input
-        type="text"
-        name="tournamentSearch"
-        [(ngModel)]="searchTerm"
-        [placeholder]="t.searchPlaceholder"
-        (input)="onSearch()"
-      />
-    </div>
-    <div class="tournament-list">
-      <div class="tournament-card" [class.active]="isTournamentJoined(tour.id)" *ngFor="let tour of filteredTournaments" (click)="openTournamentView(tour)">
-        <div class="card-header">
-          <h2>{{ tour.name }}</h2>
-          <div class="date">{{ tour.date }}</div>
-        </div>
-
-        <div class="card-body">
-          <div><strong>{{ t.location }}:</strong> {{ tour.location }}</div>
-          <div><strong>{{ t.meetingPoint }}:</strong> {{ tour.meetingPoint }}</div>
-          <div>
-            <strong>{{ t.teams }}:</strong> {{ tour.currentTeams }} / {{ tour.maxTeams }}
-          </div>
-          <div><strong>{{ t.Formattitle }}:</strong> {{ tour.format }}</div>
-        </div>
-
-        <div class="card-footer">
-          <button *ngIf="globalAuth.isLoggedIn" class="tButton" (click)="$event.stopPropagation(); joinTournament(tour.id, tour.currentTeams, tour.maxTeams)">
-            {{ isTournamentJoined(tour.id) ? t.leave : t.join }}
+      <div class="profile-info-block">
+        <div class="profile-row">
+          <span class="profile-label">{{ t.username }}</span>
+          <span *ngIf="!editName" class="profile-value">{{ userProfile.name }}</span>
+          <input *ngIf="editName" [(ngModel)]="userProfile.name" class="profile-input" [placeholder]="t.username" />
+          <button class="edit-btn" (click)="editName = !editName" [title]="t.editName || 'Name ändern'">
+            <span class="material-icons">{{ editName ? 'check' : 'edit' }}</span>
           </button>
-          <button *ngIf="globalAuth.isLoggedIn" class="tButton" (click)="$event.stopPropagation(); openDetails(tour.id)">{{ t.details }}</button>
-          <button *ngIf="!globalAuth.isLoggedIn" class="tButton outline" (click)="$event.stopPropagation(); globalAuth.openLoginModal()">
-            {{ t.loginToJoin }}
+        </div>
+        <div class="profile-row">
+          <span class="profile-label">{{ t.email }}</span>
+          <span *ngIf="!editEmail" class="profile-value">{{ userProfile.email }}</span>
+          <input *ngIf="editEmail" [(ngModel)]="userProfile.email" class="profile-input" type="email" [placeholder]="t.email" />
+          <button class="edit-btn" (click)="editEmail = !editEmail" [title]="t.editEmail || 'E-Mail ändern'">
+            <span class="material-icons">{{ editEmail ? 'check' : 'edit' }}</span>
+          </button>
+        </div>
+        <div class="profile-row">
+          <span class="profile-label">{{ t.password }}</span>
+          <span class="profile-value">********</span>
+          <button class="edit-btn" (click)="showChangePw = !showChangePw" [title]="t.passwordChange">
+            <span class="material-icons">lock_reset</span>
+          </button>
+        </div>
+        <div class="profile-row bio-row">
+          <span class="profile-label">{{ t.bio }}</span>
+          <span *ngIf="!editBio" class="profile-value bio-text">{{ userProfile.bio }}</span>
+          <textarea *ngIf="editBio" [(ngModel)]="userProfile.bio" class="bio-input" [placeholder]="t.bio"></textarea>
+          <button class="edit-btn" (click)="editBio = !editBio" [title]="t.editBio || 'Biographie ändern'">
+            <span class="material-icons">{{ editBio ? 'check' : 'edit' }}</span>
           </button>
         </div>
       </div>
     </div>
 
-    <div id="detailsModal" class="details-modal" [class.visible]="detailsModalVisible">
-      <div class="details-overlay"></div>
-      <div class="details-content">
-        <div id="DetailsPage">
-          <h2 id="DetailsTitle">{{ t.detailsFor }} {{ selectedTournament?.name }}</h2>
-          <h3 id="RulesTitle">{{ t.rules }}</h3>
-          <ul id="RuleList">
-            <li>{{ selectedTournament?.rules }}</li>
-          </ul>
-          <h3 id="NotesTitle">{{ t.notes }}</h3>
-          <p>{{ selectedTournament?.notes }}</p>
-          <button class="tButton" (click)="closeDetails()">{{ t.close }}</button>
+    <div *ngIf="showChangePw" class="change-pw-form">
+      <div class="pw-edit-row">
+        <input
+          type="password"
+          [(ngModel)]="newPassword"
+          [placeholder]="t.newPassword"
+          class="profile-input"
+          name="newPassword"
+          required
+          style="flex:1; min-width:0;"
+        />
+        <button (click)="changePassword()" type="button" class="profile-btn save-btn" [title]="t.save">
+          <span class="material-icons">check</span>
+        </button>
+        <button (click)="showChangePw = false" type="button" class="profile-btn outline cancel-btn" [title]="t.cancel">
+          <span class="material-icons">close</span>
+        </button>
+      </div>
+      <div *ngIf="pwChanged" class="reset-success">{{ t.passwordChanged }}</div>
+    </div>
+
+    <div class="profile-stats">
+      <h3>{{ t.statistics }}</h3>
+      <div class="stats-row">
+        <div class="stat-card">
+          <span class="stat-label">{{ t.gamesPlayed }}</span>
+          <span class="stat-value">{{ userProfile.gamesPlayed || 0 }}</span>
+          <span class="stat-desc">{{ t.statsLabels.gamesPlayed }}</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">{{ t.matchesWon }}</span>
+          <span class="stat-value">{{ userProfile.matchesWon || 0 }}</span>
+          <span class="stat-desc">{{ t.statsLabels.matchesWon }}</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">{{ t.matchesLost }}</span>
+          <span class="stat-value">{{ userProfile.matchesLost || 0 }}</span>
+          <span class="stat-desc">{{ t.statsLabels.matchesLost }}</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">{{ t.points }}</span>
+          <span class="stat-value">{{ userProfile.points || 0 }}</span>
+          <span class="stat-desc">{{ t.statsLabels.points }}</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">{{ t.winRate }}</span>
+          <span class="stat-value">{{ userProfile.winRate || 0 }}%</span>
+          <span class="stat-desc">{{ t.statsLabels.winRate }}</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">{{ t.partner }}</span>
+          <span class="stat-value">{{ userProfile.partner || '-' }}</span>
+          <span class="stat-desc">{{ t.statsLabels.partner }}</span>
         </div>
       </div>
     </div>
-  </section>
-  <section *ngIf="isTournamentRegisterOpen" class="TournamentRegister">
-    <button class="back-btn tButton" (click)="backFromTeamName()">&larr; {{ t.back || 'Back' }}</button>
-    <label for="tournamentTeamName">
-      {{ t.TeamName }}
-      <span class="info-icon" tabindex="0">
-        <i class="fa fa-info-circle"></i>
-        <span class="privacy-tooltip small">
-          {{ t.TeamNameInfo }}
-        </span>
-      </span>
-    </label>
-    <input id="tournamentTeamName" name="teamname" type="text" class="form-input" required />
-    <button id="JoinTournamentButton" (click)="joinTournamentfinish()">
-      {{t.join}}
-    </button>
-  </section>
+  </div>
 </main>
+
+<app-spinner *ngIf="isLoading"></app-spinner>
 
 <footer>
   <p>&copy; 2025 KCA Cornhole Tournaments | All Rights Reserved</p>
@@ -314,5 +307,3 @@
     <a routerLink="/contact">{{ t.contact }}</a>
   </div>
 </footer>
-
-

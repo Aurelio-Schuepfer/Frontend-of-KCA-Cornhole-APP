@@ -75,15 +75,20 @@ margin-top: 1rem;
     color: var(--fg);
     box-shadow: 0 0 20px cyan;
     animation: floaty 3s ease-in-out infinite;
+    transition: all 0.3s ease-in-out;
   }
-  
+
   .kca-decoration::before {
     content: 'KCA';
     font-weight: bold;
-    font-size: 4rem;
+    font-size: 4.5rem;
     letter-spacing: 0.1rem;
   }
-  
+
+  .kca-decoration:hover {
+    box-shadow: 0 0 30px cyan;
+  }
+
   @keyframes floaty {
     0%, 100% {
       transform: translateY(0px);

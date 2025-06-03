@@ -15,6 +15,8 @@ import { PrivacyPolicyComponent } from './Details/privacy-policy/privacy-policy.
 import { TermsOfServiceComponent } from './Details/terms-of-service/terms-of-service.component';
 import { ContactComponent } from './Details/contact/contact.component';
 import { HttpClientModule } from '@angular/common/http';
+import { SpinnerComponent } from './spinner/spinner.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,9 @@ import { HttpClientModule } from '@angular/common/http';
     AboutComponent,
     PrivacyPolicyComponent,
     TermsOfServiceComponent,
-    ContactComponent, 
+    ContactComponent,
+    SpinnerComponent,
+    ProfileComponent, 
   ],
   imports: [
     BrowserModule,

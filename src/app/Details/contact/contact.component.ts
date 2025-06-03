@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { GlobalAuth } from '../../global-auth';
+import { UserProfileService } from '../../user-profile.service'; 
+import { Router } from '@angular/router';
 
 type LanguageCode = 'de' | 'en' | 'fr' | 'es';
 @Component({
@@ -59,7 +61,18 @@ export class ContactComponent {
       contactAddress: 'Musterstraße 123, 12345 Musterstadt',
       privacyPolicy: 'Datenschutz',
       termsOfService: 'Nutzungsbedingungen',
-      contact: 'Kontakt'
+      contact: 'Kontakt',
+      rememberMe: 'Angemeldet bleiben',
+      passwordReset: 'Passwort vergessen?',
+      resetEmailLabel: 'E-Mail für Passwort-Reset',
+      resetSend: 'Reset-Link senden',
+      resetBack: 'Zurück',
+      resetSuccess: 'Bitte prüfe dein E-Mail-Postfach!',
+      passwordChange: 'Passwort ändern',
+      newPassword: 'Neues Passwort',
+      save: 'Speichern',
+      cancel: 'Abbrechen',
+      passwordChanged: 'Passwort geändert!',
     },
     en: {
       home: 'Home',
@@ -97,7 +110,18 @@ export class ContactComponent {
       contactAddress: 'Musterstraße 123, 12345 Musterstadt',
       privacyPolicy: 'Privacy Policy',
       termsOfService: 'Terms of Service',
-      contact: 'Contact'
+      contact: 'Contact',
+      rememberMe: 'Remember Me',
+      passwordReset: 'Forgot password?',
+      resetEmailLabel: 'Email for password reset',
+      resetSend: 'Send reset link',
+      resetBack: 'Back',
+      resetSuccess: 'Please check your email inbox!',
+      passwordChange: 'Change password',
+      newPassword: 'New password',
+      save: 'Save',
+      cancel: 'Cancel',
+      passwordChanged: 'Password changed!',
     },
     fr: {
       home: 'Accueil',
@@ -135,7 +159,18 @@ export class ContactComponent {
       contactAddress: 'Musterstraße 123, 12345 Musterstadt',
       privacyPolicy: 'Politique de confidentialité',
       termsOfService: 'Conditions d\'utilisation',
-      contact: 'Contact'
+      contact: 'Contact',
+      rememberMe: 'Se souvenir de moi',
+      passwordReset: 'Mot de passe oublié ?',
+      resetEmailLabel: 'E-mail pour réinitialiser le mot de passe',
+      resetSend: 'Envoyer le lien',
+      resetBack: 'Retour',
+      resetSuccess: 'Veuillez vérifier votre boîte mail !',
+      passwordChange: 'Changer le mot de passe',
+      newPassword: 'Nouveau mot de passe',
+      save: 'Enregistrer',
+      cancel: 'Annuler',
+      passwordChanged: 'Mot de passe changé !',
     },
     es: {
       home: 'Inicio',
@@ -173,13 +208,36 @@ export class ContactComponent {
       contactAddress: 'Musterstraße 123, 12345 Musterstadt',
       privacyPolicy: 'Política de privacidad',
       termsOfService: 'Términos de servicio',
-      contact: 'Contacto'
+      contact: 'Contacto',
+      rememberMe: 'Recuérdame',
+      passwordReset: 'Olvidaste tu contraseña?',
+      resetEmailLabel: 'Correo electrónico para restablecer la contraseña',
+      resetSend: 'Enviar enlace',
+      resetBack: 'Atrás',
+      resetSuccess: '¡Por favor revisa tu correo!',
+      passwordChange: 'Cambiar contraseña',
+      newPassword: 'Nueva contraseña',
+      save: 'Guardar',
+      cancel: 'Cancelar',
+      passwordChanged: 'Contraseña cambiada!',
     }
   };
 
   t = this.translations[this.selectedLang];
 
-    constructor(public globalAuth: GlobalAuth) {}
+   userProfile: any = null;
+  isProfileLoading = false;
+
+  showResetForm = false;
+  resetEmail = '';
+  resetRequested = false;
+
+
+constructor(
+    public globalAuth: GlobalAuth,
+    private userProfileService: UserProfileService,
+    private router: Router
+  ) {}
   ngOnInit(): void {
     this.setInitialTheme();
   const saved = localStorage.getItem('lang');
@@ -187,6 +245,53 @@ export class ContactComponent {
       this.selectedLang = saved as LanguageCode;
     }
     this.applyTranslations();  
+        this.loadUserProfile(); 
+  }
+
+  // Profil laden
+  loadUserProfile() {
+    this.isProfileLoading = true;
+    this.userProfileService.getProfile().subscribe({
+      next: data => {
+        this.userProfile = data;
+        this.isProfileLoading = false;
+      },
+      error: () => {
+        this.isProfileLoading = false;
+      }
+    });
+  }
+
+  goToProfile() {
+    this.router.navigate(['/profile']);
+  }
+  
+  // Profil speichern (z.B. nach Bearbeitung)
+  saveUserProfile(updated: { name: string; email: string; image?: File }) {
+    this.isProfileLoading = true;
+    this.userProfileService.updateProfile(updated).subscribe({
+      next: data => {
+        this.userProfile = data;
+        this.isProfileLoading = false;
+        alert('Profil saved!');
+      },
+      error: () => {
+        this.isProfileLoading = false;
+        alert('Error Saving!');
+      }
+    });
+  }
+
+  requestReset() {
+    if (!this.resetEmail) return;
+    this.userProfileService.requestPasswordReset(this.resetEmail).subscribe({
+      next: () => {
+        this.resetRequested = true;
+      },
+      error: () => {
+        alert('Error sending the request link please check the Email');
+      }
+    });
   }
 
   toggleTheme() {
@@ -200,6 +305,10 @@ export class ContactComponent {
     } else {
       body.classList.remove('light-mode');
     }
+  }
+
+  get isDarkMode(): boolean {
+    return !document.body.classList.contains('light-mode');
   }
 
   setInitialTheme() {

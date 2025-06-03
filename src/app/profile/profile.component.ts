@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { GlobalAuth } from '../global-auth';
 import { UserProfileService } from '../user-profile.service'; 
 import { Router } from '@angular/router';
@@ -7,12 +7,22 @@ import { jwtDecode } from "jwt-decode";
 type LanguageCode = 'de' | 'en' | 'fr' | 'es';
 
 @Component({
-  selector: 'app-home',
+  selector: 'app-profile',
   standalone: false,
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class ProfileComponent implements OnInit {
+  userProfile: any = null;
+  isLoading = false;
+  showChangePw = false;
+  newPassword = '';
+  pwChanged = false;
+  selectedImage: File | undefined = undefined;
+  editName = false;
+  editEmail = false;
+  editBio = false;
+
   isNavOpen = false;
 
   languages = [
@@ -69,6 +79,26 @@ export class HomeComponent implements OnInit {
       save: 'Speichern',
       cancel: 'Abbrechen',
       passwordChanged: 'Passwort geändert!',
+      changeProfileImage: 'Profilbild ändern',
+      editName: 'Name ändern',
+      editEmail: 'E-Mail ändern',
+      editBio: 'Biographie ändern',
+      bio: 'Biographie',
+      gamesPlayed: 'Gespielte Matches',
+      matchesWon: 'Gewonnene Matches',
+      matchesLost: 'Verlorene Matches',
+      points: 'Erspielte Punkte',
+      winRate: 'Siegquote',
+      partner: 'Partner',
+      statsDescription: 'Hier findest du deine wichtigsten Cornhole-Statistiken:',
+      statsLabels: {
+        gamesPlayed: 'Alle Matches, die du gespielt hast.',
+        matchesWon: 'Alle Matches, die du gewonnen hast.',
+        matchesLost: 'Alle Matches, die du verloren hast.',
+        points: 'Alle Punkte, die du insgesamt erzielt hast.',
+        winRate: 'Dein prozentualer Anteil an Siegen.',
+        partner: 'Dein häufigster Spielpartner.'
+      }
     },
     en: {
       home: 'Home',
@@ -113,6 +143,26 @@ export class HomeComponent implements OnInit {
       save: 'Save',
       cancel: 'Cancel',
       passwordChanged: 'Password changed!',
+      changeProfileImage: 'Change profile image',
+      editName: 'Edit name',
+      editEmail: 'Edit email',
+      editBio: 'Edit biography',
+      bio: 'Biography',
+      gamesPlayed: 'Matches Played',
+      matchesWon: 'Matches Won',
+      matchesLost: 'Matches Lost',
+      points: 'Total Points',
+      winRate: 'Win Rate',
+      partner: 'Partner',
+      statsDescription: 'Here are your most important Cornhole statistics:',
+      statsLabels: {
+        gamesPlayed: 'All matches you have played.',
+        matchesWon: 'All matches you have won.',
+        matchesLost: 'All matches you have lost.',
+        points: 'All points you have scored in total.',
+        winRate: 'Your win percentage.',
+        partner: 'Your most frequent partner.'
+      }
     },
     fr: {
       home: 'Accueil',
@@ -157,6 +207,26 @@ export class HomeComponent implements OnInit {
       save: 'Enregistrer',
       cancel: 'Annuler',
       passwordChanged: 'Mot de passe changé !',
+      changeProfileImage: 'Changer la photo de profil',
+      editName: 'Modifier le nom',
+      editEmail: 'Modifier l\'e-mail',
+      editBio: 'Modifier la biographie',
+      bio: 'Biographie',
+      gamesPlayed: 'Parties jouées',
+      matchesWon: 'Matchs gagnés',
+      matchesLost: 'Matchs perdus',
+      points: 'Points marqués',
+      winRate: 'Taux de victoire',
+      partner: 'Partenaire',
+      statsDescription: 'Voici vos statistiques Cornhole les plus importantes :',
+      statsLabels: {
+        gamesPlayed: 'Toutes les parties que vous avez jouées.',
+        matchesWon: 'Toutes les parties que vous avez gagnées.',
+        matchesLost: 'Toutes les parties que vous avez perdues.',
+        points: 'Tous les points que vous avez marqués au total.',
+        winRate: 'Votre pourcentage de victoires.',
+        partner: 'Votre partenaire le plus fréquent.'
+      }
     },
     es: {
       home: 'Inicio',
@@ -200,13 +270,32 @@ export class HomeComponent implements OnInit {
       newPassword: 'Nueva contraseña',
       save: 'Guardar',
       cancel: 'Cancelar',
-      passwordChanged: 'Contraseña cambiada!',
+      passwordChanged: '¡Contraseña cambiada!',
+      changeProfileImage: 'Cambiar imagen de perfil',
+      editName: 'Editar nombre',
+      editEmail: 'Editar correo',
+      editBio: 'Editar biografía',
+      bio: 'Biografía',
+      gamesPlayed: 'Partidas jugadas',
+      matchesWon: 'Partidas ganadas',
+      matchesLost: 'Partidas perdidas',
+      points: 'Puntos conseguidos',
+      winRate: 'Porcentaje de victorias',
+      partner: 'Compañero',
+      statsDescription: 'Aquí están tus estadísticas más importantes de Cornhole:',
+      statsLabels: {
+        gamesPlayed: 'Todas las partidas que has jugado.',
+        matchesWon: 'Todas las partidas que has ganado.',
+        matchesLost: 'Todas las partidas que has perdido.',
+        points: 'Todos los puntos que has conseguido en total.',
+        winRate: 'Tu porcentaje de victorias.',
+        partner: 'Tu compañero más frecuente.'
+      }
     }
   };
 
   t = this.translations[this.selectedLang];
-  
-  userProfile: any = null;
+
   isProfileLoading = false;
 
   showResetForm = false;
@@ -214,12 +303,15 @@ export class HomeComponent implements OnInit {
   resetRequested = false;
 
   username: string = '';
+  email: string = '';
   isLoggedIn: boolean = false;
+
+  @ViewChild('avatarInput') avatarInput!: ElementRef<HTMLInputElement>;
 
   constructor(
     public globalAuth: GlobalAuth,
     private userProfileService: UserProfileService,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -229,49 +321,130 @@ export class HomeComponent implements OnInit {
       this.selectedLang = saved as LanguageCode;
     }
     this.applyTranslations();
-    this.loadUserProfile(); 
 
     const token = localStorage.getItem('token') || sessionStorage.getItem('token');
     if (token) {
       try {
         const decoded: any = jwtDecode(token);
+        console.log('Decoded JWT:', decoded); 
         this.username = decoded['unique_name'] || decoded['name'] || decoded['sub'] || '';
         this.isLoggedIn = true;
+        this.userProfile = {
+          name: decoded['unique_name'] || decoded['name'] || decoded['sub'] || '',
+          email: decoded['email'] || decoded['mail'] || decoded['user_email'] || '', 
+          imageUrl: localStorage.getItem('profileImageUrl') || 'assets/images/default-profile.png',
+          gamesPlayed: decoded['gamesPlayed'] || 0,
+          matchesWon: decoded['matchesWon'] || 0,
+          matchesLost: decoded['matchesLost'] || 0,
+          points: decoded['points'] || 0,
+          winRate: decoded['winRate'] || 0,
+          partner: decoded['partner'] || '',
+          bio: decoded['bio'] || ''
+        };
+        this.userProfileService.getProfile().subscribe({
+          next: data => {
+            console.log('Backend-Profile:', data);
+            let backendEmail = data?.email || data?.mail || data?.user_email;
+            this.userProfile = {
+              ...this.userProfile,
+              ...data,
+              email: backendEmail || this.userProfile.email || 'demo@example.com' 
+            };
+            if (this.userProfile.imageUrl) {
+              localStorage.setItem('profileImageUrl', this.userProfile.imageUrl);
+              this.globalAuth.profileImageUrl = this.userProfile.imageUrl;
+            }
+          },
+          error: () => {}
+        });
       } catch (e) {
         this.username = '';
         this.isLoggedIn = false;
       }
+    } else {
+      const storedImage = localStorage.getItem('profileImageUrl');
+      this.userProfile = {
+        name: 'Demo User',
+        email: 'demo@example.com',
+        imageUrl: storedImage || 'assets/images/default-profile.png',
+        gamesPlayed: 0,
+        matchesWon: 0,
+        matchesLost: 0,
+        points: 0,
+        winRate: 0,
+        partner: '',
+        bio: ''
+      };
+    }
+  }
+  loadProfile() {
+    this.isLoading = true;
+    this.userProfileService.getProfile().subscribe({
+      next: data => {
+        if (!data || !data.name) {
+          this.userProfile = {
+            name: this.username || 'Demo User',
+            email: this.email || 'demo@example.com',
+            imageUrl: localStorage.getItem('profileImageUrl') || 'assets/images/default-profile.png',
+            gamesPlayed: 12,
+            matchesWon: 5,
+            matchesLost: 7,
+            points: 123,
+            winRate: 41,
+            partner: 'Erika Musterfrau',
+            bio: 'Cornhole-Fan seit 2015.'
+          };
+        } else {
+          this.userProfile = data;
+        }
+        this.isLoading = false;
+        if (this.userProfile.imageUrl) {
+          localStorage.setItem('profileImageUrl', this.userProfile.imageUrl);
+          this.globalAuth.profileImageUrl = this.userProfile.imageUrl;
+        }
+      },
+      error: () => {
+        this.userProfile = {
+          name: this.username || 'Demo User',
+          email: this.email || 'demo@example.com',
+          imageUrl: localStorage.getItem('profileImageUrl') || 'assets/images/default-profile.png',
+          gamesPlayed: 12,
+          matchesWon: 5,
+          matchesLost: 7,
+          points: 123,
+          winRate: 41,
+          partner: 'Erika Musterfrau',
+          bio: 'Cornhole-Fan seit 2015.'
+        };
+        this.isLoading = false;
+      }
+    });
+  }
+
+  onImageChange(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      this.selectedImage = file;
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.userProfile.imageUrl = e.target.result;
+        localStorage.setItem('profileImageUrl', e.target.result);
+        this.globalAuth.profileImageUrl = e.target.result;
+      };
+      reader.readAsDataURL(file);
     }
   }
 
-  // Profil laden
-  loadUserProfile() {
-    this.isProfileLoading = true;
-    this.userProfileService.getProfile().subscribe({
-      next: data => {
-        this.userProfile = data;
-        this.isProfileLoading = false;
-      },
-      error: () => {
-        this.isProfileLoading = false;
-      }
-    });
+  saveProfile() {
+    alert('Profil gespeichert! (Demo)');
   }
 
-  // Profil speichern (z.B. nach Bearbeitung)
-  saveUserProfile(updated: { name: string; email: string; image?: File }) {
-    this.isProfileLoading = true;
-    this.userProfileService.updateProfile(updated).subscribe({
-      next: data => {
-        this.userProfile = data;
-        this.isProfileLoading = false;
-        alert('Profil saved!');
-      },
-      error: () => {
-        this.isProfileLoading = false;
-        alert('Error Saving!');
-      }
-    });
+  changePassword() {
+    if (!this.newPassword) return;
+    this.pwChanged = true;
+    this.showChangePw = false;
+    this.newPassword = '';
+    setTimeout(() => this.pwChanged = false, 2000);
   }
 
   requestReset() {
@@ -351,5 +524,6 @@ export class HomeComponent implements OnInit {
     this.username = username;
     this.isLoggedIn = true;
     localStorage.setItem('username', username);
+    this.loadProfile();
   }
 }

@@ -1,5 +1,19 @@
 <div id="HeaderContainer">
   <header>
+    <button type="button" routerLink="/">
+      <img
+        id="logo"
+        *ngIf="!isDarkMode"
+        alt="Logo"
+        src="assets/images/CornholeLogo.png"
+      />
+      <img
+        id="logo"
+        *ngIf="isDarkMode"
+        alt="Logo"
+        src="assets/images/CornholeLogoDarkMode.png"
+      />
+    </button>
     <div class="header-inner">
       <h1 id="title">KCA Cornhole Tournaments</h1>
     </div>
@@ -27,7 +41,7 @@
       <button routerLink="/" class="nav-btn">{{ t.home }}</button>
       <button routerLink="/join" class="nav-btn">{{ t.joinTournament }}</button>
       <button routerLink="/create" class="nav-btn">{{ t.createTournament }}</button>
-      <button routerLink="/stats" class="nav-btn active">{{ t.statistics }}</button>
+      <button routerLink="/stats" class="nav-btn  active">{{ t.statistics }}</button>
       <button routerLink="/about" class="nav-btn">{{ t.about }}</button>
     </div>
     <div class="auth-buttons">
@@ -39,9 +53,34 @@
         <div class="auth-row">
           <div class="user-info">
             <p id="username">{{globalAuth.username}}</p>
-            <span class="status-icon fas fa-user-circle"></span>
+            <button
+            id="profileBtn"
+            class="profile-btn"
+            (click)="goToProfile()"
+            title="Profil"
+            type="button"
+          >
+            <img
+              [src]="globalAuth.profileImageUrl || 'assets/images/default-profile.png'"
+              alt="Profil"
+              class="profile-icon"
+            />
+            </button>
           </div>
-          <button id="registerBtn" class="sign-buttons outline" (click)="globalAuth.logout()">{{ t.logout }}</button>
+          <button id="registerBtn"
+                  class="sign-buttons outline"
+                  *ngIf="globalAuth.isLoggedIn && (selectedLang === 'fr' || selectedLang === 'es')"
+                  [attr.lang-fr]="selectedLang === 'fr' ? true : null"
+                  [attr.lang-es]="selectedLang === 'es' ? true : null"
+                  (click)="globalAuth.logout()">
+            {{ t.logout }}
+          </button>
+          <button id="registerBtn"
+                  class="sign-buttons outline"
+                  *ngIf="globalAuth.isLoggedIn && !(selectedLang === 'fr' || selectedLang === 'es')"
+                  (click)="globalAuth.logout()">
+            {{ t.logout }}
+          </button>
         </div>
       </ng-container>
     </div>
@@ -91,6 +130,10 @@
           required
         />
 
+        <label *ngIf="!showResetForm && !globalAuth.isRegisterMode" class="forgot-link">
+          <a href="#" (click)="showResetForm = true; $event.preventDefault()">{{ t.passwordReset }}</a>
+        </label>
+
         <ng-container *ngIf="globalAuth.isRegisterMode">
           <label for="confirmPassword" class="auth-label">{{ t.confirmPassword }}</label>
           <input
@@ -102,11 +145,41 @@
             required
           />
         </ng-container>
+        <div class="remember-me-row">
+          <label class="remember-me-label">
+            <input
+              type="checkbox"
+              [(ngModel)]="globalAuth.loginModel.rememberMe"
+              name="rememberMe"
+              class="remember-me-checkbox"
+            />
+            <span class="custom-checkbox"></span>
+            {{ t.rememberMe }}
+          </label>
+        </div>
+
+        <div *ngIf="globalAuth.errorMessage" class="auth-error">{{ globalAuth.errorMessage }}</div>
 
         <button class="LogButton" type="submit">
           {{ globalAuth.isRegisterMode ? t.createAccount : t.login }}
         </button>
       </form>
+
+      <div *ngIf="showResetForm && !globalAuth.isRegisterMode" class="reset-form">
+        <label for="resetEmail" class="auth-label">{{ t.resetEmailLabel }}</label>
+        <input
+          id="resetEmail"
+          class="auth-input"
+          name="resetEmail"
+          type="email"
+          [(ngModel)]="resetEmail"
+          required
+        />
+        <button class="LogButton" (click)="requestReset()" type="button">{{ t.resetSend }}</button>
+        <button class="LogButton outline" (click)="showResetForm = false" type="button">{{ t.resetBack }}</button>
+        <div *ngIf="resetRequested" class="reset-success">{{ t.resetSuccess }}</div>
+      </div>
+
       <div class="register-link">
         <a href="#" id="toggleAuthMode" (click)="globalAuth.toggleMode($event)">
           {{ globalAuth.isRegisterMode ? t.alreadyAccount : t.noAccount }}
@@ -132,11 +205,7 @@
 
     <div class="player-cards">
       <div class="player-card" *ngFor="let player of filteredPlayers">
-        <img
-          [src]="player.image || 'assets/images/default-profile.jpg'"
-          alt="Player"
-          class="player-image"
-        />
+        <img [src]="player.image" alt="Player" class="player-image" />
         <div class="player-info">
           <h3>{{ player.name }}</h3>
           <p><strong>{{ t.wins }}:</strong> {{ player.wins }}</p>

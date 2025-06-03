@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GlobalAuth } from '../../global-auth';
-
+import { UserProfileService } from '../../user-profile.service'; 
+import { Router } from '@angular/router';
 type LanguageCode = 'de' | 'en' | 'fr' | 'es';
 @Component({
   selector: 'app-statssite',
@@ -57,7 +58,18 @@ export class StatssiteComponent {
       trustedUsersDesc: 'Nutzer, die unserer Plattform vertrauen und sich regelmäßig einloggen.',
       privacyPolicy: 'Datenschutz',
       termsOfService: 'Nutzungsbedingungen',
-      contact: 'Kontakt'
+      contact: 'Kontakt',
+      rememberMe: 'Angemeldet bleiben',
+      passwordReset: 'Passwort vergessen?',
+      resetEmailLabel: 'E-Mail für Passwort-Reset',
+      resetSend: 'Reset-Link senden',
+      resetBack: 'Zurück',
+      resetSuccess: 'Bitte prüfe dein E-Mail-Postfach!',
+      passwordChange: 'Passwort ändern',
+      newPassword: 'Neues Passwort',
+      save: 'Speichern',
+      cancel: 'Abbrechen',
+      passwordChanged: 'Passwort geändert!',
     },
     en: {
       home: 'Home',
@@ -92,7 +104,18 @@ export class StatssiteComponent {
       trustedUsersDesc: 'Users who trust and regularly log in to our platform.',
       privacyPolicy: 'Privacy Policy',
       termsOfService: 'Terms of Service',
-      contact: 'Contact'
+      contact: 'Contact',
+      rememberMe: 'Remember Me',
+      passwordReset: 'Forgot password?',
+      resetEmailLabel: 'Email for password reset',
+      resetSend: 'Send reset link',
+      resetBack: 'Back',
+      resetSuccess: 'Please check your email inbox!',
+      passwordChange: 'Change password',
+      newPassword: 'New password',
+      save: 'Save',
+      cancel: 'Cancel',
+      passwordChanged: 'Password changed!',
     },
     fr: {
       home: 'Accueil',
@@ -127,7 +150,18 @@ export class StatssiteComponent {
       trustedUsersDesc: 'Utilisateurs qui font confiance à notre plateforme et se connectent régulièrement.',
       privacyPolicy: 'Politique de confidentialité',
       termsOfService: 'Conditions d\'utilisation',
-      contact: 'Contact'
+      contact: 'Contact',
+      rememberMe: 'Se souvenir de moi',
+      passwordReset: 'Mot de passe oublié ?',
+      resetEmailLabel: 'E-mail pour réinitialiser le mot de passe',
+      resetSend: 'Envoyer le lien',
+      resetBack: 'Retour',
+      resetSuccess: 'Veuillez vérifier votre boîte mail !',
+      passwordChange: 'Changer le mot de passe',
+      newPassword: 'Nouveau mot de passe',
+      save: 'Enregistrer',
+      cancel: 'Annuler',
+      passwordChanged: 'Mot de passe changé !',
     },
     es: {
       home: 'Inicio',
@@ -162,13 +196,35 @@ export class StatssiteComponent {
       trustedUsersDesc: 'Usuarios que confían y acceden regularmente a nuestra plataforma.',
       privacyPolicy: 'Política de privacidad',
       termsOfService: 'Términos de servicio',
-      contact: 'Contacto'
+      contact: 'Contacto',
+      rememberMe: 'Recuérdame',
+      passwordReset: 'Olvidaste tu contraseña?',
+      resetEmailLabel: 'Correo electrónico para restablecer la contraseña',
+      resetSend: 'Enviar enlace',
+      resetBack: 'Atrás',
+      resetSuccess: '¡Por favor revisa tu correo!',
+      passwordChange: 'Cambiar contraseña',
+      newPassword: 'Nueva contraseña',
+      save: 'Guardar',
+      cancel: 'Cancelar',
+      passwordChanged: 'Contraseña cambiada!',
     }
   };
 
   t = this.translations[this.selectedLang];
 
-  constructor(public globalAuth: GlobalAuth) {}
+ userProfile: any = null;
+  isProfileLoading = false;
+
+  showResetForm = false;
+  resetEmail = '';
+  resetRequested = false;
+
+  constructor(
+    public globalAuth: GlobalAuth,
+    private userProfileService: UserProfileService,
+    private router: Router
+  ) {}
 
   ngAfterViewInit() {
   const cards = document.querySelectorAll('.insight-card');
@@ -195,6 +251,53 @@ ngOnInit(): void {
       this.selectedLang = saved as LanguageCode;
     }
     this.applyTranslations();  
+      this.loadUserProfile(); 
+  }
+
+  // Profil laden
+  loadUserProfile() {
+    this.isProfileLoading = true;
+    this.userProfileService.getProfile().subscribe({
+      next: data => {
+        this.userProfile = data;
+        this.isProfileLoading = false;
+      },
+      error: () => {
+        this.isProfileLoading = false;
+      }
+    });
+  }
+
+   goToProfile() {
+    this.router.navigate(['/profile']);
+  }
+
+  // Profil speichern (z.B. nach Bearbeitung)
+  saveUserProfile(updated: { name: string; email: string; image?: File }) {
+    this.isProfileLoading = true;
+    this.userProfileService.updateProfile(updated).subscribe({
+      next: data => {
+        this.userProfile = data;
+        this.isProfileLoading = false;
+        alert('Profil saved!');
+      },
+      error: () => {
+        this.isProfileLoading = false;
+        alert('Error Saving!');
+      }
+    });
+  }
+
+  requestReset() {
+    if (!this.resetEmail) return;
+    this.userProfileService.requestPasswordReset(this.resetEmail).subscribe({
+      next: () => {
+        this.resetRequested = true;
+      },
+      error: () => {
+        alert('Error sending the request link please check the Email');
+      }
+    });
   }
 
   toggleTheme() {
@@ -210,6 +313,10 @@ ngOnInit(): void {
     }
   }
 
+  get isDarkMode(): boolean {
+    return !document.body.classList.contains('light-mode');
+  }
+  
   setInitialTheme() {
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'light') {

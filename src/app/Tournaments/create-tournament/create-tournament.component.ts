@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GlobalAuth } from '../../global-auth';
-
+import { UserProfileService } from '../../user-profile.service'; 
+import { Router } from '@angular/router';
 type LanguageCode = 'de' | 'en' | 'fr' | 'es';
 
 @Component({
@@ -22,6 +23,7 @@ export class CreateTournamentComponent implements OnInit {
     teams: '',
     notes: '',
     private: '',
+    format: '',
   };
 
   languages = [
@@ -73,7 +75,21 @@ export class CreateTournamentComponent implements OnInit {
       createTournamentBtn: 'Turnier erstellen',
       privacyPolicy: 'Datenschutz',
       termsOfService: 'Nutzungsbedingungen',
-      contact: 'Kontakt'
+      contact: 'Kontakt',
+      rememberMe: 'Angemeldet bleiben',
+      passwordReset: 'Passwort vergessen?',
+      resetEmailLabel: 'E-Mail für Passwort-Reset',
+      resetSend: 'Reset-Link senden',
+      resetBack: 'Zurück',
+      resetSuccess: 'Bitte prüfe dein E-Mail-Postfach!',
+      passwordChange: 'Passwort ändern',
+      newPassword: 'Neues Passwort',
+      save: 'Speichern',
+      cancel: 'Abbrechen',
+      passwordChanged: 'Passwort geändert!',
+      loginToJoin: 'Melde dich an, um ein Turnier zu erstellen',
+      tournamentFormat: 'Format',
+      tournamentFormatInfo: 'Solo: Nur Einzelspieler. Duo: Zwei Spieler pro Team.',
     },
     en: {
       home: 'Home',
@@ -108,7 +124,21 @@ export class CreateTournamentComponent implements OnInit {
       createTournamentBtn: 'Create Tournament',
       privacyPolicy: 'Privacy Policy',
       termsOfService: 'Terms of Service',
-      contact: 'Contact'
+      contact: 'Contact',
+      rememberMe: 'Remember Me',
+      passwordReset: 'Forgot password?',
+      resetEmailLabel: 'Email for password reset',
+      resetSend: 'Send reset link',
+      resetBack: 'Back',
+      resetSuccess: 'Please check your email inbox!',
+      passwordChange: 'Change password',
+      newPassword: 'New password',
+      save: 'Save',
+      cancel: 'Cancel',
+      passwordChanged: 'Password changed!',
+      loginToJoin: 'Log in to create a tournament',
+      tournamentFormat: 'Format',
+      tournamentFormatInfo: 'Solo: A tournament for individuals. Duo: Two players per team.',
     },
     fr: {
       home: 'Accueil',
@@ -143,7 +173,21 @@ export class CreateTournamentComponent implements OnInit {
       createTournamentBtn: 'Créer le tournoi',
       privacyPolicy: 'Politique de confidentialité',
       termsOfService: 'Conditions d\'utilisation',
-      contact: 'Contact'
+      contact: 'Contact',
+      rememberMe: 'Se souvenir de moi',
+      passwordReset: 'Mot de passe oublié ?',
+      resetEmailLabel: 'E-mail pour réinitialiser le mot de passe',
+      resetSend: 'Envoyer le lien',
+      resetBack: 'Retour',
+      resetSuccess: 'Veuillez vérifier votre boîte mail !',
+      passwordChange: 'Changer le mot de passe',
+      newPassword: 'Nouveau mot de passe',
+      save: 'Enregistrer',
+      cancel: 'Annuler',
+      passwordChanged: 'Mot de passe changé !',
+      loginToJoin: 'Connecte-toi pour créer un tournoi',
+      tournamentFormat: 'Format',
+      tournamentFormatInfo: 'Solo : Joueurs seuls. Duo : Deux joueurs par équipe.',
     },
     es: {
       home: 'Inicio',
@@ -178,13 +222,38 @@ export class CreateTournamentComponent implements OnInit {
       createTournamentBtn: 'Crear torneo',
       privacyPolicy: 'Política de privacidad',
       termsOfService: 'Términos de servicio',
-      contact: 'Contacto'
+      contact: 'Contacto',
+      rememberMe: 'Recuérdame',
+      passwordReset: 'Olvidaste tu contraseña?',
+      resetEmailLabel: 'Correo electrónico para restablecer la contraseña',
+      resetSend: 'Enviar enlace',
+      resetBack: 'Atrás',
+      resetSuccess: '¡Por favor revisa tu correo!',
+      passwordChange: 'Cambiar contraseña',
+      newPassword: 'Nueva contraseña',
+      save: 'Guardar',
+      cancel: 'Cancelar',
+      passwordChanged: 'Contraseña cambiada!',
+      loginToJoin: 'Inicia sesión para crear un torneo',
+      tournamentFormat: 'Formato',
+      tournamentFormatInfo: 'Solo: Solo jugadores individuales. Dúo: Dos jugadores por equipo.',
     }
   };
 
   t = this.translations[this.selectedLang];
 
-  constructor(public globalAuth: GlobalAuth) {}
+   userProfile: any = null;
+  isProfileLoading = false;
+
+  showResetForm = false;
+  resetEmail = '';
+  resetRequested = false;
+
+constructor(
+    public globalAuth: GlobalAuth,
+    private userProfileService: UserProfileService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.setInitialTheme();
@@ -193,6 +262,51 @@ export class CreateTournamentComponent implements OnInit {
       this.selectedLang = saved as LanguageCode;
     }
     this.applyTranslations();  
+      this.loadUserProfile(); 
+  }
+
+  loadUserProfile() {
+    this.isProfileLoading = true;
+    this.userProfileService.getProfile().subscribe({
+      next: data => {
+        this.userProfile = data;
+        this.isProfileLoading = false;
+      },
+      error: () => {
+        this.isProfileLoading = false;
+      }
+    });
+  }
+
+   goToProfile() {
+    this.router.navigate(['/profile']);
+  }
+
+  saveUserProfile(updated: { name: string; email: string; image?: File }) {
+    this.isProfileLoading = true;
+    this.userProfileService.updateProfile(updated).subscribe({
+      next: data => {
+        this.userProfile = data;
+        this.isProfileLoading = false;
+        alert('Profil saved!');
+      },
+      error: () => {
+        this.isProfileLoading = false;
+        alert('Error Saving!');
+      }
+    });
+  }
+
+  requestReset() {
+    if (!this.resetEmail) return;
+    this.userProfileService.requestPasswordReset(this.resetEmail).subscribe({
+      next: () => {
+        this.resetRequested = true;
+      },
+      error: () => {
+        alert('Error sending the request link please check the Email');
+      }
+    });
   }
 
   toggleTheme() {
@@ -208,6 +322,10 @@ export class CreateTournamentComponent implements OnInit {
     }
   }
 
+  get isDarkMode(): boolean {
+    return !document.body.classList.contains('light-mode');
+  }
+
   setInitialTheme() {
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'light') {
@@ -220,14 +338,21 @@ export class CreateTournamentComponent implements OnInit {
   }
 
   onCreateTournament() {
-    if (!this.tournament.name || !this.tournament.date || !this.tournament.location) {
-      alert('Please fill all tournament fields!');
+    if (
+      !this.tournament.name ||
+      !this.tournament.date ||
+      !this.tournament.location ||
+      !this.tournament.format || 
+      (this.tournament.format !== 'solo' && this.tournament.format !== 'duo') 
+    ) {
+      alert('Please fill all tournament fields and select a valid format!');
       return;
     }
     alert('Tournament created successfully!');
-    this.tournament = { name: '', date: '', location: '', teams: '', notes: '', private: '', };
+    this.tournament = { name: '', date: '', location: '', teams: '', notes: '', private: '', format: '', };
     this.isCreateTournamentStart = false;
   }
+
   toggleLangDropdown() {
     this.langDropdownOpen = !this.langDropdownOpen;
   }
@@ -254,5 +379,7 @@ export class CreateTournamentComponent implements OnInit {
   applyTranslations() {
     this.t = this.translations[this.selectedLang];
   }
+
+  
 }
 

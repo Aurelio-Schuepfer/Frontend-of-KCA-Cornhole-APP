@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GlobalAuth } from '../../global-auth';
-
+import { UserProfileService } from '../../user-profile.service'; 
+import { Router } from '@angular/router';
 type LanguageCode = 'de' | 'en' | 'fr' | 'es';
 @Component({
   selector: 'app-privacy-policy',
@@ -90,7 +91,18 @@ export class PrivacyPolicyComponent {
       privacySection8Text: 'Bei Fragen oder Anliegen zur Datenschutzerklärung oder zur Verarbeitung Ihrer Daten kontaktieren Sie uns bitte unter:',
       privacySection8List1: 'E-Mail: <strong>{{ contactEmail }}</strong>',
       privacySection8List2: 'Telefon: <strong>{{ contactPhone }}</strong>',
-      privacySection8List3: 'Adresse: <strong>{{ contactAddress }}</strong>'
+      privacySection8List3: 'Adresse: <strong>{{ contactAddress }}</strong>',
+      rememberMe: 'Angemeldet bleiben',
+      passwordReset: 'Passwort vergessen?',
+      resetEmailLabel: 'E-Mail für Passwort-Reset',
+      resetSend: 'Reset-Link senden',
+      resetBack: 'Zurück',
+      resetSuccess: 'Bitte prüfe dein E-Mail-Postfach!',
+      passwordChange: 'Passwort ändern',
+      newPassword: 'Neues Passwort',
+      save: 'Speichern',
+      cancel: 'Abbrechen',
+      passwordChanged: 'Passwort geändert!',
     },
     en: {
       home: 'Home',
@@ -152,7 +164,18 @@ export class PrivacyPolicyComponent {
       privacySection8Text: 'If you have any questions or concerns about this Privacy Policy or how we handle your personal data, please contact us at:',
       privacySection8List1: 'Email: <strong>{{ contactEmail }}</strong>',
       privacySection8List2: 'Phone: <strong>{{ contactPhone }}</strong>',
-      privacySection8List3: 'Address: <strong>{{ contactAddress }}</strong>'
+      privacySection8List3: 'Address: <strong>{{ contactAddress }}</strong>',
+      rememberMe: 'Remember Me',
+      passwordReset: 'Forgot password?',
+      resetEmailLabel: 'Email for password reset',
+      resetSend: 'Send reset link',
+      resetBack: 'Back',
+      resetSuccess: 'Please check your email inbox!',
+      passwordChange: 'Change password',
+      newPassword: 'New password',
+      save: 'Save',
+      cancel: 'Cancel',
+      passwordChanged: 'Password changed!',
     },
     fr: {
       home: 'Accueil',
@@ -214,7 +237,18 @@ export class PrivacyPolicyComponent {
       privacySection8Text: 'Si vous avez des questions ou des préoccupations concernant cette politique de confidentialité ou la manière dont nous traitons vos données personnelles, veuillez nous contacter à :',
       privacySection8List1: 'Email : <strong>{{ contactEmail }}</strong>',
       privacySection8List2: 'Téléphone : <strong>{{ contactPhone }}</strong>',
-      privacySection8List3: 'Adresse : <strong>{{ contactAddress }}</strong>'
+      privacySection8List3: 'Adresse : <strong>{{ contactAddress }}</strong>',
+      rememberMe: 'Se souvenir de moi',
+      passwordReset: 'Mot de passe oublié ?',
+      resetEmailLabel: 'E-mail pour réinitialiser le mot de passe',
+      resetSend: 'Envoyer le lien',
+      resetBack: 'Retour',
+      resetSuccess: 'Veuillez vérifier votre boîte mail !',
+      passwordChange: 'Changer le mot de passe',
+      newPassword: 'Nouveau mot de passe',
+      save: 'Enregistrer',
+      cancel: 'Annuler',
+      passwordChanged: 'Mot de passe changé !',
     },
     es: {
       home: 'Inicio',
@@ -276,13 +310,36 @@ export class PrivacyPolicyComponent {
       privacySection8Text: 'Si tiene alguna pregunta o inquietud sobre esta política de privacidad o sobre cómo manejamos sus datos personales, contáctenos en:',
       privacySection8List1: 'Correo electrónico: <strong>{{ contactEmail }}</strong>',
       privacySection8List2: 'Teléfono: <strong>{{ contactPhone }}</strong>',
-      privacySection8List3: 'Dirección: <strong>{{ contactAddress }}</strong>'
+      privacySection8List3: 'Dirección: <strong>{{ contactAddress }}</strong>',
+      rememberMe: 'Recuérdame',
+      passwordReset: 'Olvidaste tu contraseña?',
+      resetEmailLabel: 'Correo electrónico para restablecer la contraseña',
+      resetSend: 'Enviar enlace',
+      resetBack: 'Atrás',
+      resetSuccess: '¡Por favor revisa tu correo!',
+      passwordChange: 'Cambiar contraseña',
+      newPassword: 'Nueva contraseña',
+      save: 'Guardar',
+      cancel: 'Cancelar',
+      passwordChanged: 'Contraseña cambiada!',
     }
   };
 
   t = this.translations[this.selectedLang];
 
-  constructor(public globalAuth: GlobalAuth) {}
+   userProfile: any = null;
+  isProfileLoading = false;
+
+  showResetForm = false;
+  resetEmail = '';
+  resetRequested = false;
+
+
+constructor(
+    public globalAuth: GlobalAuth,
+    private userProfileService: UserProfileService,
+    private router: Router
+  ) {}
   ngOnInit(): void {
     this.setInitialTheme();
     const saved = localStorage.getItem('lang');
@@ -290,6 +347,53 @@ export class PrivacyPolicyComponent {
       this.selectedLang = saved as LanguageCode;
     }
     this.applyTranslations();  
+       this.loadUserProfile(); 
+  }
+
+   goToProfile() {
+    this.router.navigate(['/profile']);
+  }
+  
+  // Profil laden
+  loadUserProfile() {
+    this.isProfileLoading = true;
+    this.userProfileService.getProfile().subscribe({
+      next: data => {
+        this.userProfile = data;
+        this.isProfileLoading = false;
+      },
+      error: () => {
+        this.isProfileLoading = false;
+      }
+    });
+  }
+
+  // Profil speichern (z.B. nach Bearbeitung)
+  saveUserProfile(updated: { name: string; email: string; image?: File }) {
+    this.isProfileLoading = true;
+    this.userProfileService.updateProfile(updated).subscribe({
+      next: data => {
+        this.userProfile = data;
+        this.isProfileLoading = false;
+        alert('Profil saved!');
+      },
+      error: () => {
+        this.isProfileLoading = false;
+        alert('Error Saving!');
+      }
+    });
+  }
+
+  requestReset() {
+    if (!this.resetEmail) return;
+    this.userProfileService.requestPasswordReset(this.resetEmail).subscribe({
+      next: () => {
+        this.resetRequested = true;
+      },
+      error: () => {
+        alert('Error sending the request link please check the Email');
+      }
+    });
   }
 
   toggleTheme() {
@@ -303,6 +407,10 @@ export class PrivacyPolicyComponent {
     } else {
       body.classList.remove('light-mode');
     }
+  }
+
+  get isDarkMode(): boolean {
+    return !document.body.classList.contains('light-mode');
   }
 
   setInitialTheme() {

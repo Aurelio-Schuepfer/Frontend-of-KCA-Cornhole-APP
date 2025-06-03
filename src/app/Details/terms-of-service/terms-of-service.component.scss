@@ -9,14 +9,14 @@
       margin-bottom: 2rem;
   
       h1 {
-        font-size: 2.5rem;
+        font-size: clamp(2rem, 5vw, 2.5rem);
         font-weight: 700;
         color: var(--accent);
         margin-bottom: 1rem;
       }
   
       p {
-        font-size: 1.1rem;
+        font-size: clamp(1rem, 2.5vw, 1.1rem);
         line-height: 1.6;
         color: var(--fg);
       }
@@ -26,13 +26,13 @@
       margin-bottom: 3rem;
   
       h2 {
-        font-size: 1.8rem;
+        font-size: clamp(1.3rem, 4vw, 1.8rem);
         margin-top: 2rem;
         color: var(--accent);
       }
   
       p {
-        font-size: 1.1rem;
+        font-size: clamp(0.98rem, 2.5vw, 1.1rem);
         line-height: 1.7;
         color: var(--fg);
         margin-bottom: 1.5rem;
@@ -42,8 +42,61 @@
     footer {
       text-align: center;
       margin-top: 3rem;
-      font-size: 1rem;
+      font-size: clamp(0.95rem, 2vw, 1rem);
       color: var(--fg);
+    }
+  }
+  
+  @media (max-width: 700px) {
+    .terms-of-service-page {
+      padding: 1.2rem 0.5rem;
+      max-width: 98vw;
+  
+      .terms-header {
+        h1 {
+          font-size: clamp(1.5rem, 7vw, 2rem);
+        }
+      }
+  
+      .terms-content {
+        h2 {
+          font-size: clamp(1.1rem, 5vw, 1.4rem);
+        }
+      }
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .terms-of-service-page {
+      padding: 0.7rem 0.2rem;
+      max-width: 100vw;
+  
+      .terms-header {
+        margin-bottom: 1.2rem;
+        h1 {
+          font-size: clamp(1.1rem, 8vw, 1.5rem);
+        }
+        p {
+          font-size: clamp(0.92rem, 3vw, 1rem);
+        }
+      }
+  
+      .terms-content {
+        margin-bottom: 2rem;
+        h2 {
+          font-size: clamp(1rem, 6vw, 1.2rem);
+          margin-top: 1.2rem;
+        }
+        p {
+          font-size: clamp(0.9rem, 3vw, 1rem);
+          margin-bottom: 1rem;
+        }
+      }
+  
+      footer {
+        margin-top: 2rem;
+        font-size: clamp(0.85rem, 2vw, 0.95rem);
+      }
     }
   }
   
@@ -57,4 +110,3 @@
       transform: translateY(0);
     }
   }
-  

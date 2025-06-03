@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GlobalAuth } from '../global-auth';
-
+import { UserProfileService } from '../user-profile.service'; 
+import { Router } from '@angular/router';
 type LanguageCode = 'de' | 'en' | 'fr' | 'es';
 
 @Component({
@@ -31,6 +32,7 @@ export class AboutComponent implements OnInit {
       createTournament: 'Turnier erstellen',
       statistics: 'Statistiken',
       about: 'Über',
+      logout: 'Logout',
       aboutTitle: 'Über KCA Cornhole Tournaments',
       aboutText: 'Willkommen bei KCA Cornhole Tournaments – deine Anlaufstelle für spannende und gut organisierte Cornhole-Turniere!',
       founders: 'Die Gründer',
@@ -52,7 +54,18 @@ export class AboutComponent implements OnInit {
       noAccount: 'Kein Account? Hier registrieren',
       privacyPolicy: 'Datenschutz',
       termsOfService: 'Nutzungsbedingungen',
-      contact: 'Kontakt'
+      contact: 'Kontakt',
+      rememberMe: 'Angemeldet bleiben',
+      passwordReset: 'Passwort vergessen?',
+      resetEmailLabel: 'E-Mail für Passwort-Reset',
+      resetSend: 'Reset-Link senden',
+      resetBack: 'Zurück',
+      resetSuccess: 'Bitte prüfe dein E-Mail-Postfach!',
+      passwordChange: 'Passwort ändern',
+      newPassword: 'Neues Passwort',
+      save: 'Speichern',
+      cancel: 'Abbrechen',
+      passwordChanged: 'Passwort geändert!',
     },
     en: {
       home: 'Home',
@@ -60,6 +73,7 @@ export class AboutComponent implements OnInit {
       createTournament: 'Create Tournament',
       statistics: 'Statistics',
       about: 'About',
+      logout: 'Logout',
       aboutTitle: 'About KCA Cornhole Tournaments',
       aboutText: 'Welcome to KCA Cornhole Tournaments – your place for exciting and well-organized cornhole tournaments!',
       founders: 'The Founders',
@@ -81,7 +95,18 @@ export class AboutComponent implements OnInit {
       noAccount: 'No account? Register here',
       privacyPolicy: 'Privacy Policy',
       termsOfService: 'Terms of Service',
-      contact: 'Contact'
+      contact: 'Contact',
+      rememberMe: 'Remember Me',
+      passwordReset: 'Forgot password?',
+      resetEmailLabel: 'Email for password reset',
+      resetSend: 'Send reset link',
+      resetBack: 'Back',
+      resetSuccess: 'Please check your email inbox!',
+      passwordChange: 'Change password',
+      newPassword: 'New password',
+      save: 'Save',
+      cancel: 'Cancel',
+      passwordChanged: 'Password changed!',
     },
     fr: {
       home: 'Accueil',
@@ -89,6 +114,7 @@ export class AboutComponent implements OnInit {
       createTournament: 'Créer un tournoi',
       statistics: 'Statistiques',
       about: 'À propos',
+      logout: 'Déconnexion',
       aboutTitle: 'À propos de KCA Cornhole Tournaments',
       aboutText: 'Bienvenue chez KCA Cornhole Tournaments – votre plateforme pour des tournois de cornhole passionnants et bien organisés!',
       founders: 'Les Fondateurs',
@@ -110,7 +136,18 @@ export class AboutComponent implements OnInit {
       noAccount: 'Pas de compte ? S’inscrire ici',
       privacyPolicy: 'Politique de confidentialité',
       termsOfService: 'Conditions d\'utilisation',
-      contact: 'Contact'
+      contact: 'Contact',
+      rememberMe: 'Se souvenir de moi',
+      passwordReset: 'Mot de passe oublié ?',
+      resetEmailLabel: 'E-mail pour réinitialiser le mot de passe',
+      resetSend: 'Envoyer le lien',
+      resetBack: 'Retour',
+      resetSuccess: 'Veuillez vérifier votre boîte mail !',
+      passwordChange: 'Changer le mot de passe',
+      newPassword: 'Nouveau mot de passe',
+      save: 'Enregistrer',
+      cancel: 'Annuler',
+      passwordChanged: 'Mot de passe changé !',
     },
     es: {
       home: 'Inicio',
@@ -118,8 +155,9 @@ export class AboutComponent implements OnInit {
       createTournament: 'Crear torneo',
       statistics: 'Estadísticas',
       about: 'Acerca de',
+      logout: 'Cerrar sesión',
       aboutTitle: 'Sobre KCA Cornhole Tournaments',
-      aboutText: '¡Bienvenido a KCA Cornhole Tournaments – tu lugar para torneos de cornhole emocionantes y bien organizados!',
+      aboutText: 'Bienvenido a KCA Cornhole Tournaments – tu lugar para torneos de cornhole emocionantes y bien organizados!',
       founders: 'Los Fundadores',
       foundersText: 'Christian y Andreas Kiefer son los fundadores de KCA Cornhole Tournaments. Su pasión por el cornhole los llevó a crear este proyecto para ofrecer una verdadera experiencia de torneo para todos los jugadores. Los dos fundadores también gestionan otra plataforma centrada en productos de cornhole de alta calidad:',
       mission: 'Nuestra Misión',
@@ -139,13 +177,35 @@ export class AboutComponent implements OnInit {
       noAccount: '¿No tienes cuenta? Regístrate aquí',
       privacyPolicy: 'Política de privacidad',
       termsOfService: 'Términos de servicio',
-      contact: 'Contacto'
+      contact: 'Contacto',
+      rememberMe: 'Recuérdame',
+      passwordReset: 'Olvidaste tu contraseña?',
+      resetEmailLabel: 'Correo electrónico para restablecer la contraseña',
+      resetSend: 'Enviar enlace',
+      resetBack: 'Atrás',
+      resetSuccess: '¡Por favor revisa tu correo!',
+      passwordChange: 'Cambiar contraseña',
+      newPassword: 'Nueva contraseña',
+      save: 'Guardar',
+      cancel: 'Cancelar',
+      passwordChanged: 'Contraseña cambiada!',
     }
   };
 
   t = this.translations[this.selectedLang];
 
-  constructor(public globalAuth: GlobalAuth) {}
+    userProfile: any = null;
+  isProfileLoading = false;
+
+  showResetForm = false;
+  resetEmail = '';
+  resetRequested = false;
+
+constructor(
+    public globalAuth: GlobalAuth,
+    private userProfileService: UserProfileService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.setInitialTheme();
@@ -154,6 +214,53 @@ export class AboutComponent implements OnInit {
       this.selectedLang = saved as LanguageCode;
     }
     this.applyTranslations();
+   this.loadUserProfile(); 
+  }
+
+  // Profil laden
+  loadUserProfile() {
+    this.isProfileLoading = true;
+    this.userProfileService.getProfile().subscribe({
+      next: data => {
+        this.userProfile = data;
+        this.isProfileLoading = false;
+      },
+      error: () => {
+        this.isProfileLoading = false;
+      }
+    });
+  }
+
+   goToProfile() {
+    this.router.navigate(['/profile']);
+  }
+
+  // Profil speichern (z.B. nach Bearbeitung)
+  saveUserProfile(updated: { name: string; email: string; image?: File }) {
+    this.isProfileLoading = true;
+    this.userProfileService.updateProfile(updated).subscribe({
+      next: data => {
+        this.userProfile = data;
+        this.isProfileLoading = false;
+        alert('Profil saved!');
+      },
+      error: () => {
+        this.isProfileLoading = false;
+        alert('Error Saving!');
+      }
+    });
+  }
+
+  requestReset() {
+    if (!this.resetEmail) return;
+    this.userProfileService.requestPasswordReset(this.resetEmail).subscribe({
+      next: () => {
+        this.resetRequested = true;
+      },
+      error: () => {
+        alert('Error sending the request link please check the Email');
+      }
+    });
   }
 
   toggleTheme() {
@@ -167,6 +274,10 @@ export class AboutComponent implements OnInit {
     } else {
       body.classList.remove('light-mode');
     }
+  }
+
+  get isDarkMode(): boolean {
+    return !document.body.classList.contains('light-mode');
   }
 
   setInitialTheme() {
