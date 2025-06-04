@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
 import { GlobalAuth } from '../../global-auth';
 import { UserProfileService } from '../../user-profile.service'; 
 import { Router } from '@angular/router';
@@ -10,7 +10,7 @@ type LanguageCode = 'de' | 'en' | 'fr' | 'es';
   templateUrl: './join-tournament.component.html',
   styleUrl: './join-tournament.component.scss'
 })
-export class JoinTournamentComponent implements OnInit {
+export class JoinTournamentComponent implements OnInit, AfterViewInit, OnDestroy {
   isNavOpen: boolean = false;
   isTournamentRegisterOpen = false;
   expandedId: number | null = null;
@@ -26,6 +26,9 @@ export class JoinTournamentComponent implements OnInit {
   selectedCurrentTeams: number = 0;
   selectedMaxTeams: number = 0;
   selectedTournamentImage: string | null = null;
+
+  joinFeedback: { message: string, type: 'success' | 'error' } | null = null;
+  showCelebration = false;
 
   languages = [
     { code: 'de' as LanguageCode, label: 'Deutsch' },
@@ -97,6 +100,8 @@ export class JoinTournamentComponent implements OnInit {
       TeamNameInfo: 'Bitte wähle einen kurzen und passenden Teamnamen. Beleidigende oder zu lange Namen sind nicht erlaubt. Der gewählte Name wird während des gesamten Turniers verwendet.',
       back: 'Zurück',
       Particitant: 'Teilnehmer',
+      tournamentFull: 'Das Turnier ist voll',
+      joinSuccess: 'Erfolgreich dem Turnier beigetreten!',
     },
     en: {
       home: 'Home',
@@ -157,6 +162,8 @@ export class JoinTournamentComponent implements OnInit {
       TeamNameInfo: 'Choose a short and appropriate name for your team. Offensive or overly long names wont be accepted. This name will represent your team throughout the tournament.',
       back: 'Back',
       Particitant: 'Participant',
+      tournamentFull: 'Tournament is full',
+      joinSuccess: 'Successfully joined the tournament!',
     },
     fr: {
       home: 'Accueil',
@@ -217,6 +224,8 @@ export class JoinTournamentComponent implements OnInit {
       TeamNameInfo: 'Choisis un nom court et respectueux pour ton équipe. Les noms offensants ou trop longs ne seront pas acceptés. Ce nom sera utilisé pendant tout le tournoi.',
       back: 'Retour',
       Particitant: 'Participant',
+      tournamentFull: 'Le tournoi est complet',
+      joinSuccess: 'Inscription réussie au tournoi !',
     },
     es: {
       home: 'Inicio',
@@ -277,6 +286,8 @@ export class JoinTournamentComponent implements OnInit {
       TeamNameInfo: 'Elige un nombre corto y apropiado para tu equipo. No se permiten nombres ofensivos ni demasiado largos. Este nombre se usará durante todo el torneo.',
       back: 'Atrás',
       Particitant: 'Participante',
+      tournamentFull: 'El torneo está completo',
+      joinSuccess: '¡Te has unido al torneo con éxito!',
     }
   };
 
@@ -302,6 +313,13 @@ export class JoinTournamentComponent implements OnInit {
   { name: 'Chris Müller', image: 'https://randomuser.me/api/portraits/men/27.jpg', team: 'Bag Masters' }
 ];
 
+@ViewChild('confettiCanvas', { static: false }) confettiCanvasRef!: ElementRef<HTMLCanvasElement>;
+private confettiActive = false;
+private confettiTimeout: any;
+
+teamNameValue: string = '';
+hideTeamNameInput = false;
+
 constructor(
     public globalAuth: GlobalAuth,
     private userProfileService: UserProfileService,
@@ -319,7 +337,18 @@ constructor(
     this.showTournamentView = false;
   }
 
-   goToProfile() {
+  ngAfterViewInit(): void {
+    // If celebration is already active on init, start confetti
+    if (this.showCelebration) {
+      this.startConfetti();
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.stopConfetti();
+  }
+
+  goToProfile() {
     this.router.navigate(['/profile']);
   }
 
@@ -567,18 +596,28 @@ constructor(
   }
 
   joinTournamentfinish() {
-    if (this.selectedTournamentForJoin !== null) {
-      let joinedTournaments = this.getJoinedTournaments();
-      if (!joinedTournaments.includes(this.selectedTournamentForJoin)) {
-        joinedTournaments.push(this.selectedTournamentForJoin);
-        localStorage.setItem('joinedTournaments', JSON.stringify(joinedTournaments));
-        alert("Successfully joined tournament");
-      }
+    this.hideTeamNameInput = true;
+    if (this.selectedCurrentTeams >= this.selectedMaxTeams) {
+      this.joinFeedback = { message: this.t.tournamentFull || 'Tournament is full', type: 'error' };
+      setTimeout(() => { this.joinFeedback = null; }, 3000);
+      return;
     }
-    this.isTournamentRegisterOpen = false;
-    this.selectedTournament = null;
-    this.selectedTournamentImage = null;
-    this.showTournamentView = false;
+    let joinedTournaments = this.getJoinedTournaments();
+    if (this.selectedTournamentForJoin && !joinedTournaments.includes(this.selectedTournamentForJoin)) {
+      joinedTournaments.push(this.selectedTournamentForJoin);
+      localStorage.setItem('joinedTournaments', JSON.stringify(joinedTournaments));
+      this.loadJoinedTournaments();
+    }
+    this.joinFeedback = { message: this.t.joinSuccess || 'Successfully joined!', type: 'success' };
+    this.showCelebration = true;
+    setTimeout(() => {
+      this.showCelebration = false;
+      this.joinFeedback = null;
+      this.isTournamentRegisterOpen = false;
+      this.showTournamentView = false;
+      this.showTournamentListFade = true;
+    }, 3000);
+    setTimeout(() => this.startConfetti(), 50); 
   }
 
   openDetails(tournamentId: number): void {
@@ -597,7 +636,6 @@ constructor(
 
   openTournamentView(tournament: any): void {
     this.selectedTournament = tournament;
-    // Use the logo image as fallback
     this.selectedTournamentImage = 'assets/images/TournamentFiller.png';
     this.isTournamentRegisterOpen = false;
     this.detailsModalVisible = false;
@@ -608,11 +646,10 @@ constructor(
     this.showTournamentView = false;
     this.selectedTournament = null;
     this.selectedTournamentImage = null;
-    // Trigger fade-in animation for tournament list
     this.showTournamentListFade = true;
     setTimeout(() => {
       this.showTournamentListFade = false;
-    }, 500); // match fadeIn duration
+    }, 500);
   }
 
   backFromTeamName() {
@@ -681,5 +718,86 @@ constructor(
   }
   closeImageModal() {
     this.showImageModal = false;
+  }
+
+  onTeamNameInput(event: Event) {
+    const value = (event.target as HTMLInputElement).value;
+    this.teamNameValue = value;
+    if (value && value.trim().length > 0) {
+      this.hideTeamNameInput = true;
+    }
+  }
+
+  private startConfetti() {
+    if (this.confettiActive) return;
+    this.confettiActive = true;
+    const canvas = document.getElementById('confetti-canvas') as HTMLCanvasElement;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const confettiCount = 180;
+    const confettiColors = ['#ffecb3', '#ff9800', '#b3e5fc', '#03a9f4', '#c8e6c9', '#4caf50', '#ffcdd2', '#e91e63', '#fff9c4', '#ffeb3b'];
+    const confetti: any[] = [];
+    for (let i = 0; i < confettiCount; i++) {
+      confetti.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * -canvas.height,
+        r: 6 + Math.random() * 10,
+        d: 8 + Math.random() * 12,
+        color: confettiColors[Math.floor(Math.random() * confettiColors.length)],
+        tilt: Math.random() * 10 - 5,
+        tiltAngle: 0,
+        tiltAngleIncremental: (Math.random() * 0.07) + 0.05
+      });
+    }
+    let angle = 0;
+    let tiltAngle = 0;
+    const draw = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = 0; i < confetti.length; i++) {
+        const c = confetti[i];
+        ctx.beginPath();
+        ctx.lineWidth = c.r;
+        ctx.strokeStyle = c.color;
+        ctx.moveTo(c.x + c.tilt + (c.r / 3), c.y);
+        ctx.lineTo(c.x + c.tilt, c.y + c.d);
+        ctx.stroke();
+      }
+      update();
+    };
+    const update = () => {
+      angle += 0.01;
+      tiltAngle += 0.1;
+      for (let i = 0; i < confetti.length; i++) {
+        const c = confetti[i];
+        c.y += (Math.cos(angle + c.d) + 3 + c.r / 2) * 0.8;
+        c.x += Math.sin(angle);
+        c.tiltAngle += c.tiltAngleIncremental;
+        c.tilt = Math.sin(c.tiltAngle) * 15;
+        if (c.y > canvas.height) {
+          c.x = Math.random() * canvas.width;
+          c.y = -10;
+        }
+      }
+    };
+    const animate = () => {
+      if (!this.confettiActive) return;
+      draw();
+      requestAnimationFrame(animate);
+    };
+    animate();
+    this.confettiTimeout = setTimeout(() => this.stopConfetti(), 2500);
+  }
+
+  private stopConfetti() {
+    this.confettiActive = false;
+    const canvas = document.getElementById('confetti-canvas') as HTMLCanvasElement;
+    if (canvas) {
+      const ctx = canvas.getContext('2d');
+      if (ctx) ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+    if (this.confettiTimeout) clearTimeout(this.confettiTimeout);
   }
 }

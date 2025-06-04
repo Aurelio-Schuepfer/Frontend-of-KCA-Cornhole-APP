@@ -245,7 +245,7 @@
       />
     </div>
     <div class="tournament-list">
-      <div class="tournament-card" [class.active]="isTournamentJoined(tour.id)" *ngFor="let tour of filteredTournaments" (click)="openTournamentView(tour)">
+      <div class="tournament-card" [class.active]="globalAuth.isLoggedIn && isTournamentJoined(tour.id)" *ngFor="let tour of filteredTournaments" (click)="openTournamentView(tour)">
         <div class="card-header">
           <h2>{{ tour.name }}</h2>
           <div class="date">{{ tour.date }}</div>
@@ -288,7 +288,7 @@
       </div>
     </div>
   </section>
-  <section *ngIf="isTournamentRegisterOpen" class="TournamentRegister">
+  <section *ngIf="isTournamentRegisterOpen && !showCelebration" class="TournamentRegister">
     <button class="back-btn tButton" (click)="backFromTeamName()">&larr; {{ t.back || 'Back' }}</button>
     <label for="tournamentTeamName">
       {{ t.TeamName }}
@@ -299,11 +299,20 @@
         </span>
       </span>
     </label>
-    <input id="tournamentTeamName" name="teamname" type="text" class="form-input" required />
+    <input id="tournamentTeamName" name="teamname" type="text" class="form-input" required (input)="onTeamNameInput($event)" />
     <button id="JoinTournamentButton" (click)="joinTournamentfinish()">
       {{t.join}}
     </button>
   </section>
+  <div *ngIf="showCelebration && joinFeedback?.type === 'success'" class="cornhole-celebration-overlay confetti-overlay">
+    <div class="join-feedback-fixed" [ngClass]="joinFeedback?.type">
+      <span *ngIf="joinFeedback?.type === 'success'" class="celebration-animation">🎉</span>
+      {{ joinFeedback?.message }}
+    </div>
+    <div class="confetti-canvas-wrapper">
+      <canvas id="confetti-canvas"></canvas>
+    </div>
+  </div>
 </main>
 
 <footer>
