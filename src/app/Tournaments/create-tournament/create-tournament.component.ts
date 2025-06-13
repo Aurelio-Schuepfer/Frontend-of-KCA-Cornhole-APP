@@ -1,6 +1,6 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { GlobalAuth } from '../../global-auth';
-import { UserProfileService } from '../../Services/user-profile.service'; 
+import { UserProfileService } from '../../Services/user-profile.service';
 import { Router } from '@angular/router';
 import { TournamentService } from '../../Services/tournament.service';
 
@@ -30,7 +30,7 @@ export class CreateTournamentComponent implements OnInit {
   selectedImage: File | undefined = undefined;
   editName = false;
   editDate = false;
-  editLocation = false
+  editLocation = false;
   editTeams = false;
   editNotes = false;
   editFormat = false;
@@ -51,10 +51,8 @@ export class CreateTournamentComponent implements OnInit {
   editIndex: number | null = null;
   showSuccess = false;
 
-
-
   tournament = {
-    id: undefined as string | undefined, // Unique id for storage
+    id: undefined as string | undefined,
     name: '',
     date: '',
     location: '',
@@ -70,31 +68,31 @@ export class CreateTournamentComponent implements OnInit {
     { code: 'de' as LanguageCode, label: 'Deutsch' },
     { code: 'en' as LanguageCode, label: 'English' },
     { code: 'fr' as LanguageCode, label: 'Français' },
-    { code: 'es' as LanguageCode, label: 'Español' }
+    { code: 'es' as LanguageCode, label: 'Español' },
   ];
 
- players = [
-  {
-    name: 'Anna König',
-    team: 'Red Hawks',
-    avatar: 'https://randomuser.me/api/portraits/women/44.jpg'
-  },
-  {
-    name: 'Ben Müller',
-    team: 'Blue Wolves',
-    avatar: 'https://randomuser.me/api/portraits/men/23.jpg'
-  },
-  {
-    name: 'Clara Schmidt',
-    team: 'Green Snakes',
-    avatar: 'https://randomuser.me/api/portraits/women/18.jpg'
-  },
-  {
-    name: 'David Weber',
-    team: '',
-    avatar: 'https://randomuser.me/api/portraits/men/65.jpg'
-  }
-];
+  players = [
+    {
+      name: 'Anna König',
+      team: 'Red Hawks',
+      avatar: 'https://randomuser.me/api/portraits/women/44.jpg',
+    },
+    {
+      name: 'Ben Müller',
+      team: 'Blue Wolves',
+      avatar: 'https://randomuser.me/api/portraits/men/23.jpg',
+    },
+    {
+      name: 'Clara Schmidt',
+      team: 'Green Snakes',
+      avatar: 'https://randomuser.me/api/portraits/women/18.jpg',
+    },
+    {
+      name: 'David Weber',
+      team: '',
+      avatar: 'https://randomuser.me/api/portraits/men/65.jpg',
+    },
+  ];
 
   selectedLang: LanguageCode = 'en';
   langDropdownOpen = false;
@@ -122,7 +120,8 @@ export class CreateTournamentComponent implements OnInit {
       name: 'Name',
       nameInfo: 'Gib den Namen deines Turniers ein.',
       organizer: 'Veranstalter (optional)',
-      organizerInfo: 'Der Veranstalter ist die Person oder Organisation, die das Turnier plant, organisiert und durchführt.',
+      organizerInfo:
+        'Der Veranstalter ist die Person oder Organisation, die das Turnier plant, organisiert und durchführt.',
       date: 'Datum',
       dateInfo: 'Wähle das Datum, an dem das Turnier stattfindet.',
       location: 'Ort',
@@ -130,9 +129,11 @@ export class CreateTournamentComponent implements OnInit {
       teams: 'Teams (optional)',
       teamsInfo: 'Anzahl der Teams, die teilnehmen können.',
       notes: 'Notizen (optional)',
-      notesInfo: 'Füge zusätzliche Informationen oder Regeln für das Turnier hinzu.',
+      notesInfo:
+        'Füge zusätzliche Informationen oder Regeln für das Turnier hinzu.',
       privateTournament: 'Privat',
-      privateInfo: '<strong>Privat:</strong> Nur eingeladene Personen können teilnehmen, nicht öffentlich gelistet.<br><strong>Öffentlich:</strong> Turnier ist öffentlich gelistet und jeder kann teilnehmen.',
+      privateInfo:
+        '<strong>Privat:</strong> Nur eingeladene Personen können teilnehmen, nicht öffentlich gelistet.<br><strong>Öffentlich:</strong> Turnier ist öffentlich gelistet und jeder kann teilnehmen.',
       fee: 'Startgebühr (optional)',
       feeInfo: 'Betrag, den Teilnehmende für die Teilnahme zahlen müssen.',
       createTournamentBtn: 'Turnier erstellen',
@@ -152,7 +153,8 @@ export class CreateTournamentComponent implements OnInit {
       passwordChanged: 'Passwort geändert!',
       loginToJoin: 'Melde dich an, um ein Turnier zu erstellen',
       tournamentFormat: 'Format',
-      tournamentFormatInfo: 'Solo: Nur Einzelspieler. Duo: Zwei Spieler pro Team.',
+      tournamentFormatInfo:
+        'Solo: Nur Einzelspieler. Duo: Zwei Spieler pro Team.',
       editNametitle: 'Name des Turniers',
       editDatetitle: 'Veranstaltungsdatum',
       editLocationtitle: 'Austragungsort',
@@ -171,7 +173,8 @@ export class CreateTournamentComponent implements OnInit {
       cancelTournament: 'Turnier abbrechen',
       cancelButton: 'Turnier abbrechen',
       title: 'Bist du sicher?',
-      description: 'Bitte gib dein Passwort ein, um dieses Turnier abzubrechen:',
+      description:
+        'Bitte gib dein Passwort ein, um dieses Turnier abzubrechen:',
       placeholder: 'Passwort eingeben',
       confirmBtn: 'Bestätigen',
       cancelBtn: 'Abbrechen',
@@ -179,18 +182,18 @@ export class CreateTournamentComponent implements OnInit {
       successTitle: 'Turnier abgebrochen',
       successText: 'Das Turnier wurde erfolgreich abgebrochen.',
       okBtn: 'OK',
-      sponsorsLabel: "Sponsoren",
-      sponsorsAdd: "Sponsor hinzufügen",
-      sponsorNamePlaceholder: "Sponsor Name...",
-      sponsorSelectLogo: "Sponsor Logo auswählen",
-      sponsorLogoAlt: "Sponsor Logo",
-      partnersLabel: "Partner",
-      partnersAdd: "Partner hinzufügen",
-      partnerNamePlaceholder: "Partner Name...",
-      partnerSelectLogo: "Partner Logo auswählen",
-      partnerLogoAlt: "Partner Logo",
-      fullscreenExit: "x",
-      fullscreenAlt: "Vollbild Logo",
+      sponsorsLabel: 'Sponsoren',
+      sponsorsAdd: 'Sponsor hinzufügen',
+      sponsorNamePlaceholder: 'Sponsor Name...',
+      sponsorSelectLogo: 'Sponsor Logo auswählen',
+      sponsorLogoAlt: 'Sponsor Logo',
+      partnersLabel: 'Partner',
+      partnersAdd: 'Partner hinzufügen',
+      partnerNamePlaceholder: 'Partner Name...',
+      partnerSelectLogo: 'Partner Logo auswählen',
+      partnerLogoAlt: 'Partner Logo',
+      fullscreenExit: 'x',
+      fullscreenAlt: 'Vollbild Logo',
       participantsLabel: 'Teilnehmer',
       searchPlaceholder: 'Suche Spieler oder Team...',
       avatarAlt: 'Avatar',
@@ -243,7 +246,8 @@ export class CreateTournamentComponent implements OnInit {
       name: 'Name',
       nameInfo: 'Enter the name of your tournament.',
       organizer: 'Organizer  (optional)',
-      organizerInfo: 'The organizer is the person or organization responsible for planning, managing, and running the tournament.',
+      organizerInfo:
+        'The organizer is the person or organization responsible for planning, managing, and running the tournament.',
       date: 'Date',
       dateInfo: 'Select the date when the tournament will take place.',
       location: 'Location',
@@ -253,7 +257,8 @@ export class CreateTournamentComponent implements OnInit {
       notes: 'Notes (optional)',
       notesInfo: 'Add any additional information or rules for the tournament.',
       privateTournament: 'Private',
-      privateInfo: '<strong>Private:</strong> Only invited people can join, not listed globally.<br><strong>Public:</strong> Tournament is listed globally and everyone can join.',
+      privateInfo:
+        '<strong>Private:</strong> Only invited people can join, not listed globally.<br><strong>Public:</strong> Tournament is listed globally and everyone can join.',
       fee: 'Entry Fee (optional)',
       feeInfo: 'Amount participants must pay to join the tournament.',
       createTournamentBtn: 'Create Tournament',
@@ -273,7 +278,8 @@ export class CreateTournamentComponent implements OnInit {
       passwordChanged: 'Password changed!',
       loginToJoin: 'Log in to create a tournament',
       tournamentFormat: 'Format',
-      tournamentFormatInfo: 'Solo: A tournament for individuals. Duo: Two players per team.',
+      tournamentFormatInfo:
+        'Solo: A tournament for individuals. Duo: Two players per team.',
       editNametitle: 'Tournament Name',
       editDatetitle: 'Event Date',
       editLocationtitle: 'Tournament Location',
@@ -364,22 +370,25 @@ export class CreateTournamentComponent implements OnInit {
       name: 'Nom',
       nameInfo: 'Entrez le nom de votre tournoi.',
       organizer: 'Organisateur (optionnel)',
-      organizerInfo: 'L’organisateur est la personne ou l’organisation qui planifie, gère et supervise le tournoi.',
+      organizerInfo:
+        'L’organisateur est la personne ou l’organisation qui planifie, gère et supervise le tournoi.',
       date: 'Date',
       dateInfo: 'Sélectionnez la date du tournoi.',
       location: 'Lieu',
       locationInfo: 'Entrez le lieu où se déroulera le tournoi.',
       teams: 'Équipes (optionnel)',
-      teamsInfo: 'Nombre d\'équipes pouvant participer à ce tournoi.',
+      teamsInfo: "Nombre d'équipes pouvant participer à ce tournoi.",
       notes: 'Notes (optionnel)',
-      notesInfo: 'Ajoutez des informations ou règles supplémentaires pour le tournoi.',
+      notesInfo:
+        'Ajoutez des informations ou règles supplémentaires pour le tournoi.',
       privateTournament: 'Privé',
-      privateInfo: '<strong>Privé :</strong> Seules les personnes invitées peuvent participer, non listé publiquement.<br><strong>Public :</strong> Le tournoi est listé publiquement et tout le monde peut participer.',
+      privateInfo:
+        '<strong>Privé :</strong> Seules les personnes invitées peuvent participer, non listé publiquement.<br><strong>Public :</strong> Le tournoi est listé publiquement et tout le monde peut participer.',
       fee: 'Frais d’inscription (optionnel)',
       feeInfo: 'Montant que les participants doivent payer pour s’inscrire.',
       createTournamentBtn: 'Créer le tournoi',
       privacyPolicy: 'Politique de confidentialité',
-      termsOfService: 'Conditions d\'utilisation',
+      termsOfService: "Conditions d'utilisation",
       contact: 'Contact',
       rememberMe: 'Se souvenir de moi',
       passwordReset: 'Mot de passe oublié ?',
@@ -394,7 +403,8 @@ export class CreateTournamentComponent implements OnInit {
       passwordChanged: 'Mot de passe changé !',
       loginToJoin: 'Connecte-toi pour créer un tournoi',
       tournamentFormat: 'Format',
-      tournamentFormatInfo: 'Solo : Joueurs seuls. Duo : Deux joueurs par équipe.',
+      tournamentFormatInfo:
+        'Solo : Joueurs seuls. Duo : Deux joueurs par équipe.',
       editNametitle: 'Nom du tournoi',
       editDatetitle: 'Date de l’événement',
       editLocationtitle: 'Lieu du tournoi',
@@ -413,7 +423,8 @@ export class CreateTournamentComponent implements OnInit {
       cancelTournament: 'Annuler le tournoi',
       cancelButton: 'Annuler le tournoi',
       title: 'Es-tu sûr ?',
-      description: 'Veuillez entrer votre mot de passe pour annuler ce tournoi :',
+      description:
+        'Veuillez entrer votre mot de passe pour annuler ce tournoi :',
       placeholder: 'Entrez votre mot de passe',
       confirmBtn: 'Confirmer',
       cancelBtn: 'Annuler',
@@ -444,7 +455,7 @@ export class CreateTournamentComponent implements OnInit {
       inviteButton: 'Inviter',
       addGuestLabel: 'Ajouter un invité',
       guestNamePlaceholder: 'Nom',
-      guestTeamPlaceholder: "Nom de l’équipe",
+      guestTeamPlaceholder: 'Nom de l’équipe',
       addGuestButton: 'Ajouter un invité',
       participantsCount: 'Participants',
       withoutTeamCount: 'Sans équipe',
@@ -462,7 +473,6 @@ export class CreateTournamentComponent implements OnInit {
       leagueLabel: 'Ligue du tournoi',
       leaguePlaceholder: 'Ligue du tournoi',
       tournamentcreatesucces: 'Tournoi créé avec succès',
-
     },
     es: {
       home: 'Inicio',
@@ -486,7 +496,8 @@ export class CreateTournamentComponent implements OnInit {
       name: 'Nombre',
       nameInfo: 'Introduce el nombre de tu torneo.',
       organizer: 'Organizador  (opcional)',
-      organizerInfo: 'El organizador es la persona u organización que planifica, gestiona y dirige el torneo.',
+      organizerInfo:
+        'El organizador es la persona u organización que planifica, gestiona y dirige el torneo.',
       date: 'Fecha',
       dateInfo: 'Selecciona la fecha en la que se celebrará el torneo.',
       location: 'Ubicación',
@@ -496,7 +507,8 @@ export class CreateTournamentComponent implements OnInit {
       notes: 'Notas (opcional)',
       notesInfo: 'Agrega información adicional o reglas para el torneo.',
       privateTournament: 'Privado',
-      privateInfo: '<strong>Privado:</strong> Solo personas invitadas pueden unirse, no aparece globalmente.<br><strong>Público:</strong> El torneo aparece globalmente y cualquiera puede unirse.',
+      privateInfo:
+        '<strong>Privado:</strong> Solo personas invitadas pueden unirse, no aparece globalmente.<br><strong>Público:</strong> El torneo aparece globalmente y cualquiera puede unirse.',
       fee: 'Cuota de inscripción (opcional)',
       feeInfo: 'Monto que deben pagar los participantes para unirse al torneo.',
       createTournamentBtn: 'Crear torneo',
@@ -516,15 +528,16 @@ export class CreateTournamentComponent implements OnInit {
       passwordChanged: 'Contraseña cambiada!',
       loginToJoin: 'Inicia sesión para crear un torneo',
       tournamentFormat: 'Formato',
-      tournamentFormatInfo: 'Solo: Solo jugadores individuales. Dúo: Dos jugadores por equipo.',
+      tournamentFormatInfo:
+        'Solo: Solo jugadores individuales. Dúo: Dos jugadores por equipo.',
       editNametitle: 'Nombre del torneo',
       editDatetitle: 'Fecha del evento',
       editLocationtitle: 'Lugar del torneo',
       editNotestitle: 'Notas sobre el torneo',
       editTeamstitle: 'Número de equipos',
       editFormattitle: 'Formato del torneo',
-      editPrivatetitle: 'Torneo privado (por defecto: público)', 
-      editorganizertitle: 'Organizador', 
+      editPrivatetitle: 'Torneo privado (por defecto: público)',
+      editorganizertitle: 'Organizador',
       edit: 'Personalizar',
       participants: 'Participantes',
       bracket: 'Cuadro del torneo',
@@ -584,7 +597,7 @@ export class CreateTournamentComponent implements OnInit {
       leagueLabel: 'Liga del torneo',
       leaguePlaceholder: 'Liga del torneo',
       tournamentcreatesucces: 'Torneo creado con éxito',
-    }
+    },
   };
 
   t = this.translations[this.selectedLang];
@@ -611,11 +624,11 @@ export class CreateTournamentComponent implements OnInit {
   partners: { name: string; logoUrl: string | null }[] = [];
   fullscreenImageUrl: string | null = null;
 
-constructor(
+  constructor(
     public globalAuth: GlobalAuth,
     private userProfileService: UserProfileService,
     private router: Router,
-    private tournamentService: TournamentService,
+    private tournamentService: TournamentService
   ) {}
 
   ngOnInit(): void {
@@ -624,15 +637,17 @@ constructor(
     if (saved && ['de', 'en', 'fr', 'es'].includes(saved)) {
       this.selectedLang = saved as LanguageCode;
     }
-    this.applyTranslations();  
-    this.loadUserProfile(); 
+    this.applyTranslations();
+    this.loadUserProfile();
 
-    // Check for saved tournaments in localStorage
-    const savedTournaments = JSON.parse(localStorage.getItem('tournaments') || '[]');
-    this.hasTournament = Array.isArray(savedTournaments) && savedTournaments.length > 0;
+    const savedTournaments = JSON.parse(
+      localStorage.getItem('tournaments') || '[]'
+    );
+    this.hasTournament =
+      Array.isArray(savedTournaments) && savedTournaments.length > 0;
 
     this.tournament = {
-      id: undefined as string | undefined, // Unique id for storage
+      id: undefined as string | undefined,
       name: '',
       date: '',
       location: '',
@@ -643,23 +658,25 @@ constructor(
       organizer: '',
       fee: '',
     };
-    this.tournamentService.tournament$.subscribe(t => {
-      // Also keep hasTournament true if there are saved tournaments
-      const savedTournaments = JSON.parse(localStorage.getItem('tournaments') || '[]');
-      this.hasTournament = !!t || (Array.isArray(savedTournaments) && savedTournaments.length > 0);
+    this.tournamentService.tournament$.subscribe((t) => {
+      const savedTournaments = JSON.parse(
+        localStorage.getItem('tournaments') || '[]'
+      );
+      this.hasTournament =
+        !!t || (Array.isArray(savedTournaments) && savedTournaments.length > 0);
     });
   }
 
   loadUserProfile() {
     this.isProfileLoading = true;
     this.userProfileService.getProfile().subscribe({
-      next: data => {
+      next: (data) => {
         this.userProfile = data;
         this.isProfileLoading = false;
       },
       error: () => {
         this.isProfileLoading = false;
-      }
+      },
     });
   }
 
@@ -670,7 +687,7 @@ constructor(
   saveUserProfile(updated: { name: string; email: string; image?: File }) {
     this.isProfileLoading = true;
     this.userProfileService.updateProfile(updated).subscribe({
-      next: data => {
+      next: (data) => {
         this.userProfile = data;
         this.isProfileLoading = false;
         alert('Profil saved!');
@@ -678,7 +695,7 @@ constructor(
       error: () => {
         this.isProfileLoading = false;
         alert('Error Saving!');
-      }
+      },
     });
   }
 
@@ -690,7 +707,7 @@ constructor(
       },
       error: () => {
         alert('Error sending the request link please check the Email');
-      }
+      },
     });
   }
 
@@ -722,42 +739,40 @@ constructor(
     this.isNavOpen = !this.isNavOpen;
   }
 
-onCreateTournament() {
-  if (
-    !this.tournament.name ||
-    !this.tournament.date ||
-    !this.tournament.location ||
-    !this.tournament.format || 
-    (this.tournament.format !== 'solo' && this.tournament.format !== 'duo') 
-  ) {
-    alert('Please fill all tournament fields and select a valid format!');
-    return;
+  onCreateTournament() {
+    if (
+      !this.tournament.name ||
+      !this.tournament.date ||
+      !this.tournament.location ||
+      !this.tournament.format ||
+      (this.tournament.format !== 'solo' && this.tournament.format !== 'duo')
+    ) {
+      alert('Please fill all tournament fields and select a valid format!');
+      return;
+    }
+
+    if (!this.tournament.id) {
+      this.tournament.id =
+        't_' + Date.now() + '_' + Math.floor(Math.random() * 10000);
+    }
+
+    const all = JSON.parse(localStorage.getItem('tournaments') || '[]');
+    const idx = all.findIndex((t: any) => t.id === this.tournament.id);
+    if (idx >= 0) {
+      all[idx] = this.tournament;
+    } else {
+      all.push(this.tournament);
+    }
+    localStorage.setItem('tournaments', JSON.stringify(all));
+
+    this.tournamentService.setTournament(this.tournament);
+    this.showSuccess = true;
+
+    setTimeout(() => {
+      this.showSuccess = false;
+      this.router.navigate(['/manage']);
+    }, 3000);
   }
-
-  // Ensure tournament has a unique id
-  if (!this.tournament.id) {
-    this.tournament.id = 't_' + Date.now() + '_' + Math.floor(Math.random() * 10000);
-  }
-
-  // Save to localStorage under 'tournaments' key (additive)
-  const all = JSON.parse(localStorage.getItem('tournaments') || '[]');
-  const idx = all.findIndex((t: any) => t.id === this.tournament.id);
-  if (idx >= 0) {
-    all[idx] = this.tournament;
-  } else {
-    all.push(this.tournament);
-  }
-  localStorage.setItem('tournaments', JSON.stringify(all));
-
-  this.tournamentService.setTournament(this.tournament);
-  this.showSuccess = true;
-
-  setTimeout(() => {
-    this.showSuccess = false;
-    this.router.navigate(['/manage']);
-  }, 3000);
-}
-
 
   toggleLangDropdown() {
     this.langDropdownOpen = !this.langDropdownOpen;
@@ -773,21 +788,25 @@ onCreateTournament() {
   }
 
   getFlagUrl(lang: string): string {
-  switch (lang) {
-    case 'de': return 'https://flagcdn.com/w40/de.png';
-    case 'en': return 'https://flagcdn.com/w40/gb.png';
-    case 'fr': return 'https://flagcdn.com/w40/fr.png';
-    case 'es': return 'https://flagcdn.com/w40/es.png';
-    default: return '';
-}
-}
+    switch (lang) {
+      case 'de':
+        return 'https://flagcdn.com/w40/de.png';
+      case 'en':
+        return 'https://flagcdn.com/w40/gb.png';
+      case 'fr':
+        return 'https://flagcdn.com/w40/fr.png';
+      case 'es':
+        return 'https://flagcdn.com/w40/es.png';
+      default:
+        return '';
+    }
+  }
 
   applyTranslations() {
     this.t = this.translations[this.selectedLang];
   }
 
-  editSelect()
-  {
+  editSelect() {
     this.editSelected = true;
     this.participantsSelected = false;
     this.bracketSelected = false;
@@ -797,8 +816,7 @@ onCreateTournament() {
     this.presentSelected = false;
   }
 
-  participantsSelect()
-  {
+  participantsSelect() {
     this.editSelected = false;
     this.participantsSelected = true;
     this.bracketSelected = false;
@@ -807,8 +825,7 @@ onCreateTournament() {
     this.resultsSelected = false;
     this.presentSelected = false;
   }
-  bracketSelect()
-  {
+  bracketSelect() {
     this.editSelected = false;
     this.participantsSelected = false;
     this.bracketSelected = true;
@@ -817,8 +834,7 @@ onCreateTournament() {
     this.resultsSelected = false;
     this.presentSelected = false;
   }
-  scheduleSelect()
-  {
+  scheduleSelect() {
     this.editSelected = false;
     this.participantsSelected = false;
     this.bracketSelected = false;
@@ -827,8 +843,7 @@ onCreateTournament() {
     this.resultsSelected = false;
     this.presentSelected = false;
   }
-  extendedSelect()
-  {
+  extendedSelect() {
     this.editSelected = false;
     this.participantsSelected = false;
     this.bracketSelected = false;
@@ -837,8 +852,7 @@ onCreateTournament() {
     this.resultsSelected = false;
     this.presentSelected = false;
   }
-  presentSelect()
-  {
+  presentSelect() {
     this.editSelected = false;
     this.participantsSelected = false;
     this.bracketSelected = false;
@@ -847,8 +861,7 @@ onCreateTournament() {
     this.resultsSelected = false;
     this.presentSelected = true;
   }
-  resultsSelect()
-  {
+  resultsSelect() {
     this.editSelected = false;
     this.participantsSelected = false;
     this.bracketSelected = false;
@@ -872,129 +885,137 @@ onCreateTournament() {
     }
   }
   confirmCancel() {
-  const correctPassword = 'Passwort123';
-  if (this.confirmPassword.trim() === '') {
-    this.passwordInvalid = true;
-    this.cancelSuccess = false;
-    return;
+    const correctPassword = 'Passwort123';
+    if (this.confirmPassword.trim() === '') {
+      this.passwordInvalid = true;
+      this.cancelSuccess = false;
+      return;
+    }
+
+    if (this.confirmPassword === correctPassword) {
+      this.passwordInvalid = false;
+      this.cancelSuccess = true;
+    } else {
+      this.passwordInvalid = true;
+      this.cancelSuccess = false;
+    }
   }
 
-  if (this.confirmPassword === correctPassword) {
+  closeDialog() {
+    this.showConfirm = false;
+    this.confirmPassword = '';
     this.passwordInvalid = false;
-    this.cancelSuccess = true;
-    
-  } else {
-    this.passwordInvalid = true;
     this.cancelSuccess = false;
   }
-}
 
-closeDialog() {
-  this.showConfirm = false;
-  this.confirmPassword = '';
-  this.passwordInvalid = false;
-  this.cancelSuccess = false;
-}
+  showImage(imageSrc: string) {
+    this.modalImageSrc = imageSrc;
+    this.showImageModal = true;
+  }
 
-showImage(imageSrc: string) {
-  this.modalImageSrc = imageSrc;
-  this.showImageModal = true;
-}
-
-closeImageModal() {
-  this.showImageModal = false;
-  this.modalImageSrc = '';
-}
+  closeImageModal() {
+    this.showImageModal = false;
+    this.modalImageSrc = '';
+  }
 
   showPlayerInfo(player: any) {
     alert(`Hier noch Funktion mit Backend machen`);
   }
 
-teamColors = new Map<string, string>();
-usedColors: string[] = [];
+  teamColors = new Map<string, string>();
+  usedColors: string[] = [];
 
-filteredPlayers() {
-  const query = this.searchQuery.toLowerCase();
-  return this.players.filter(player =>
-    player.name.toLowerCase().includes(query) ||
-    (player.team && player.team.toLowerCase().includes(query))
-  );
-}
-
-kickPlayer(event: MouseEvent, player: any) {
-  event.stopPropagation();
-  this.players = this.players.filter(p => p !== player);
-}
-
-addGuest() {
-  if (!this.guestName.trim()) return;
-
-  const newGuest = {
-    name: this.guestName.trim(),
-    team: this.guestTeam.trim() || '',
-    avatar: 'assets/images/default-profile.png'
-  };
-
-  this.players.push(newGuest);
-  this.guestName = '';
-  this.guestTeam = '';
-}
-
-countPlayersWithoutTeam() {
-  return this.players.filter(p => !p.team || p.team.trim() === '').length;
-}
-
-getTeamColor(team: string): string {
-  if (!team) return 'transparent';
-
-  if (!this.teamColors.has(team)) {
-    const newColor = this.generateUniqueColor();
-    this.teamColors.set(team, newColor);
+  filteredPlayers() {
+    const query = this.searchQuery.toLowerCase();
+    return this.players.filter(
+      (player) =>
+        player.name.toLowerCase().includes(query) ||
+        (player.team && player.team.toLowerCase().includes(query))
+    );
   }
 
-  return this.teamColors.get(team)!;
-}
-
-generateUniqueColor(): string {
-  const colors = [
-    '#f44336', '#2196f3', '#4caf50', '#ff9800',
-    '#9c27b0', '#00bcd4', '#ff5722', '#8bc34a',
-    '#ffc107', '#673ab7', '#3f51b5', '#e91e63'
-  ];
-
-  const available = colors.filter(c => !this.usedColors.includes(c));
-  const color = available.length ? available[0] : `#${Math.floor(Math.random()*16777215).toString(16)}`;
-
-  this.usedColors.push(color);
-  return color;
-}
-toggleEdit(event: MouseEvent, index: number) {
-  event.stopPropagation();
-  if (this.editIndex === index) {
-    this.editIndex = null;
-  } else {
-    this.editIndex = index;
+  kickPlayer(event: MouseEvent, player: any) {
+    event.stopPropagation();
+    this.players = this.players.filter((p) => p !== player);
   }
-}
+
+  addGuest() {
+    if (!this.guestName.trim()) return;
+
+    const newGuest = {
+      name: this.guestName.trim(),
+      team: this.guestTeam.trim() || '',
+      avatar: 'assets/images/default-profile.png',
+    };
+
+    this.players.push(newGuest);
+    this.guestName = '';
+    this.guestTeam = '';
+  }
+
+  countPlayersWithoutTeam() {
+    return this.players.filter((p) => !p.team || p.team.trim() === '').length;
+  }
+
+  getTeamColor(team: string): string {
+    if (!team) return 'transparent';
+
+    if (!this.teamColors.has(team)) {
+      const newColor = this.generateUniqueColor();
+      this.teamColors.set(team, newColor);
+    }
+
+    return this.teamColors.get(team)!;
+  }
+
+  generateUniqueColor(): string {
+    const colors = [
+      '#f44336',
+      '#2196f3',
+      '#4caf50',
+      '#ff9800',
+      '#9c27b0',
+      '#00bcd4',
+      '#ff5722',
+      '#8bc34a',
+      '#ffc107',
+      '#673ab7',
+      '#3f51b5',
+      '#e91e63',
+    ];
+
+    const available = colors.filter((c) => !this.usedColors.includes(c));
+    const color = available.length
+      ? available[0]
+      : `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+
+    this.usedColors.push(color);
+    return color;
+  }
+  toggleEdit(event: MouseEvent, index: number) {
+    event.stopPropagation();
+    if (this.editIndex === index) {
+      this.editIndex = null;
+    } else {
+      this.editIndex = index;
+    }
+  }
 
   addSponsor() {
     this.sponsors.push({ name: '', logoUrl: null });
-}
+  }
 
-addPartner() {
+  addPartner() {
     this.partners.push({ name: '', logoUrl: null });
-}
+  }
 
-deleteSponsor(index: number) {
-  this.sponsors.splice(index, 1);
-}
+  deleteSponsor(index: number) {
+    this.sponsors.splice(index, 1);
+  }
 
-deletePartner(index: number) {
-  this.partners.splice(index, 1);
-}
-
-
-
+  deletePartner(index: number) {
+    this.partners.splice(index, 1);
+  }
 
   isValidImage(file: File): boolean {
     const allowed = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
@@ -1030,10 +1051,7 @@ deletePartner(index: number) {
   }
 
   closeFullscreen(event?: Event) {
-    if (event) event.stopPropagation(); // Prevent close on inner click
+    if (event) event.stopPropagation();
     this.fullscreenImageUrl = null;
   }
 }
-
-
-

@@ -257,17 +257,14 @@ constructor(
     this.applyTranslations();  
     this.loadUserProfile(); 
 
-    // Check for saved tournaments in localStorage
     const savedTournaments = JSON.parse(localStorage.getItem('tournaments') || '[]');
     this.hasTournament = Array.isArray(savedTournaments) && savedTournaments.length > 0;
     this.tournamentService.tournament$.subscribe(t => {
-      // Also keep hasTournament true if there are saved tournaments
       const savedTournaments = JSON.parse(localStorage.getItem('tournaments') || '[]');
       this.hasTournament = !!t || (Array.isArray(savedTournaments) && savedTournaments.length > 0);
     });
   }
 
-  // Profil laden
   loadUserProfile() {
     this.isProfileLoading = true;
     this.userProfileService.getProfile().subscribe({
@@ -285,7 +282,6 @@ constructor(
     this.router.navigate(['/profile']);
   }
   
-  // Profil speichern (z.B. nach Bearbeitung)
   saveUserProfile(updated: { name: string; email: string; image?: File }) {
     this.isProfileLoading = true;
     this.userProfileService.updateProfile(updated).subscribe({

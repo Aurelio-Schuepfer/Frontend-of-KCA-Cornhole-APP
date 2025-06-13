@@ -1,4 +1,4 @@
-@use 'sass:color';
+@use "sass:color";
 
 .statistics-container {
   padding: 2rem;
@@ -54,96 +54,93 @@
   }
 }
 
-footer
-{
-margin-top: 1rem;
+footer {
+  margin-top: 1rem;
 }
 
 .kca-decoration {
-    width: 325px;
-    height: 325px;
-    margin-top: 5rem;
-    margin-left: auto;
-    margin-right: auto;
-    background: radial-gradient(circle at center, cyan, transparent 70%);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: var(--font);
-    font-size: 1.2rem;
-    color: var(--fg);
-    box-shadow: 0 0 20px cyan;
-    animation: floaty 3s ease-in-out infinite;
-    transition: all 0.3s ease-in-out;
+  width: 325px;
+  height: 325px;
+  margin-top: 5rem;
+  margin-left: auto;
+  margin-right: auto;
+  background: radial-gradient(circle at center, cyan, transparent 70%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font);
+  font-size: 1.2rem;
+  color: var(--fg);
+  box-shadow: 0 0 20px cyan;
+  animation: floaty 3s ease-in-out infinite;
+  transition: all 0.3s ease-in-out;
+}
+
+.kca-decoration::before {
+  content: "KCA";
+  font-weight: bold;
+  font-size: 4.5rem;
+  letter-spacing: 0.1rem;
+}
+
+.kca-decoration:hover {
+  box-shadow: 0 0 30px cyan;
+}
+
+@keyframes floaty {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@media (max-width: 1200px) {
+  .kca-decoration {
+    width: 250px;
+    height: 250px;
   }
 
   .kca-decoration::before {
-    content: 'KCA';
-    font-weight: bold;
-    font-size: 4.5rem;
-    letter-spacing: 0.1rem;
+    font-size: 4rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .kca-decoration {
+    width: 180px;
+    height: 180px;
+    margin-top: 4rem;
   }
 
-  .kca-decoration:hover {
-    box-shadow: 0 0 30px cyan;
+  h2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  @keyframes floaty {
-    0%, 100% {
-      transform: translateY(0px);
-    }
-    50% {
-      transform: translateY(-20px);
-    }
+  .kca-decoration::before {
+    font-size: 2.5rem;
   }
-  
-  @media (max-width: 1200px) {
-    .kca-decoration {
-      width: 250px;
-      height: 250px;
-    }
-  
-    .kca-decoration::before {
-      font-size: 4rem;
-    }
-  }
-  
-  @media (max-width: 768px) {
-    .kca-decoration {
-      width: 180px;
-      height: 180px;
-      margin-top: 4rem;
-    }
+}
 
-    h2
-    {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-  
-    .kca-decoration::before {
-      font-size: 2.5rem;
-    }
+@media (max-width: 480px) {
+  .kca-decoration {
+    width: 140px;
+    height: 140px;
+    margin-top: 4rem;
   }
-  
-  @media (max-width: 480px) {
-    .kca-decoration {
-      width: 140px;
-      height: 140px;
-      margin-top: 4rem;
-    }
-  
-    h2
-    {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
 
-    .kca-decoration::before {
-      font-size: 1.5rem;
-    }
+  h2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
-  
+
+  .kca-decoration::before {
+    font-size: 1.5rem;
+  }
+}

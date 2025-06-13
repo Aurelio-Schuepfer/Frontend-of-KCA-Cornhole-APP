@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { GlobalAuth } from '../global-auth';
-import { UserProfileService } from '../Services/user-profile.service'; 
+import { UserProfileService } from '../Services/user-profile.service';
 import { Router } from '@angular/router';
-import { jwtDecode } from "jwt-decode";
+import { jwtDecode } from 'jwt-decode';
 import { TournamentService } from '../Services/tournament.service';
 type LanguageCode = 'de' | 'en' | 'fr' | 'es';
 
@@ -10,7 +10,7 @@ type LanguageCode = 'de' | 'en' | 'fr' | 'es';
   selector: 'app-profile',
   standalone: false,
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss']
+  styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit {
   userProfile: any = null;
@@ -31,7 +31,7 @@ export class ProfileComponent implements OnInit {
     { code: 'de' as LanguageCode, label: 'Deutsch' },
     { code: 'en' as LanguageCode, label: 'English' },
     { code: 'fr' as LanguageCode, label: 'Français' },
-    { code: 'es' as LanguageCode, label: 'Español' }
+    { code: 'es' as LanguageCode, label: 'Español' },
   ];
 
   selectedLang: LanguageCode = 'en';
@@ -57,17 +57,22 @@ export class ProfileComponent implements OnInit {
       alreadyAccount: 'Schon registriert? Hier einloggen',
       noAccount: 'Kein Account? Hier registrieren',
       heroTitle: 'Spielen. Wettkämpfen. Gewinnen.',
-      heroSubtitle: 'Organisiere oder trete Cornhole-Turnieren ganz einfach bei – powered by KCA.',
+      heroSubtitle:
+        'Organisiere oder trete Cornhole-Turnieren ganz einfach bei – powered by KCA.',
       createTournamentBtn: 'Turnier erstellen',
       joinTournamentBtn: 'Turnier beitreten',
       feature1Title: '🏆 Eigenes Turnier erstellen',
-      feature1Text: 'Passe Ort, Zeit, Regeln, Teams und mehr an. Perfekt für lockere Spiele und Profi-Turniere.',
+      feature1Text:
+        'Passe Ort, Zeit, Regeln, Teams und mehr an. Perfekt für lockere Spiele und Profi-Turniere.',
       feature2Title: '🤝 Turnieren in deiner Nähe beitreten',
-      feature2Text: 'Finde lokale Events oder nimm an digitalen Matches teil. Im Team oder allein – du entscheidest.',
+      feature2Text:
+        'Finde lokale Events oder nimm an digitalen Matches teil. Im Team oder allein – du entscheidest.',
       feature3Title: '📊 Spielerstatistiken verfolgen',
-      feature3Text: 'Sieh Siege, Punkte und Leistungen in Echtzeit. Deine Stats, deine Reise, deine Story.',
+      feature3Text:
+        'Sieh Siege, Punkte und Leistungen in Echtzeit. Deine Stats, deine Reise, deine Story.',
       aboutAppTitle: 'Über KCA Cornhole Tournaments',
-      aboutAppText: 'KCA Cornhole Tournaments wurde für die Community gebaut. Ob Gartenpartie oder Arena-Championship – wir geben dir die Tools für ein episches Erlebnis.',
+      aboutAppText:
+        'KCA Cornhole Tournaments wurde für die Community gebaut. Ob Gartenpartie oder Arena-Championship – wir geben dir die Tools für ein episches Erlebnis.',
       privacyPolicy: 'Datenschutz',
       termsOfService: 'Nutzungsbedingungen',
       contact: 'Kontakt',
@@ -93,15 +98,16 @@ export class ProfileComponent implements OnInit {
       points: 'Erspielte Punkte',
       winRate: 'Siegquote',
       partner: 'Partner',
-      statsDescription: 'Hier findest du deine wichtigsten Cornhole-Statistiken:',
+      statsDescription:
+        'Hier findest du deine wichtigsten Cornhole-Statistiken:',
       statsLabels: {
         gamesPlayed: 'Alle Matches, die du gespielt hast.',
         matchesWon: 'Alle Matches, die du gewonnen hast.',
         matchesLost: 'Alle Matches, die du verloren hast.',
         points: 'Alle Punkte, die du insgesamt erzielt hast.',
         winRate: 'Dein prozentualer Anteil an Siegen.',
-        partner: 'Dein häufigster Spielpartner.'
-      }
+        partner: 'Dein häufigster Spielpartner.',
+      },
     },
     en: {
       home: 'Home',
@@ -122,17 +128,22 @@ export class ProfileComponent implements OnInit {
       alreadyAccount: 'Already have an account? Login here',
       noAccount: 'No account? Register here',
       heroTitle: 'Play. Compete. Win.',
-      heroSubtitle: 'Organize or join Cornhole tournaments with ease – powered by KCA.',
+      heroSubtitle:
+        'Organize or join Cornhole tournaments with ease – powered by KCA.',
       createTournamentBtn: 'Create Tournament',
       joinTournamentBtn: 'Join Tournament',
       feature1Title: '🏆 Create Your Own Tournament',
-      feature1Text: 'Customize location, time, rules, teams, and more. Perfect for both casual games and pro brackets.',
+      feature1Text:
+        'Customize location, time, rules, teams, and more. Perfect for both casual games and pro brackets.',
       feature2Title: '🤝 Join Tournaments Near You',
-      feature2Text: 'Find local events or join digital matchups. Team up or go solo – you choose your game.',
+      feature2Text:
+        'Find local events or join digital matchups. Team up or go solo – you choose your game.',
       feature3Title: '📊 Track Player Stats',
-      feature3Text: 'See wins, points, and performance evolve in real time. Your stats, your journey, your story.',
+      feature3Text:
+        'See wins, points, and performance evolve in real time. Your stats, your journey, your story.',
       aboutAppTitle: 'About KCA Cornhole Tournaments',
-      aboutAppText: 'KCA Cornhole Tournaments was built for the community. Whether you\'re hosting backyard battles or arena-level championships – we give you the tools to make it epic.',
+      aboutAppText:
+        "KCA Cornhole Tournaments was built for the community. Whether you're hosting backyard battles or arena-level championships – we give you the tools to make it epic.",
       privacyPolicy: 'Privacy Policy',
       termsOfService: 'Terms of Service',
       contact: 'Contact',
@@ -165,8 +176,8 @@ export class ProfileComponent implements OnInit {
         matchesLost: 'All matches you have lost.',
         points: 'All points you have scored in total.',
         winRate: 'Your win percentage.',
-        partner: 'Your most frequent partner.'
-      }
+        partner: 'Your most frequent partner.',
+      },
     },
     fr: {
       home: 'Accueil',
@@ -187,19 +198,24 @@ export class ProfileComponent implements OnInit {
       alreadyAccount: 'Déjà inscrit ? Se connecter ici',
       noAccount: 'Pas de compte ? S’inscrire ici',
       heroTitle: 'Jouer. Concourir. Gagner.',
-      heroSubtitle: 'Organisez ou rejoignez des tournois de Cornhole facilement – propulsé par KCA.',
+      heroSubtitle:
+        'Organisez ou rejoignez des tournois de Cornhole facilement – propulsé par KCA.',
       createTournamentBtn: 'Créer un tournoi',
       joinTournamentBtn: 'Rejoindre un tournoi',
       feature1Title: '🏆 Créez votre propre tournoi',
-      feature1Text: 'Personnalisez le lieu, l\'heure, les règles, les équipes et plus encore. Parfait pour les parties amicales et les tournois pro.',
+      feature1Text:
+        "Personnalisez le lieu, l'heure, les règles, les équipes et plus encore. Parfait pour les parties amicales et les tournois pro.",
       feature2Title: '🤝 Rejoignez des tournois près de chez vous',
-      feature2Text: 'Trouvez des événements locaux ou participez à des matchs numériques. En équipe ou en solo – à vous de choisir.',
+      feature2Text:
+        'Trouvez des événements locaux ou participez à des matchs numériques. En équipe ou en solo – à vous de choisir.',
       feature3Title: '📊 Suivez les statistiques des joueurs',
-      feature3Text: 'Voyez les victoires, les points et les performances évoluer en temps réel. Vos stats, votre parcours, votre histoire.',
+      feature3Text:
+        'Voyez les victoires, les points et les performances évoluer en temps réel. Vos stats, votre parcours, votre histoire.',
       aboutAppTitle: 'À propos de KCA Cornhole Tournaments',
-      aboutAppText: 'KCA Cornhole Tournaments a été créé pour la communauté. Que vous organisiez des parties dans le jardin ou des championnats en arène – nous vous donnons les outils pour rendre cela épique.',
+      aboutAppText:
+        'KCA Cornhole Tournaments a été créé pour la communauté. Que vous organisiez des parties dans le jardin ou des championnats en arène – nous vous donnons les outils pour rendre cela épique.',
       privacyPolicy: 'Politique de confidentialité',
-      termsOfService: 'Conditions d\'utilisation',
+      termsOfService: "Conditions d'utilisation",
       contact: 'Contact',
       rememberMe: 'Se souvenir de moi',
       passwordReset: 'Mot de passe oublié ?',
@@ -214,7 +230,7 @@ export class ProfileComponent implements OnInit {
       passwordChanged: 'Mot de passe changé !',
       changeProfileImage: 'Changer la photo de profil',
       editName: 'Modifier le nom',
-      editEmail: 'Modifier l\'e-mail',
+      editEmail: "Modifier l'e-mail",
       editBio: 'Modifier la biographie',
       bio: 'Biographie',
       gamesPlayed: 'Parties jouées',
@@ -223,15 +239,16 @@ export class ProfileComponent implements OnInit {
       points: 'Points marqués',
       winRate: 'Taux de victoire',
       partner: 'Partenaire',
-      statsDescription: 'Voici vos statistiques Cornhole les plus importantes :',
+      statsDescription:
+        'Voici vos statistiques Cornhole les plus importantes :',
       statsLabels: {
         gamesPlayed: 'Toutes les parties que vous avez jouées.',
         matchesWon: 'Toutes les parties que vous avez gagnées.',
         matchesLost: 'Toutes les parties que vous avez perdues.',
         points: 'Tous les points que vous avez marqués au total.',
         winRate: 'Votre pourcentage de victoires.',
-        partner: 'Votre partenaire le plus fréquent.'
-      }
+        partner: 'Votre partenaire le plus fréquent.',
+      },
     },
     es: {
       home: 'Inicio',
@@ -252,17 +269,22 @@ export class ProfileComponent implements OnInit {
       alreadyAccount: '¿Ya tienes cuenta? Inicia sesión aquí',
       noAccount: '¿No tienes cuenta? Regístrate aquí',
       heroTitle: 'Jugar. Competir. Ganar.',
-      heroSubtitle: 'Organiza o únete a torneos de Cornhole fácilmente – powered by KCA.',
+      heroSubtitle:
+        'Organiza o únete a torneos de Cornhole fácilmente – powered by KCA.',
       createTournamentBtn: 'Crear torneo',
       joinTournamentBtn: 'Unirse a un torneo',
       feature1Title: '🏆 Crea tu propio torneo',
-      feature1Text: 'Personaliza ubicación, hora, reglas, equipos y más. Perfecto para juegos casuales y torneos profesionales.',
+      feature1Text:
+        'Personaliza ubicación, hora, reglas, equipos y más. Perfecto para juegos casuales y torneos profesionales.',
       feature2Title: '🤝 Únete a torneos cerca de ti',
-      feature2Text: 'Encuentra eventos locales o únete a partidas digitales. En equipo o solo – tú eliges.',
+      feature2Text:
+        'Encuentra eventos locales o únete a partidas digitales. En equipo o solo – tú eliges.',
       feature3Title: '📊 Sigue las estadísticas de los jugadores',
-      feature3Text: 'Mira victorias, puntos y rendimiento en tiempo real. Tus estadísticas, tu viaje, tu historia.',
+      feature3Text:
+        'Mira victorias, puntos y rendimiento en tiempo real. Tus estadísticas, tu viaje, tu historia.',
       aboutAppTitle: 'Sobre KCA Cornhole Tournaments',
-      aboutAppText: 'KCA Cornhole Tournaments fue creado para la comunidad. Ya sea en el jardín o en campeonatos de arena – te damos las herramientas para hacerlo épico.',
+      aboutAppText:
+        'KCA Cornhole Tournaments fue creado para la comunidad. Ya sea en el jardín o en campeonatos de arena – te damos las herramientas para hacerlo épico.',
       privacyPolicy: 'Política de privacidad',
       termsOfService: 'Términos de servicio',
       contact: 'Contacto',
@@ -288,16 +310,17 @@ export class ProfileComponent implements OnInit {
       points: 'Puntos conseguidos',
       winRate: 'Porcentaje de victorias',
       partner: 'Compañero',
-      statsDescription: 'Aquí están tus estadísticas más importantes de Cornhole:',
+      statsDescription:
+        'Aquí están tus estadísticas más importantes de Cornhole:',
       statsLabels: {
         gamesPlayed: 'Todas las partidas que has jugado.',
         matchesWon: 'Todas las partidas que has ganado.',
         matchesLost: 'Todas las partidas que has perdido.',
         points: 'Todos los puntos que has conseguido en total.',
         winRate: 'Tu porcentaje de victorias.',
-        partner: 'Tu compañero más frecuente.'
-      }
-    }
+        partner: 'Tu compañero más frecuente.',
+      },
+    },
   };
 
   t = this.translations[this.selectedLang];
@@ -318,18 +341,21 @@ export class ProfileComponent implements OnInit {
     public globalAuth: GlobalAuth,
     private userProfileService: UserProfileService,
     private router: Router,
-    private tournamentService: TournamentService,
-
+    private tournamentService: TournamentService
   ) {}
 
   ngOnInit(): void {
-    // Check for saved tournaments in localStorage
-    const savedTournaments = JSON.parse(localStorage.getItem('tournaments') || '[]');
-    this.hasTournament = Array.isArray(savedTournaments) && savedTournaments.length > 0;
-    this.tournamentService.tournament$.subscribe(t => {
-      // Also keep hasTournament true if there are saved tournaments
-      const savedTournaments = JSON.parse(localStorage.getItem('tournaments') || '[]');
-      this.hasTournament = !!t || (Array.isArray(savedTournaments) && savedTournaments.length > 0);
+    const savedTournaments = JSON.parse(
+      localStorage.getItem('tournaments') || '[]'
+    );
+    this.hasTournament =
+      Array.isArray(savedTournaments) && savedTournaments.length > 0;
+    this.tournamentService.tournament$.subscribe((t) => {
+      const savedTournaments = JSON.parse(
+        localStorage.getItem('tournaments') || '[]'
+      );
+      this.hasTournament =
+        !!t || (Array.isArray(savedTournaments) && savedTournaments.length > 0);
     });
     this.setInitialTheme();
     const saved = localStorage.getItem('lang');
@@ -338,27 +364,33 @@ export class ProfileComponent implements OnInit {
     }
     this.applyTranslations();
 
-    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+    const token =
+      localStorage.getItem('token') || sessionStorage.getItem('token');
     if (token) {
       try {
         const decoded: any = jwtDecode(token);
-        console.log('Decoded JWT:', decoded); 
-        this.username = decoded['unique_name'] || decoded['name'] || decoded['sub'] || '';
+        console.log('Decoded JWT:', decoded);
+        this.username =
+          decoded['unique_name'] || decoded['name'] || decoded['sub'] || '';
         this.isLoggedIn = true;
         this.userProfile = {
-          name: decoded['unique_name'] || decoded['name'] || decoded['sub'] || '',
-          email: decoded['email'] || decoded['mail'] || decoded['user_email'] || '', 
-          imageUrl: localStorage.getItem('profileImageUrl') || 'assets/images/default-profile.png',
+          name:
+            decoded['unique_name'] || decoded['name'] || decoded['sub'] || '',
+          email:
+            decoded['email'] || decoded['mail'] || decoded['user_email'] || '',
+          imageUrl:
+            localStorage.getItem('profileImageUrl') ||
+            'assets/images/default-profile.png',
           gamesPlayed: decoded['gamesPlayed'] || 0,
           matchesWon: decoded['matchesWon'] || 0,
           matchesLost: decoded['matchesLost'] || 0,
           points: decoded['points'] || 0,
           winRate: decoded['winRate'] || 0,
           partner: decoded['partner'] || '',
-          bio: decoded['bio'] || ''
+          bio: decoded['bio'] || '',
         };
         this.userProfileService.getProfile().subscribe({
-          next: data => {
+          next: (data) => {
             console.log('Backend-Profile:', data);
             let backendEmail = data?.email || data?.mail || data?.user_email;
             this.userProfile = {
@@ -366,10 +398,10 @@ export class ProfileComponent implements OnInit {
               email: backendEmail || this.userProfile.email,
               name: data?.name || this.userProfile.name,
               bio: data?.bio || this.userProfile.bio,
-              imageUrl: data?.imageUrl || this.userProfile.imageUrl
+              imageUrl: data?.imageUrl || this.userProfile.imageUrl,
             };
           },
-          error: () => {}
+          error: () => {},
         });
       } catch (e) {
         this.username = '';
@@ -380,19 +412,21 @@ export class ProfileComponent implements OnInit {
   loadProfile() {
     this.isLoading = true;
     this.userProfileService.getProfile().subscribe({
-      next: data => {
+      next: (data) => {
         if (!data || !data.name) {
           this.userProfile = {
             name: this.username || 'Demo User',
             email: this.email || 'demo@example.com',
-            imageUrl: localStorage.getItem('profileImageUrl') || 'assets/images/default-profile.png',
+            imageUrl:
+              localStorage.getItem('profileImageUrl') ||
+              'assets/images/default-profile.png',
             gamesPlayed: 12,
             matchesWon: 5,
             matchesLost: 7,
             points: 123,
             winRate: 41,
             partner: 'Erika Musterfrau',
-            bio: 'Cornhole-Fan seit 2015.'
+            bio: 'Cornhole-Fan seit 2015.',
           };
         } else {
           this.userProfile = data;
@@ -407,17 +441,19 @@ export class ProfileComponent implements OnInit {
         this.userProfile = {
           name: this.username || 'Demo User',
           email: this.email || 'demo@example.com',
-          imageUrl: localStorage.getItem('profileImageUrl') || 'assets/images/default-profile.png',
+          imageUrl:
+            localStorage.getItem('profileImageUrl') ||
+            'assets/images/default-profile.png',
           gamesPlayed: 12,
           matchesWon: 5,
           matchesLost: 7,
           points: 123,
           winRate: 41,
           partner: 'Erika Musterfrau',
-          bio: 'Cornhole-Fan seit 2015.'
+          bio: 'Cornhole-Fan seit 2015.',
         };
         this.isLoading = false;
-      }
+      },
     });
   }
 
@@ -444,7 +480,7 @@ export class ProfileComponent implements OnInit {
     this.pwChanged = true;
     this.showChangePw = false;
     this.newPassword = '';
-    setTimeout(() => this.pwChanged = false, 2000);
+    setTimeout(() => (this.pwChanged = false), 2000);
   }
 
   requestReset() {
@@ -455,7 +491,7 @@ export class ProfileComponent implements OnInit {
       },
       error: () => {
         alert('Error sending the request link please check the Email');
-      }
+      },
     });
   }
 
@@ -496,11 +532,16 @@ export class ProfileComponent implements OnInit {
 
   getFlagUrl(lang: string): string {
     switch (lang) {
-      case 'de': return 'https://flagcdn.com/w40/de.png';
-      case 'en': return 'https://flagcdn.com/w40/gb.png';
-      case 'fr': return 'https://flagcdn.com/w40/fr.png';
-      case 'es': return 'https://flagcdn.com/w40/es.png';
-      default: return '';
+      case 'de':
+        return 'https://flagcdn.com/w40/de.png';
+      case 'en':
+        return 'https://flagcdn.com/w40/gb.png';
+      case 'fr':
+        return 'https://flagcdn.com/w40/fr.png';
+      case 'es':
+        return 'https://flagcdn.com/w40/es.png';
+      default:
+        return '';
     }
   }
 
@@ -517,7 +558,8 @@ export class ProfileComponent implements OnInit {
     let username = '';
     try {
       const decoded: any = jwtDecode(token);
-      username = decoded['unique_name'] || decoded['name'] || decoded['sub'] || '';
+      username =
+        decoded['unique_name'] || decoded['name'] || decoded['sub'] || '';
     } catch (e) {
       username = '';
     }

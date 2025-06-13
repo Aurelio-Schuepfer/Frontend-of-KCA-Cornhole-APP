@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GlobalAuth } from '../../global-auth';
-import { UserProfileService } from '../../Services/user-profile.service'; 
+import { UserProfileService } from '../../Services/user-profile.service';
 import { Router } from '@angular/router';
 import { TournamentService } from '../../Services/tournament.service';
 type LanguageCode = 'de' | 'en' | 'fr' | 'es';
@@ -8,7 +8,7 @@ type LanguageCode = 'de' | 'en' | 'fr' | 'es';
   selector: 'app-statshome',
   standalone: false,
   templateUrl: './statshome.component.html',
-  styleUrl: './statshome.component.scss'
+  styleUrl: './statshome.component.scss',
 })
 export class StatshomeComponent implements OnInit {
   isNavOpen: boolean = false;
@@ -22,7 +22,7 @@ export class StatshomeComponent implements OnInit {
     { code: 'de' as LanguageCode, label: 'Deutsch' },
     { code: 'en' as LanguageCode, label: 'English' },
     { code: 'fr' as LanguageCode, label: 'Français' },
-    { code: 'es' as LanguageCode, label: 'Español' }
+    { code: 'es' as LanguageCode, label: 'Español' },
   ];
 
   selectedLang: LanguageCode = 'en';
@@ -51,7 +51,8 @@ export class StatshomeComponent implements OnInit {
       statsPlayerTitle: 'Spielerstatistiken',
       statsPlayerDesc: 'Leistung, Punkte, Turnierverlauf und Ranglisten.',
       statsWebsiteTitle: 'Website-Statistiken',
-      statsWebsiteDesc: 'Gesamtzahl der Turniere, Teilnehmer und Vertrauenswürdigkeit der Plattform.',
+      statsWebsiteDesc:
+        'Gesamtzahl der Turniere, Teilnehmer und Vertrauenswürdigkeit der Plattform.',
       privacyPolicy: 'Datenschutz',
       termsOfService: 'Nutzungsbedingungen',
       contact: 'Kontakt',
@@ -89,7 +90,8 @@ export class StatshomeComponent implements OnInit {
       statsPlayerTitle: 'Player Statistics',
       statsPlayerDesc: 'Performance, points, tournament history and rankings.',
       statsWebsiteTitle: 'Website Insights',
-      statsWebsiteDesc: 'Total tournaments, participants and trusted by players data.',
+      statsWebsiteDesc:
+        'Total tournaments, participants and trusted by players data.',
       privacyPolicy: 'Privacy Policy',
       termsOfService: 'Terms of Service',
       contact: 'Contact',
@@ -125,11 +127,13 @@ export class StatshomeComponent implements OnInit {
       noAccount: 'Pas de compte ? S’inscrire ici',
       statsTitle: 'Choisissez le type de statistiques',
       statsPlayerTitle: 'Statistiques du joueur',
-      statsPlayerDesc: 'Performance, points, historique des tournois et classements.',
+      statsPlayerDesc:
+        'Performance, points, historique des tournois et classements.',
       statsWebsiteTitle: 'Statistiques du site',
-      statsWebsiteDesc: 'Nombre total de tournois, participants et confiance des joueurs.',
+      statsWebsiteDesc:
+        'Nombre total de tournois, participants et confiance des joueurs.',
       privacyPolicy: 'Politique de confidentialité',
-      termsOfService: 'Conditions d\'utilisation',
+      termsOfService: "Conditions d'utilisation",
       contact: 'Contact',
       rememberMe: 'Se souvenir de moi',
       passwordReset: 'Mot de passe oublié ?',
@@ -163,9 +167,11 @@ export class StatshomeComponent implements OnInit {
       noAccount: '¿No tienes cuenta? Regístrate aquí',
       statsTitle: 'Elige el tipo de estadísticas',
       statsPlayerTitle: 'Estadísticas del jugador',
-      statsPlayerDesc: 'Rendimiento, puntos, historial de torneos y clasificaciones.',
+      statsPlayerDesc:
+        'Rendimiento, puntos, historial de torneos y clasificaciones.',
       statsWebsiteTitle: 'Estadísticas del sitio web',
-      statsWebsiteDesc: 'Total de torneos, participantes y datos de confianza de los jugadores.',
+      statsWebsiteDesc:
+        'Total de torneos, participantes y datos de confianza de los jugadores.',
       privacyPolicy: 'Política de privacidad',
       termsOfService: 'Términos de servicio',
       contact: 'Contacto',
@@ -180,12 +186,12 @@ export class StatshomeComponent implements OnInit {
       save: 'Guardar',
       cancel: 'Cancelar',
       passwordChanged: 'Contraseña cambiada!',
-    }
+    },
   };
 
   t = this.translations[this.selectedLang];
 
- userProfile: any = null;
+  userProfile: any = null;
   isProfileLoading = false;
 
   showResetForm = false;
@@ -196,8 +202,7 @@ export class StatshomeComponent implements OnInit {
     public globalAuth: GlobalAuth,
     private userProfileService: UserProfileService,
     private router: Router,
-    private tournamentService: TournamentService,
-
+    private tournamentService: TournamentService
   ) {}
 
   ngOnInit(): void {
@@ -206,43 +211,45 @@ export class StatshomeComponent implements OnInit {
     if (saved && ['de', 'en', 'fr', 'es'].includes(saved)) {
       this.selectedLang = saved as LanguageCode;
     }
-    this.applyTranslations();  
-    this.loadUserProfile(); 
+    this.applyTranslations();
+    this.loadUserProfile();
 
-    // Check for saved tournaments in localStorage
-    const savedTournaments = JSON.parse(localStorage.getItem('tournaments') || '[]');
-    this.hasTournament = Array.isArray(savedTournaments) && savedTournaments.length > 0;
+    const savedTournaments = JSON.parse(
+      localStorage.getItem('tournaments') || '[]'
+    );
+    this.hasTournament =
+      Array.isArray(savedTournaments) && savedTournaments.length > 0;
 
-    this.tournamentService.tournament$.subscribe(t => {
-      // Also keep hasTournament true if there are saved tournaments
-      const savedTournaments = JSON.parse(localStorage.getItem('tournaments') || '[]');
-      this.hasTournament = !!t || (Array.isArray(savedTournaments) && savedTournaments.length > 0);
+    this.tournamentService.tournament$.subscribe((t) => {
+      const savedTournaments = JSON.parse(
+        localStorage.getItem('tournaments') || '[]'
+      );
+      this.hasTournament =
+        !!t || (Array.isArray(savedTournaments) && savedTournaments.length > 0);
     });
   }
 
-  // Profil laden
   loadUserProfile() {
     this.isProfileLoading = true;
     this.userProfileService.getProfile().subscribe({
-      next: data => {
+      next: (data) => {
         this.userProfile = data;
         this.isProfileLoading = false;
       },
       error: () => {
         this.isProfileLoading = false;
-      }
+      },
     });
   }
 
-   goToProfile() {
+  goToProfile() {
     this.router.navigate(['/profile']);
   }
 
-  // Profil speichern (z.B. nach Bearbeitung)
   saveUserProfile(updated: { name: string; email: string; image?: File }) {
     this.isProfileLoading = true;
     this.userProfileService.updateProfile(updated).subscribe({
-      next: data => {
+      next: (data) => {
         this.userProfile = data;
         this.isProfileLoading = false;
         alert('Profil saved!');
@@ -250,7 +257,7 @@ export class StatshomeComponent implements OnInit {
       error: () => {
         this.isProfileLoading = false;
         alert('Error Saving!');
-      }
+      },
     });
   }
 
@@ -262,7 +269,7 @@ export class StatshomeComponent implements OnInit {
       },
       error: () => {
         alert('Error sending the request link please check the Email');
-      }
+      },
     });
   }
 
@@ -308,14 +315,19 @@ export class StatshomeComponent implements OnInit {
   }
 
   getFlagUrl(lang: string): string {
-  switch (lang) {
-    case 'de': return 'https://flagcdn.com/w40/de.png';
-    case 'en': return 'https://flagcdn.com/w40/gb.png';
-    case 'fr': return 'https://flagcdn.com/w40/fr.png';
-    case 'es': return 'https://flagcdn.com/w40/es.png';
-    default: return '';
-}
-}
+    switch (lang) {
+      case 'de':
+        return 'https://flagcdn.com/w40/de.png';
+      case 'en':
+        return 'https://flagcdn.com/w40/gb.png';
+      case 'fr':
+        return 'https://flagcdn.com/w40/fr.png';
+      case 'es':
+        return 'https://flagcdn.com/w40/es.png';
+      default:
+        return '';
+    }
+  }
 
   applyTranslations() {
     this.t = this.translations[this.selectedLang];

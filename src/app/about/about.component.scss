@@ -1,4 +1,4 @@
-@use 'sass:color';
+@use "sass:color";
 
 .about-page {
   padding: 3rem 1rem;
@@ -21,13 +21,12 @@
       color: var(--fg);
     }
   }
-  
 
   .founders,
   .mission,
   .community {
     margin-bottom: 2rem;
-    
+
     h2 {
       font-size: 1.8rem;
       color: var(--accent);
@@ -52,7 +51,7 @@
   }
 
   .kca-decoration {
-    content: 'KCA';
+    content: "KCA";
     font-size: 5rem;
     font-weight: bold;
     color: var(--accent);
@@ -65,15 +64,14 @@
   }
 }
 
-footer
-{
-margin-top: 1rem;
+footer {
+  margin-top: 1rem;
 }
 
 @media (max-width: 1200px) {
   .about-page {
     padding: 2rem 1rem;
-    
+
     .about-header h1 {
       font-size: 2rem;
     }
@@ -101,4 +99,3 @@ margin-top: 1rem;
     font-size: 1.4rem;
   }
 }
-

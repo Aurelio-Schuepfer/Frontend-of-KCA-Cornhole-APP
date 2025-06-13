@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GlobalAuth } from '../../global-auth';
-import { UserProfileService } from '../../Services/user-profile.service'; 
+import { UserProfileService } from '../../Services/user-profile.service';
 import { Router } from '@angular/router';
 import { TournamentService } from '../../Services/tournament.service';
 type LanguageCode = 'de' | 'en' | 'fr' | 'es';
@@ -8,7 +8,7 @@ type LanguageCode = 'de' | 'en' | 'fr' | 'es';
   selector: 'app-statssite',
   standalone: false,
   templateUrl: './statssite.component.html',
-  styleUrl: './statssite.component.scss'
+  styleUrl: './statssite.component.scss',
 })
 export class StatssiteComponent {
   isNavOpen: boolean = false;
@@ -22,7 +22,7 @@ export class StatssiteComponent {
     { code: 'de' as LanguageCode, label: 'Deutsch' },
     { code: 'en' as LanguageCode, label: 'English' },
     { code: 'fr' as LanguageCode, label: 'Français' },
-    { code: 'es' as LanguageCode, label: 'Español' }
+    { code: 'es' as LanguageCode, label: 'Español' },
   ];
 
   selectedLang: LanguageCode = 'en';
@@ -48,19 +48,24 @@ export class StatssiteComponent {
       alreadyAccount: 'Schon registriert? Hier einloggen',
       noAccount: 'Kein Account? Hier registrieren',
       statsSiteTitle: 'Website Statistiken',
-      statsSiteDesc: 'Entdecke wichtige Statistiken und Einblicke zu KCA Cornhole Turnieren, Spieleraktivität und mehr!',
+      statsSiteDesc:
+        'Entdecke wichtige Statistiken und Einblicke zu KCA Cornhole Turnieren, Spieleraktivität und mehr!',
       totalPlayers: 'Spieler insgesamt',
-      totalPlayersDesc: 'Die Gesamtzahl der auf unserer Plattform registrierten Spieler.',
+      totalPlayersDesc:
+        'Die Gesamtzahl der auf unserer Plattform registrierten Spieler.',
       totalTournaments: 'Turniere insgesamt',
-      totalTournamentsDesc: 'Die Anzahl der bisher auf unserer Plattform durchgeführten Turniere.',
+      totalTournamentsDesc:
+        'Die Anzahl der bisher auf unserer Plattform durchgeführten Turniere.',
       matchesPlayed: 'Gespielte Spiele',
-      matchesPlayedDesc: 'Die Gesamtzahl der gespielten Spiele in allen Turnieren.',
+      matchesPlayedDesc:
+        'Die Gesamtzahl der gespielten Spiele in allen Turnieren.',
       topPlayer: 'Top Spieler',
       topPlayerDesc: 'Der Spieler mit den meisten Siegen.',
       avgParticipants: 'Ø Teilnehmer pro Turnier',
       avgParticipantsDesc: 'Die durchschnittliche Teilnehmerzahl pro Turnier.',
       trustedUsers: 'Vertrauenswürdige Nutzer',
-      trustedUsersDesc: 'Nutzer, die unserer Plattform vertrauen und sich regelmäßig einloggen.',
+      trustedUsersDesc:
+        'Nutzer, die unserer Plattform vertrauen und sich regelmäßig einloggen.',
       privacyPolicy: 'Datenschutz',
       termsOfService: 'Nutzungsbedingungen',
       contact: 'Kontakt',
@@ -95,13 +100,17 @@ export class StatssiteComponent {
       alreadyAccount: 'Already have an account? Login here',
       noAccount: 'No account? Register here',
       statsSiteTitle: 'Website Insights',
-      statsSiteDesc: 'Discover key statistics and insights into KCA Cornhole tournaments, player activity, and more!',
+      statsSiteDesc:
+        'Discover key statistics and insights into KCA Cornhole tournaments, player activity, and more!',
       totalPlayers: 'Total Players',
-      totalPlayersDesc: 'The total number of players registered on our platform.',
+      totalPlayersDesc:
+        'The total number of players registered on our platform.',
       totalTournaments: 'Total Tournaments',
-      totalTournamentsDesc: 'The number of tournaments held on our platform so far.',
+      totalTournamentsDesc:
+        'The number of tournaments held on our platform so far.',
       matchesPlayed: 'Matches Played',
-      matchesPlayedDesc: 'The total number of matches played in all tournaments.',
+      matchesPlayedDesc:
+        'The total number of matches played in all tournaments.',
       topPlayer: 'Top Player',
       topPlayerDesc: 'The player with the highest number of victories.',
       avgParticipants: 'Avg. Participants per Tournament',
@@ -142,21 +151,26 @@ export class StatssiteComponent {
       alreadyAccount: 'Déjà inscrit ? Se connecter ici',
       noAccount: 'Pas de compte ? S’inscrire ici',
       statsSiteTitle: 'Statistiques du site',
-      statsSiteDesc: 'Découvrez les statistiques clés et les informations sur les tournois KCA Cornhole, l\'activité des joueurs et plus encore !',
+      statsSiteDesc:
+        "Découvrez les statistiques clés et les informations sur les tournois KCA Cornhole, l'activité des joueurs et plus encore !",
       totalPlayers: 'Joueurs au total',
-      totalPlayersDesc: 'Le nombre total de joueurs inscrits sur notre plateforme.',
+      totalPlayersDesc:
+        'Le nombre total de joueurs inscrits sur notre plateforme.',
       totalTournaments: 'Tournois au total',
-      totalTournamentsDesc: 'Le nombre de tournois organisés sur notre plateforme à ce jour.',
+      totalTournamentsDesc:
+        'Le nombre de tournois organisés sur notre plateforme à ce jour.',
       matchesPlayed: 'Matchs joués',
-      matchesPlayedDesc: 'Le nombre total de matchs joués dans tous les tournois.',
+      matchesPlayedDesc:
+        'Le nombre total de matchs joués dans tous les tournois.',
       topPlayer: 'Meilleur joueur',
       topPlayerDesc: 'Le joueur avec le plus de victoires.',
       avgParticipants: 'Participants moyens par tournoi',
       avgParticipantsDesc: 'Le nombre moyen de participants par tournoi.',
       trustedUsers: 'Utilisateurs de confiance',
-      trustedUsersDesc: 'Utilisateurs qui font confiance à notre plateforme et se connectent régulièrement.',
+      trustedUsersDesc:
+        'Utilisateurs qui font confiance à notre plateforme et se connectent régulièrement.',
       privacyPolicy: 'Politique de confidentialité',
-      termsOfService: 'Conditions d\'utilisation',
+      termsOfService: "Conditions d'utilisation",
       contact: 'Contact',
       rememberMe: 'Se souvenir de moi',
       passwordReset: 'Mot de passe oublié ?',
@@ -189,19 +203,24 @@ export class StatssiteComponent {
       alreadyAccount: '¿Ya tienes cuenta? Inicia sesión aquí',
       noAccount: '¿No tienes cuenta? Regístrate aquí',
       statsSiteTitle: 'Estadísticas del sitio web',
-      statsSiteDesc: 'Descubre estadísticas clave e información sobre los torneos de KCA Cornhole, la actividad de los jugadores y más.',
+      statsSiteDesc:
+        'Descubre estadísticas clave e información sobre los torneos de KCA Cornhole, la actividad de los jugadores y más.',
       totalPlayers: 'Jugadores totales',
-      totalPlayersDesc: 'El número total de jugadores registrados en nuestra plataforma.',
+      totalPlayersDesc:
+        'El número total de jugadores registrados en nuestra plataforma.',
       totalTournaments: 'Torneos totales',
-      totalTournamentsDesc: 'El número de torneos celebrados en nuestra plataforma hasta ahora.',
+      totalTournamentsDesc:
+        'El número de torneos celebrados en nuestra plataforma hasta ahora.',
       matchesPlayed: 'Partidos jugados',
-      matchesPlayedDesc: 'El número total de partidos jugados en todos los torneos.',
+      matchesPlayedDesc:
+        'El número total de partidos jugados en todos los torneos.',
       topPlayer: 'Mejor jugador',
       topPlayerDesc: 'El jugador con el mayor número de victorias.',
       avgParticipants: 'Prom. participantes por torneo',
       avgParticipantsDesc: 'El número promedio de participantes por torneo.',
       trustedUsers: 'Usuarios de confianza',
-      trustedUsersDesc: 'Usuarios que confían y acceden regularmente a nuestra plataforma.',
+      trustedUsersDesc:
+        'Usuarios que confían y acceden regularmente a nuestra plataforma.',
       privacyPolicy: 'Política de privacidad',
       termsOfService: 'Términos de servicio',
       contact: 'Contacto',
@@ -216,12 +235,12 @@ export class StatssiteComponent {
       save: 'Guardar',
       cancel: 'Cancelar',
       passwordChanged: 'Contraseña cambiada!',
-    }
+    },
   };
 
   t = this.translations[this.selectedLang];
 
- userProfile: any = null;
+  userProfile: any = null;
   isProfileLoading = false;
 
   showResetForm = false;
@@ -232,69 +251,72 @@ export class StatssiteComponent {
     public globalAuth: GlobalAuth,
     private userProfileService: UserProfileService,
     private router: Router,
-    private tournamentService: TournamentService,
-
+    private tournamentService: TournamentService
   ) {}
 
   ngAfterViewInit() {
-  const cards = document.querySelectorAll('.insight-card');
+    const cards = document.querySelectorAll('.insight-card');
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        (entry.target as HTMLElement).classList.add('visible');
-        observer.unobserve(entry.target);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            (entry.target as HTMLElement).classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.2,
       }
-    });
-  }, {
-    threshold: 0.2
-  });
+    );
 
-  cards.forEach(card => observer.observe(card));
-}
+    cards.forEach((card) => observer.observe(card));
+  }
 
-
-ngOnInit(): void {
+  ngOnInit(): void {
     this.setInitialTheme();
     const saved = localStorage.getItem('lang');
     if (saved && ['de', 'en', 'fr', 'es'].includes(saved)) {
       this.selectedLang = saved as LanguageCode;
     }
-    this.applyTranslations();  
-      this.loadUserProfile(); 
-    // Check for saved tournaments in localStorage
-    const savedTournaments = JSON.parse(localStorage.getItem('tournaments') || '[]');
-    this.hasTournament = Array.isArray(savedTournaments) && savedTournaments.length > 0;
-    this.tournamentService.tournament$.subscribe(t => {
-      // Also keep hasTournament true if there are saved tournaments
-      const savedTournaments = JSON.parse(localStorage.getItem('tournaments') || '[]');
-      this.hasTournament = !!t || (Array.isArray(savedTournaments) && savedTournaments.length > 0);
+    this.applyTranslations();
+    this.loadUserProfile();
+    const savedTournaments = JSON.parse(
+      localStorage.getItem('tournaments') || '[]'
+    );
+    this.hasTournament =
+      Array.isArray(savedTournaments) && savedTournaments.length > 0;
+    this.tournamentService.tournament$.subscribe((t) => {
+      const savedTournaments = JSON.parse(
+        localStorage.getItem('tournaments') || '[]'
+      );
+      this.hasTournament =
+        !!t || (Array.isArray(savedTournaments) && savedTournaments.length > 0);
     });
   }
 
-  // Profil laden
   loadUserProfile() {
     this.isProfileLoading = true;
     this.userProfileService.getProfile().subscribe({
-      next: data => {
+      next: (data) => {
         this.userProfile = data;
         this.isProfileLoading = false;
       },
       error: () => {
         this.isProfileLoading = false;
-      }
+      },
     });
   }
 
-   goToProfile() {
+  goToProfile() {
     this.router.navigate(['/profile']);
   }
 
-  // Profil speichern (z.B. nach Bearbeitung)
   saveUserProfile(updated: { name: string; email: string; image?: File }) {
     this.isProfileLoading = true;
     this.userProfileService.updateProfile(updated).subscribe({
-      next: data => {
+      next: (data) => {
         this.userProfile = data;
         this.isProfileLoading = false;
         alert('Profil saved!');
@@ -302,7 +324,7 @@ ngOnInit(): void {
       error: () => {
         this.isProfileLoading = false;
         alert('Error Saving!');
-      }
+      },
     });
   }
 
@@ -314,7 +336,7 @@ ngOnInit(): void {
       },
       error: () => {
         alert('Error sending the request link please check the Email');
-      }
+      },
     });
   }
 
@@ -334,7 +356,7 @@ ngOnInit(): void {
   get isDarkMode(): boolean {
     return !document.body.classList.contains('light-mode');
   }
-  
+
   setInitialTheme() {
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'light') {
@@ -350,9 +372,9 @@ ngOnInit(): void {
   matchesPlayed: number = 4578;
   topPlayer: string = 'Max Mustermann';
   avgParticipants: number = 18.4;
-  trustedUsers: number = 1212452
+  trustedUsers: number = 1212452;
 
-   toggleLangDropdown() {
+  toggleLangDropdown() {
     this.langDropdownOpen = !this.langDropdownOpen;
   }
 
@@ -366,17 +388,21 @@ ngOnInit(): void {
   }
 
   getFlagUrl(lang: string): string {
-  switch (lang) {
-    case 'de': return 'https://flagcdn.com/w40/de.png';
-    case 'en': return 'https://flagcdn.com/w40/gb.png';
-    case 'fr': return 'https://flagcdn.com/w40/fr.png';
-    case 'es': return 'https://flagcdn.com/w40/es.png';
-    default: return '';
-}
-}
+    switch (lang) {
+      case 'de':
+        return 'https://flagcdn.com/w40/de.png';
+      case 'en':
+        return 'https://flagcdn.com/w40/gb.png';
+      case 'fr':
+        return 'https://flagcdn.com/w40/fr.png';
+      case 'es':
+        return 'https://flagcdn.com/w40/es.png';
+      default:
+        return '';
+    }
+  }
 
   applyTranslations() {
     this.t = this.translations[this.selectedLang];
   }
 }
-

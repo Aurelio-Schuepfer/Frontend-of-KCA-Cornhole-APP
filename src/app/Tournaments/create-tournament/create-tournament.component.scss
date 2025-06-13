@@ -1,15 +1,15 @@
-@use 'sass:color';
+@use "sass:color";
 
-  #tournamentTitle {
-    font-size: 3rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 10rem;
-    margin-bottom: 0rem;
-  }
+#tournamentTitle {
+  font-size: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10rem;
+  margin-bottom: 0rem;
+}
 
-  #createTournamentForm {
+#createTournamentForm {
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -34,7 +34,8 @@
       background-color: var(--btn-bg);
       color: var(--fg);
       font-size: 1rem;
-      transition: border-color var(--transition), background-color var(--transition), color var(--transition);
+      transition: border-color var(--transition),
+        background-color var(--transition), color var(--transition);
       box-sizing: border-box;
 
       &:focus {
@@ -57,69 +58,71 @@
   }
 }
 
-    .form-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
 
-      .form-input,
-      .form-textarea {
-        padding: 1rem;
-        border-radius: 1rem;
-        border: 2px solid var(--accent);
-        background-color: var(--btn-bg);
-        color: var(--fg);
-        font-size: 1rem;
-        transition: border-color var(--transition), background-color var(--transition), color var(--transition);
+  .form-input,
+  .form-textarea {
+    padding: 1rem;
+    border-radius: 1rem;
+    border: 2px solid var(--accent);
+    background-color: var(--btn-bg);
+    color: var(--fg);
+    font-size: 1rem;
+    transition: border-color var(--transition),
+      background-color var(--transition), color var(--transition);
 
-        &:focus {
-          outline: none;
-          border-color: var(--fg);
-        }
-      }
-
-      .form-textarea {
-        resize: vertical;
-        min-height: 100px;
-      }
+    &:focus {
+      outline: none;
+      border-color: var(--fg);
     }
+  }
 
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 1.5rem;
-    }
+  .form-textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+}
 
-    .form-footer {
-      display: flex;
-      justify-content: center;
-    }
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1.5rem;
+}
 
-    .tButton {
-      background: transparent;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-top: -5rem;
-      width: 30%;
-      height: 2.5rem;
-      font-size: 1rem;
-      color: var(--fg);
-      border: 2px solid var(--accent);
-      border-radius: 1rem;
-      transition: background-color var(--transition), color var(--transition), transform var(--transition);
+.form-footer {
+  display: flex;
+  justify-content: center;
+}
 
-      &:hover {
-        background-color: var(--accent);
-        color: var(--bg);
-        transform: scale(1.05);
-      }
+.tButton {
+  background: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: -5rem;
+  width: 30%;
+  height: 2.5rem;
+  font-size: 1rem;
+  color: var(--fg);
+  border: 2px solid var(--accent);
+  border-radius: 1rem;
+  transition: background-color var(--transition), color var(--transition),
+    transform var(--transition);
 
-      &:disabled {
-        opacity: 0.6;
-        cursor: not-allowed;
-      }
-    }
+  &:hover {
+    background-color: var(--accent);
+    color: var(--bg);
+    transform: scale(1.05);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
 
 .form-private {
   display: flex;
@@ -130,7 +133,7 @@
   margin-left: 5rem;
   margin-top: -3.5rem;
   flex-wrap: wrap;
-  grid-column: 1 / 2; 
+  grid-column: 1 / 2;
 
   .checkbox-label {
     display: flex;
@@ -165,7 +168,7 @@
   }
 
   .styled-checkbox:checked + .custom-checkbox::after {
-    content: '';
+    content: "";
     position: absolute;
     left: 0.35rem;
     top: 0.1rem;
@@ -217,7 +220,7 @@
     min-width: 180px;
     max-width: 260px;
     z-index: 10;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.13);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.13);
     white-space: normal;
     line-height: 1.4;
   }
@@ -235,51 +238,55 @@
   }
 }
 
-  #tournamentTitle {
-    position: relative;
-    bottom: 6rem;
-  }
+#tournamentTitle {
+  position: relative;
+  bottom: 6rem;
+}
 
-  .form-footer {
-    display: flex !important;
-    justify-content: center;
-    align-items: center;
-    width: 100% !important;
-    margin-top: 2rem !important;
-    position: static !important;
-    background: none !important;
-    z-index: 100;
-    min-height: 3rem;
-  }
+.form-footer {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  width: 100% !important;
+  margin-top: 2rem !important;
+  position: static !important;
+  background: none !important;
+  z-index: 100;
+  min-height: 3rem;
+}
 
-  .tButton {
-    display: flex !important;
-    width: 90% !important;
-    min-width: 160px;
-    max-width: 400px;
-    font-size: 1.1rem;
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
-    position: static !important;
-    z-index: 101;
-  }
+.tButton {
+  display: flex !important;
+  width: 90% !important;
+  min-width: 160px;
+  max-width: 400px;
+  font-size: 1.1rem;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  position: static !important;
+  z-index: 101;
+}
 
-  .form-grid {
-    margin-top: 0 !important;
-  }
+.form-grid {
+  margin-top: 0 !important;
+}
 
-  .kca-decoration::before {
-    display: none;
-  }
+.kca-decoration::before {
+  display: none;
+}
 
-  .form-footer {
-    margin-top: 6rem;
-  }
+.form-footer {
+  margin-top: 6rem;
+}
 
 @media (max-width: 600px) {
   .form-grid {
     grid-template-columns: 1fr;
-    > div, > .form-notes, > .form-private { grid-column: 1; }
+    > div,
+    > .form-notes,
+    > .form-private {
+      grid-column: 1;
+    }
   }
 }
 
@@ -327,24 +334,24 @@
 }
 
 .form-format {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    width: 100%;
-  }
-  .form-format .dropdown-label {
-    margin-bottom: 0.3rem;
-  }
-  .form-format .styled-select {
-    margin-top: 0;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+.form-format .dropdown-label {
+  margin-bottom: 0.3rem;
+}
+.form-format .styled-select {
+  margin-top: 0;
+}
 
-  .form-format .privacy-tooltip {
-    font-weight: 400;
-    font-size: 0.97rem;
-    font-style: normal;
-    font-family: inherit;
-  }
+.form-format .privacy-tooltip {
+  font-weight: 400;
+  font-size: 0.97rem;
+  font-style: normal;
+  font-family: inherit;
+}
 
 .success-popup {
   position: fixed;
@@ -480,16 +487,3 @@
     margin-top: 2rem !important;
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

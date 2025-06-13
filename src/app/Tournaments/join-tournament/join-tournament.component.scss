@@ -1,4 +1,4 @@
-@use 'sass:color';
+@use "sass:color";
 
 .join-tournament-container {
   padding: 2rem;
@@ -28,11 +28,11 @@
   flex-direction: column;
   justify-content: space-between;
 
-.tournament-card:hover {
-  transform: scale(1.02);
-  box-shadow: 0 0 20px var(--accent);
-}
- &.active {
+  .tournament-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 20px var(--accent);
+  }
+  &.active {
     border-color: lime;
     background: var(--bg);
     box-shadow: 0 0 15px lime;
@@ -56,7 +56,7 @@
 .card-header h2 {
   font-size: 1.5rem;
   margin: 0;
-   color: var(--accent)
+  color: var(--accent);
 }
 
 .date {
@@ -76,7 +76,7 @@
   justify-content: flex-end;
 }
 
-  .tButton {
+.tButton {
   background: rgba(255, 255, 255, 0.05);
   display: flex;
   justify-content: center;
@@ -93,7 +93,6 @@
   margin-top: 1rem;
 }
 
-
 .tButton:hover {
   transform: scale(1.05);
   box-shadow: 0 0 15px var(--accent), 0 0 5px var(--accent) inset;
@@ -106,7 +105,7 @@
   width: 100vw;
   height: 100vh;
   z-index: 1000;
-  display: none; 
+  display: none;
   background-color: transparent;
   overflow: hidden;
 
@@ -118,7 +117,7 @@
 }
 
 .details-overlay {
-  position: fixed;  
+  position: fixed;
   top: 0;
   left: -35%;
   width: 200%;
@@ -185,8 +184,7 @@
   color: var(--fg);
 }
 
-.TournamentRegister
-{
+.TournamentRegister {
   margin-top: 10rem;
   display: flex;
   justify-content: center;
@@ -226,7 +224,7 @@
     min-width: 180px;
     max-width: 260px;
     z-index: 10;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.13);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.13);
     white-space: normal;
     line-height: 1.4;
   }
@@ -360,8 +358,14 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .participants-section {
@@ -427,7 +431,10 @@
 
 .image-modal {
   position: fixed;
-  top: 0; left: -22.4rem; width: 100vw; height: 100vh;
+  top: 0;
+  left: -22.4rem;
+  width: 100vw;
+  height: 100vh;
   z-index: 2000;
   display: flex;
   align-items: center;
@@ -439,7 +446,7 @@
   left: -22.4rem;
   width: 100vw;
   height: 100%;
-  background: rgba(0,0,0,0.7);
+  background: rgba(0, 0, 0, 0.7);
   z-index: 1;
 }
 .image-modal-content {
@@ -492,7 +499,7 @@
   background: var(--bg);
   color: var(--fg);
   border: 2px solid var(--accent);
-  box-shadow: 0 0 12px var(--accent), 0 2px 8px rgba(0,0,0,0.10);
+  box-shadow: 0 0 12px var(--accent), 0 2px 8px rgba(0, 0, 0, 0.1);
   opacity: 0.98;
   pointer-events: none;
   animation: join-feedback-pop 0.7s cubic-bezier(0.23, 1.1, 0.32, 1) both;
@@ -502,15 +509,23 @@
 .join-feedback-fixed.success {
   border-color: #2ecc40;
   color: #2ecc40;
-  background: linear-gradient(90deg, rgba(46,204,64,0.10) 0%, rgba(46,204,64,0.04) 100%);
-  box-shadow: 0 0 16px #2ecc40, 0 2px 12px rgba(46,204,64,0.10);
+  background: linear-gradient(
+    90deg,
+    rgba(46, 204, 64, 0.1) 0%,
+    rgba(46, 204, 64, 0.04) 100%
+  );
+  box-shadow: 0 0 16px #2ecc40, 0 2px 12px rgba(46, 204, 64, 0.1);
 }
 
 .join-feedback-fixed.error {
   border-color: #e74c3c;
   color: #e74c3c;
-  background: linear-gradient(90deg, rgba(231,76,60,0.10) 0%, rgba(231,76,60,0.04) 100%);
-  box-shadow: 0 0 16px #e74c3c, 0 2px 12px rgba(231,76,60,0.10);
+  background: linear-gradient(
+    90deg,
+    rgba(231, 76, 60, 0.1) 0%,
+    rgba(231, 76, 60, 0.04) 100%
+  );
+  box-shadow: 0 0 16px #e74c3c, 0 2px 12px rgba(231, 76, 60, 0.1);
 }
 
 @keyframes join-feedback-pop {
@@ -531,8 +546,7 @@
   }
 }
 
-#confetti-canvas
-{
+#confetti-canvas {
   position: relative;
   right: 33%;
   z-index: 9999;
@@ -540,10 +554,6 @@
 
 @media (max-width: 768px) {
   #confetti-canvas {
-   right: 15%;
+    right: 15%;
   }
 }
-
-
-
-

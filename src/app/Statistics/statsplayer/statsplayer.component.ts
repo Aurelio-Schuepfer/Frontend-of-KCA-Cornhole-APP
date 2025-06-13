@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GlobalAuth } from '../../global-auth';
-import { UserProfileService } from '../../Services/user-profile.service'; 
+import { UserProfileService } from '../../Services/user-profile.service';
 import { Router } from '@angular/router';
 import { TournamentService } from '../../Services/tournament.service';
 type LanguageCode = 'de' | 'en' | 'fr' | 'es';
@@ -14,19 +14,60 @@ type LanguageCode = 'de' | 'en' | 'fr' | 'es';
 export class StatsplayerComponent implements OnInit {
   isNavOpen: boolean = false;
   expandedId: number | null = null;
-  searchTerm: string = ''; 
-  selectedPlayer: any = null; 
+  searchTerm: string = '';
+  selectedPlayer: any = null;
   showPassword = false;
   showConfirmPassword = false;
   hasTournament = false;
 
   players = [
-    { name: 'Lena Schmidt', wins: 12, losses: 3, matchesPlayed: 15, points: 265, image: 'https://randomuser.me/api/portraits/women/68.jpg' },
-    { name: 'Tom Wagner', wins: 8, losses: 7, matchesPlayed: 15, points: 198, image: 'https://randomuser.me/api/portraits/men/45.jpg' },
-    { name: 'Julia Becker', wins: 15, losses: 0, matchesPlayed: 15, points: 300, image: 'https://randomuser.me/api/portraits/women/32.jpg' },
-    { name: 'Kevin Braun', wins: 5, losses: 10, matchesPlayed: 15, points: 145, image: 'https://randomuser.me/api/portraits/men/12.jpg' },
-    { name: 'Sarah Neumann', wins: 10, losses: 5, matchesPlayed: 15, points: 220,},
-    { name: 'Chris Müller', wins: 7, losses: 8, matchesPlayed: 15, points: 174, image: 'https://randomuser.me/api/portraits/men/27.jpg' }
+    {
+      name: 'Lena Schmidt',
+      wins: 12,
+      losses: 3,
+      matchesPlayed: 15,
+      points: 265,
+      image: 'https://randomuser.me/api/portraits/women/68.jpg',
+    },
+    {
+      name: 'Tom Wagner',
+      wins: 8,
+      losses: 7,
+      matchesPlayed: 15,
+      points: 198,
+      image: 'https://randomuser.me/api/portraits/men/45.jpg',
+    },
+    {
+      name: 'Julia Becker',
+      wins: 15,
+      losses: 0,
+      matchesPlayed: 15,
+      points: 300,
+      image: 'https://randomuser.me/api/portraits/women/32.jpg',
+    },
+    {
+      name: 'Kevin Braun',
+      wins: 5,
+      losses: 10,
+      matchesPlayed: 15,
+      points: 145,
+      image: 'https://randomuser.me/api/portraits/men/12.jpg',
+    },
+    {
+      name: 'Sarah Neumann',
+      wins: 10,
+      losses: 5,
+      matchesPlayed: 15,
+      points: 220,
+    },
+    {
+      name: 'Chris Müller',
+      wins: 7,
+      losses: 8,
+      matchesPlayed: 15,
+      points: 174,
+      image: 'https://randomuser.me/api/portraits/men/27.jpg',
+    },
   ];
 
   filteredPlayers: any[] = this.players;
@@ -35,7 +76,7 @@ export class StatsplayerComponent implements OnInit {
     { code: 'de' as LanguageCode, label: 'Deutsch' },
     { code: 'en' as LanguageCode, label: 'English' },
     { code: 'fr' as LanguageCode, label: 'Français' },
-    { code: 'es' as LanguageCode, label: 'Español' }
+    { code: 'es' as LanguageCode, label: 'Español' },
   ];
 
   selectedLang: LanguageCode = 'en';
@@ -145,7 +186,7 @@ export class StatsplayerComponent implements OnInit {
       matchesPlayed: 'Matchs joués',
       points: 'Points',
       privacyPolicy: 'Politique de confidentialité',
-      termsOfService: 'Conditions d\'utilisation',
+      termsOfService: "Conditions d'utilisation",
       contact: 'Contact',
       rememberMe: 'Se souvenir de moi',
       passwordReset: 'Mot de passe oublié ?',
@@ -197,11 +238,11 @@ export class StatsplayerComponent implements OnInit {
       save: 'Guardar',
       cancel: 'Cancelar',
       passwordChanged: 'Contraseña cambiada!',
-    }
+    },
   };
 
   t = this.translations[this.selectedLang];
- userProfile: any = null;
+  userProfile: any = null;
   isProfileLoading = false;
 
   showResetForm = false;
@@ -212,14 +253,13 @@ export class StatsplayerComponent implements OnInit {
     public globalAuth: GlobalAuth,
     private userProfileService: UserProfileService,
     private router: Router,
-    private tournamentService: TournamentService,
-
+    private tournamentService: TournamentService
   ) {}
 
   ngOnInit(): void {
-    this.players = this.players.map(player => ({
+    this.players = this.players.map((player) => ({
       ...player,
-      image: player.image || 'assets/images/default-profile.png'
+      image: player.image || 'assets/images/default-profile.png',
     }));
     this.filteredPlayers = this.players;
 
@@ -228,39 +268,41 @@ export class StatsplayerComponent implements OnInit {
     if (saved && ['de', 'en', 'fr', 'es'].includes(saved)) {
       this.selectedLang = saved as LanguageCode;
     }
-    this.applyTranslations();  
-    this.loadUserProfile(); 
+    this.applyTranslations();
+    this.loadUserProfile();
 
-    // Check for saved tournaments in localStorage
-    const savedTournaments = JSON.parse(localStorage.getItem('tournaments') || '[]');
-    this.hasTournament = Array.isArray(savedTournaments) && savedTournaments.length > 0;
+    const savedTournaments = JSON.parse(
+      localStorage.getItem('tournaments') || '[]'
+    );
+    this.hasTournament =
+      Array.isArray(savedTournaments) && savedTournaments.length > 0;
 
-    this.tournamentService.tournament$.subscribe(t => {
-      // Also keep hasTournament true if there are saved tournaments
-      const savedTournaments = JSON.parse(localStorage.getItem('tournaments') || '[]');
-      this.hasTournament = !!t || (Array.isArray(savedTournaments) && savedTournaments.length > 0);
+    this.tournamentService.tournament$.subscribe((t) => {
+      const savedTournaments = JSON.parse(
+        localStorage.getItem('tournaments') || '[]'
+      );
+      this.hasTournament =
+        !!t || (Array.isArray(savedTournaments) && savedTournaments.length > 0);
     });
   }
 
-  // Profil laden
   loadUserProfile() {
     this.isProfileLoading = true;
     this.userProfileService.getProfile().subscribe({
-      next: data => {
+      next: (data) => {
         this.userProfile = data;
         this.isProfileLoading = false;
       },
       error: () => {
         this.isProfileLoading = false;
-      }
+      },
     });
   }
 
-  // Profil speichern (z.B. nach Bearbeitung)
   saveUserProfile(updated: { name: string; email: string; image?: File }) {
     this.isProfileLoading = true;
     this.userProfileService.updateProfile(updated).subscribe({
-      next: data => {
+      next: (data) => {
         this.userProfile = data;
         this.isProfileLoading = false;
         alert('Profil saved!');
@@ -268,11 +310,11 @@ export class StatsplayerComponent implements OnInit {
       error: () => {
         this.isProfileLoading = false;
         alert('Error Saving!');
-      }
+      },
     });
   }
 
-   goToProfile() {
+  goToProfile() {
     this.router.navigate(['/profile']);
   }
 
@@ -284,7 +326,7 @@ export class StatsplayerComponent implements OnInit {
       },
       error: () => {
         alert('Error sending the request link please check the Email');
-      }
+      },
     });
   }
 
@@ -317,15 +359,15 @@ export class StatsplayerComponent implements OnInit {
   }
 
   onSearch(): void {
-    const lowerSearchTerm = this.searchTerm.trim().toLowerCase(); // Entfernt Leerzeichen und macht den Suchbegriff klein
+    const lowerSearchTerm = this.searchTerm.trim().toLowerCase();
     if (!lowerSearchTerm) {
-      this.filteredPlayers = this.players; // Wenn nichts eingegeben wird, alle anzeigen
-      this.selectedPlayer = null; // Kein Spieler ausgewählt
+      this.filteredPlayers = this.players;
+      this.selectedPlayer = null;
     } else {
-      // Filtert die Spieler basierend auf dem Suchbegriff
-      this.filteredPlayers = this.players.filter(player => player.name.toLowerCase().includes(lowerSearchTerm));
-      // Wenn der Spieler gefunden wird, setze ihn als 'selectedPlayer'
-      this.selectedPlayer = this.filteredPlayers[0]; // Der erste gefundene Spieler wird hervorgehoben
+      this.filteredPlayers = this.players.filter((player) =>
+        player.name.toLowerCase().includes(lowerSearchTerm)
+      );
+      this.selectedPlayer = this.filteredPlayers[0];
     }
   }
   toggleLangDropdown() {
@@ -342,14 +384,19 @@ export class StatsplayerComponent implements OnInit {
   }
 
   getFlagUrl(lang: string): string {
-  switch (lang) {
-    case 'de': return 'https://flagcdn.com/w40/de.png';
-    case 'en': return 'https://flagcdn.com/w40/gb.png';
-    case 'fr': return 'https://flagcdn.com/w40/fr.png';
-    case 'es': return 'https://flagcdn.com/w40/es.png';
-    default: return '';
-}
-}
+    switch (lang) {
+      case 'de':
+        return 'https://flagcdn.com/w40/de.png';
+      case 'en':
+        return 'https://flagcdn.com/w40/gb.png';
+      case 'fr':
+        return 'https://flagcdn.com/w40/fr.png';
+      case 'es':
+        return 'https://flagcdn.com/w40/es.png';
+      default:
+        return '';
+    }
+  }
 
   applyTranslations() {
     this.t = this.translations[this.selectedLang];

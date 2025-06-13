@@ -51,7 +51,7 @@ export class ManageTournamentComponent implements OnInit {
   maxParticipants = 32;
   editIndex: number | null = null;
   phaseNotSelected = true;
-  onlyGroupSelected  = false;
+  onlyGroupSelected = false;
   groupAndKoSelected = false;
   onlyKoPhaseSelected = false;
   tournament: any;
@@ -67,63 +67,291 @@ export class ManageTournamentComponent implements OnInit {
   ];
 
   players = [
-  { name: 'Olivia Müller', team: 'Team 1', avatar: 'https://randomuser.me/api/portraits/women/25.jpg' },
-  { name: 'David Hoffmann', team: 'Team 1', avatar: 'https://randomuser.me/api/portraits/men/1.jpg' },
-  { name: 'Greta Wagner', team: 'Team 2', avatar: 'https://randomuser.me/api/portraits/men/12.jpg' },
-  { name: 'Clara Schmidt', team: 'Team 2', avatar: 'https://randomuser.me/api/portraits/women/39.jpg' },
-  { name: 'Anna Schmidt', team: 'Team 3', avatar: 'https://randomuser.me/api/portraits/women/48.jpg' },
-  { name: 'Olivia Weber', team: 'Team 3', avatar: 'https://randomuser.me/api/portraits/women/82.jpg' },
-  { name: 'Lukas König', team: 'Team 4', avatar: 'https://randomuser.me/api/portraits/men/53.jpg' },
-  { name: 'Isabel Schulz', team: 'Team 4', avatar: 'https://randomuser.me/api/portraits/men/39.jpg' },
-  { name: 'Jonas Müller', team: 'Team 5', avatar: 'https://randomuser.me/api/portraits/men/99.jpg' },
-  { name: 'Noah König', team: 'Team 5', avatar: 'https://randomuser.me/api/portraits/men/21.jpg' },
-  { name: 'Quirin König', team: 'Team 6', avatar: 'https://randomuser.me/api/portraits/men/25.jpg' },
-  { name: 'Rosa Hoffmann', team: 'Team 6', avatar: 'https://randomuser.me/api/portraits/men/10.jpg' },
-  { name: 'Simon Müller', team: 'Team 7', avatar: 'https://randomuser.me/api/portraits/men/55.jpg' },
-  { name: 'Mia Schmidt', team: 'Team 7', avatar: 'https://randomuser.me/api/portraits/women/90.jpg' },
-  { name: 'Anna Becker', team: 'Team 8', avatar: 'https://randomuser.me/api/portraits/women/72.jpg' },
-  { name: 'Noah Weber', team: 'Team 8', avatar: 'https://randomuser.me/api/portraits/men/98.jpg' },
-  { name: 'Olivia Schneider', team: 'Team 9', avatar: 'https://randomuser.me/api/portraits/men/34.jpg' },
-  { name: 'Isabel Schulz', team: 'Team 9', avatar: 'https://randomuser.me/api/portraits/women/1.jpg' },
-  { name: 'Henry Müller', team: 'Team 10', avatar: 'https://randomuser.me/api/portraits/men/33.jpg' },
-  { name: 'David Weber', team: 'Team 10', avatar: 'https://randomuser.me/api/portraits/women/71.jpg' },
-  { name: 'Klara Schulz', team: 'Team 11', avatar: 'https://randomuser.me/api/portraits/women/83.jpg' },
-  { name: 'Lukas Schulz', team: 'Team 11', avatar: 'https://randomuser.me/api/portraits/women/57.jpg' },
-  { name: 'Quirin Müller', team: 'Team 12', avatar: 'https://randomuser.me/api/portraits/women/99.jpg' },
-  { name: 'Klara Becker', team: 'Team 12', avatar: 'https://randomuser.me/api/portraits/women/70.jpg' },
-  { name: 'Rosa Schmidt', team: 'Team 13', avatar: 'https://randomuser.me/api/portraits/men/83.jpg' },
-  { name: 'Paul Schneider', team: 'Team 13', avatar: 'https://randomuser.me/api/portraits/men/69.jpg' },
-  { name: 'Simon Müller', team: 'Team 14', avatar: 'https://randomuser.me/api/portraits/men/63.jpg' },
-  { name: 'Henry Weber', team: 'Team 14', avatar: 'https://randomuser.me/api/portraits/women/30.jpg' },
-  { name: 'Tina Weber', team: 'Team 15', avatar: 'https://randomuser.me/api/portraits/women/63.jpg' },
-  { name: 'Anna Müller', team: 'Team 15', avatar: 'https://randomuser.me/api/portraits/men/15.jpg' },
-  { name: 'Henry Weber', team: 'Team 16', avatar: 'https://randomuser.me/api/portraits/women/65.jpg' },
-  { name: 'Ben Weber', team: 'Team 16', avatar: 'https://randomuser.me/api/portraits/men/76.jpg' },
-  { name: 'David Müller', team: 'Team 17', avatar: 'https://randomuser.me/api/portraits/men/6.jpg' },
-  { name: 'Greta König', team: 'Team 17', avatar: 'https://randomuser.me/api/portraits/men/60.jpg' },
-  { name: 'Noah König', team: 'Team 18', avatar: 'https://randomuser.me/api/portraits/men/92.jpg' },
-  { name: 'Anna Schmidt', team: 'Team 18', avatar: 'https://randomuser.me/api/portraits/men/51.jpg' },
-  { name: 'Isabel Weber', team: 'Team 19', avatar: 'https://randomuser.me/api/portraits/women/14.jpg' },
-  { name: 'Greta Schmidt', team: 'Team 19', avatar: 'https://randomuser.me/api/portraits/women/55.jpg' },
-  { name: 'Jonas Schulz', team: 'Team 20', avatar: 'https://randomuser.me/api/portraits/men/82.jpg' },
-  { name: 'Isabel König', team: 'Team 20', avatar: 'https://randomuser.me/api/portraits/women/22.jpg' },
-  { name: 'Paul Hoffmann', team: 'Team 21', avatar: 'https://randomuser.me/api/portraits/men/45.jpg' },
-  { name: 'Emma Schulz', team: 'Team 21', avatar: 'https://randomuser.me/api/portraits/women/12.jpg' },
-  { name: 'Ben Becker', team: 'Team 22', avatar: 'https://randomuser.me/api/portraits/men/77.jpg' },
-  { name: 'Tina Becker', team: 'Team 22', avatar: 'https://randomuser.me/api/portraits/women/77.jpg' },
-  { name: 'Felix Schneider', team: 'Team 23', avatar: 'https://randomuser.me/api/portraits/men/44.jpg' },
-  { name: 'Emma Becker', team: 'Team 23', avatar: 'https://randomuser.me/api/portraits/women/88.jpg' },
-  { name: 'Jonas Schneider', team: 'Team 24', avatar: 'https://randomuser.me/api/portraits/men/33.jpg' },
-  { name: 'Mia Hoffmann', team: 'Team 24', avatar: 'https://randomuser.me/api/portraits/women/99.jpg' },
-  { name: 'Paul König', team: 'Team 25', avatar: 'https://randomuser.me/api/portraits/men/45.jpg' },
-  { name: 'Clara Becker', team: 'Team 25', avatar: 'https://randomuser.me/api/portraits/women/66.jpg' },
-  { name: 'Felix Hoffmann', team: 'Team 26', avatar: 'https://randomuser.me/api/portraits/men/88.jpg' },
-  { name: 'Emma Wagner', team: 'Team 26', avatar: 'https://randomuser.me/api/portraits/women/11.jpg' },
-  { name: 'Ben Schulz', team: 'Team 27', avatar: 'https://randomuser.me/api/portraits/men/11.jpg' },
-  { name: 'Greta Schulz', team: 'Team 27', avatar: 'https://randomuser.me/api/portraits/women/33.jpg' },
-  { name: 'Jonas Becker', team: 'Team 28', avatar: 'https://randomuser.me/api/portraits/men/66.jpg' },
-  { name: 'Tina Schulz', team: 'Team 28', avatar: 'https://randomuser.me/api/portraits/women/44.jpg' },
-  { name: 'Simon Schulz', team: 'Team 29', avatar: 'https://randomuser.me/api/portraits/men/22.jpg' },
+    {
+      name: 'Olivia Müller',
+      team: 'Team 1',
+      avatar: 'https://randomuser.me/api/portraits/women/25.jpg',
+    },
+    {
+      name: 'David Hoffmann',
+      team: 'Team 1',
+      avatar: 'https://randomuser.me/api/portraits/men/1.jpg',
+    },
+    {
+      name: 'Greta Wagner',
+      team: 'Team 2',
+      avatar: 'https://randomuser.me/api/portraits/men/12.jpg',
+    },
+    {
+      name: 'Clara Schmidt',
+      team: 'Team 2',
+      avatar: 'https://randomuser.me/api/portraits/women/39.jpg',
+    },
+    {
+      name: 'Anna Schmidt',
+      team: 'Team 3',
+      avatar: 'https://randomuser.me/api/portraits/women/48.jpg',
+    },
+    {
+      name: 'Olivia Weber',
+      team: 'Team 3',
+      avatar: 'https://randomuser.me/api/portraits/women/82.jpg',
+    },
+    {
+      name: 'Lukas König',
+      team: 'Team 4',
+      avatar: 'https://randomuser.me/api/portraits/men/53.jpg',
+    },
+    {
+      name: 'Isabel Schulz',
+      team: 'Team 4',
+      avatar: 'https://randomuser.me/api/portraits/men/39.jpg',
+    },
+    {
+      name: 'Jonas Müller',
+      team: 'Team 5',
+      avatar: 'https://randomuser.me/api/portraits/men/99.jpg',
+    },
+    {
+      name: 'Noah König',
+      team: 'Team 5',
+      avatar: 'https://randomuser.me/api/portraits/men/21.jpg',
+    },
+    {
+      name: 'Quirin König',
+      team: 'Team 6',
+      avatar: 'https://randomuser.me/api/portraits/men/25.jpg',
+    },
+    {
+      name: 'Rosa Hoffmann',
+      team: 'Team 6',
+      avatar: 'https://randomuser.me/api/portraits/men/10.jpg',
+    },
+    {
+      name: 'Simon Müller',
+      team: 'Team 7',
+      avatar: 'https://randomuser.me/api/portraits/men/55.jpg',
+    },
+    {
+      name: 'Mia Schmidt',
+      team: 'Team 7',
+      avatar: 'https://randomuser.me/api/portraits/women/90.jpg',
+    },
+    {
+      name: 'Anna Becker',
+      team: 'Team 8',
+      avatar: 'https://randomuser.me/api/portraits/women/72.jpg',
+    },
+    {
+      name: 'Noah Weber',
+      team: 'Team 8',
+      avatar: 'https://randomuser.me/api/portraits/men/98.jpg',
+    },
+    {
+      name: 'Olivia Schneider',
+      team: 'Team 9',
+      avatar: 'https://randomuser.me/api/portraits/men/34.jpg',
+    },
+    {
+      name: 'Isabel Schulz',
+      team: 'Team 9',
+      avatar: 'https://randomuser.me/api/portraits/women/1.jpg',
+    },
+    {
+      name: 'Henry Müller',
+      team: 'Team 10',
+      avatar: 'https://randomuser.me/api/portraits/men/33.jpg',
+    },
+    {
+      name: 'David Weber',
+      team: 'Team 10',
+      avatar: 'https://randomuser.me/api/portraits/women/71.jpg',
+    },
+    {
+      name: 'Klara Schulz',
+      team: 'Team 11',
+      avatar: 'https://randomuser.me/api/portraits/women/83.jpg',
+    },
+    {
+      name: 'Lukas Schulz',
+      team: 'Team 11',
+      avatar: 'https://randomuser.me/api/portraits/women/57.jpg',
+    },
+    {
+      name: 'Quirin Müller',
+      team: 'Team 12',
+      avatar: 'https://randomuser.me/api/portraits/women/99.jpg',
+    },
+    {
+      name: 'Klara Becker',
+      team: 'Team 12',
+      avatar: 'https://randomuser.me/api/portraits/women/70.jpg',
+    },
+    {
+      name: 'Rosa Schmidt',
+      team: 'Team 13',
+      avatar: 'https://randomuser.me/api/portraits/men/83.jpg',
+    },
+    {
+      name: 'Paul Schneider',
+      team: 'Team 13',
+      avatar: 'https://randomuser.me/api/portraits/men/69.jpg',
+    },
+    {
+      name: 'Simon Müller',
+      team: 'Team 14',
+      avatar: 'https://randomuser.me/api/portraits/men/63.jpg',
+    },
+    {
+      name: 'Henry Weber',
+      team: 'Team 14',
+      avatar: 'https://randomuser.me/api/portraits/women/30.jpg',
+    },
+    {
+      name: 'Tina Weber',
+      team: 'Team 15',
+      avatar: 'https://randomuser.me/api/portraits/women/63.jpg',
+    },
+    {
+      name: 'Anna Müller',
+      team: 'Team 15',
+      avatar: 'https://randomuser.me/api/portraits/men/15.jpg',
+    },
+    {
+      name: 'Henry Weber',
+      team: 'Team 16',
+      avatar: 'https://randomuser.me/api/portraits/women/65.jpg',
+    },
+    {
+      name: 'Ben Weber',
+      team: 'Team 16',
+      avatar: 'https://randomuser.me/api/portraits/men/76.jpg',
+    },
+    {
+      name: 'David Müller',
+      team: 'Team 17',
+      avatar: 'https://randomuser.me/api/portraits/men/6.jpg',
+    },
+    {
+      name: 'Greta König',
+      team: 'Team 17',
+      avatar: 'https://randomuser.me/api/portraits/men/60.jpg',
+    },
+    {
+      name: 'Noah König',
+      team: 'Team 18',
+      avatar: 'https://randomuser.me/api/portraits/men/92.jpg',
+    },
+    {
+      name: 'Anna Schmidt',
+      team: 'Team 18',
+      avatar: 'https://randomuser.me/api/portraits/men/51.jpg',
+    },
+    {
+      name: 'Isabel Weber',
+      team: 'Team 19',
+      avatar: 'https://randomuser.me/api/portraits/women/14.jpg',
+    },
+    {
+      name: 'Greta Schmidt',
+      team: 'Team 19',
+      avatar: 'https://randomuser.me/api/portraits/women/55.jpg',
+    },
+    {
+      name: 'Jonas Schulz',
+      team: 'Team 20',
+      avatar: 'https://randomuser.me/api/portraits/men/82.jpg',
+    },
+    {
+      name: 'Isabel König',
+      team: 'Team 20',
+      avatar: 'https://randomuser.me/api/portraits/women/22.jpg',
+    },
+    {
+      name: 'Paul Hoffmann',
+      team: 'Team 21',
+      avatar: 'https://randomuser.me/api/portraits/men/45.jpg',
+    },
+    {
+      name: 'Emma Schulz',
+      team: 'Team 21',
+      avatar: 'https://randomuser.me/api/portraits/women/12.jpg',
+    },
+    {
+      name: 'Ben Becker',
+      team: 'Team 22',
+      avatar: 'https://randomuser.me/api/portraits/men/77.jpg',
+    },
+    {
+      name: 'Tina Becker',
+      team: 'Team 22',
+      avatar: 'https://randomuser.me/api/portraits/women/77.jpg',
+    },
+    {
+      name: 'Felix Schneider',
+      team: 'Team 23',
+      avatar: 'https://randomuser.me/api/portraits/men/44.jpg',
+    },
+    {
+      name: 'Emma Becker',
+      team: 'Team 23',
+      avatar: 'https://randomuser.me/api/portraits/women/88.jpg',
+    },
+    {
+      name: 'Jonas Schneider',
+      team: 'Team 24',
+      avatar: 'https://randomuser.me/api/portraits/men/33.jpg',
+    },
+    {
+      name: 'Mia Hoffmann',
+      team: 'Team 24',
+      avatar: 'https://randomuser.me/api/portraits/women/99.jpg',
+    },
+    {
+      name: 'Paul König',
+      team: 'Team 25',
+      avatar: 'https://randomuser.me/api/portraits/men/45.jpg',
+    },
+    {
+      name: 'Clara Becker',
+      team: 'Team 25',
+      avatar: 'https://randomuser.me/api/portraits/women/66.jpg',
+    },
+    {
+      name: 'Felix Hoffmann',
+      team: 'Team 26',
+      avatar: 'https://randomuser.me/api/portraits/men/88.jpg',
+    },
+    {
+      name: 'Emma Wagner',
+      team: 'Team 26',
+      avatar: 'https://randomuser.me/api/portraits/women/11.jpg',
+    },
+    {
+      name: 'Ben Schulz',
+      team: 'Team 27',
+      avatar: 'https://randomuser.me/api/portraits/men/11.jpg',
+    },
+    {
+      name: 'Greta Schulz',
+      team: 'Team 27',
+      avatar: 'https://randomuser.me/api/portraits/women/33.jpg',
+    },
+    {
+      name: 'Jonas Becker',
+      team: 'Team 28',
+      avatar: 'https://randomuser.me/api/portraits/men/66.jpg',
+    },
+    {
+      name: 'Tina Schulz',
+      team: 'Team 28',
+      avatar: 'https://randomuser.me/api/portraits/women/44.jpg',
+    },
+    {
+      name: 'Simon Schulz',
+      team: 'Team 29',
+      avatar: 'https://randomuser.me/api/portraits/men/22.jpg',
+    },
   ];
 
   selectedLang: LanguageCode = 'en';
@@ -169,7 +397,8 @@ export class ManageTournamentComponent implements OnInit {
       cancelTournament: 'Turnier abbrechen',
       cancelButton: 'Turnier abbrechen',
       title: 'Bist du sicher?',
-      description: 'Bitte gib dein Passwort ein, um dieses Turnier abzubrechen:',
+      description:
+        'Bitte gib dein Passwort ein, um dieses Turnier abzubrechen:',
       placeholder: 'Passwort eingeben',
       confirmBtn: 'Bestätigen',
       cancelBtn: 'Abbrechen',
@@ -177,18 +406,18 @@ export class ManageTournamentComponent implements OnInit {
       successTitle: 'Turnier abgebrochen',
       successText: 'Das Turnier wurde erfolgreich abgebrochen.',
       okBtn: 'OK',
-      sponsorsLabel: "Sponsoren",
-      sponsorsAdd: "Sponsor hinzufügen",
-      sponsorNamePlaceholder: "Sponsor Name...",
-      sponsorSelectLogo: "Sponsor Logo auswählen",
-      sponsorLogoAlt: "Sponsor Logo",
-      partnersLabel: "Partner",
-      partnersAdd: "Partner hinzufügen",
-      partnerNamePlaceholder: "Partner Name...",
-      partnerSelectLogo: "Partner Logo auswählen",
-      partnerLogoAlt: "Partner Logo",
-      fullscreenExit: "x",
-      fullscreenAlt: "Vollbild Logo",
+      sponsorsLabel: 'Sponsoren',
+      sponsorsAdd: 'Sponsor hinzufügen',
+      sponsorNamePlaceholder: 'Sponsor Name...',
+      sponsorSelectLogo: 'Sponsor Logo auswählen',
+      sponsorLogoAlt: 'Sponsor Logo',
+      partnersLabel: 'Partner',
+      partnersAdd: 'Partner hinzufügen',
+      partnerNamePlaceholder: 'Partner Name...',
+      partnerSelectLogo: 'Partner Logo auswählen',
+      partnerLogoAlt: 'Partner Logo',
+      fullscreenExit: 'x',
+      fullscreenAlt: 'Vollbild Logo',
       participantsLabel: 'Teilnehmer',
       searchPlaceholder: 'Suche Spieler oder Team...',
       avatarAlt: 'Avatar',
@@ -217,14 +446,14 @@ export class ManageTournamentComponent implements OnInit {
       prizesPlaceholder: 'Geldpreis oder Medaillen',
       leagueLabel: 'Liga des Turniers',
       leaguePlaceholder: 'Liga des Turniers',
-      tournamentResultsTitle: "Turnier-Ergebnisse",
-      rank: "Platz",
-      team: "Team",
-      players: "Spieler",
-      matches: "Spiele",
-      wins: "Siege",
-      losses: "Niederlagen",
-      points: "Punkte",
+      tournamentResultsTitle: 'Turnier-Ergebnisse',
+      rank: 'Platz',
+      team: 'Team',
+      players: 'Spieler',
+      matches: 'Spiele',
+      wins: 'Siege',
+      losses: 'Niederlagen',
+      points: 'Punkte',
       editHallFields: 'Halle bearbeiten',
       hallEditorTitle: 'Hallenfeld-Editor',
       addField: 'Feld hinzufügen',
@@ -244,7 +473,8 @@ export class ManageTournamentComponent implements OnInit {
       Accuracy: 'Trefferrate',
       Diff: 'Differenz',
       Group: 'Gruppe',
-      mobileWarning: 'Die Turnierverwaltung ist auf dem Desktop empfohlen, da sie auf Mobilgeräten nicht optimal funktioniert.',
+      mobileWarning:
+        'Die Turnierverwaltung ist auf dem Desktop empfohlen, da sie auf Mobilgeräten nicht optimal funktioniert.',
     },
     en: {
       home: 'Home',
@@ -332,15 +562,15 @@ export class ManageTournamentComponent implements OnInit {
       prizesLabel: 'Cash prizes or awards',
       prizesPlaceholder: 'Cash prize or medals',
       leagueLabel: 'Tournament league',
-      leaguePlaceholder: 'Tournament league',   
-      tournamentResultsTitle: "Tournament Results",
-      rank: "Rank",
-      team: "Team",
-      players: "Player",
-      matches: "Matches",
-      wins: "Wins",
-      losses: "Losses",
-      points: "Points",
+      leaguePlaceholder: 'Tournament league',
+      tournamentResultsTitle: 'Tournament Results',
+      rank: 'Rank',
+      team: 'Team',
+      players: 'Player',
+      matches: 'Matches',
+      wins: 'Wins',
+      losses: 'Losses',
+      points: 'Points',
       editHallFields: 'Edit Hall Fields',
       hallEditorTitle: 'Hall Field Editor',
       addField: 'Add Field',
@@ -360,7 +590,8 @@ export class ManageTournamentComponent implements OnInit {
       Accuracy: '3 Point',
       Diff: 'Difference',
       Group: 'Group',
-      mobileWarning: 'Managing tournaments is recommended on desktop, as the experience on mobile is not optimal.',
+      mobileWarning:
+        'Managing tournaments is recommended on desktop, as the experience on mobile is not optimal.',
     },
     fr: {
       home: 'Accueil',
@@ -381,7 +612,7 @@ export class ManageTournamentComponent implements OnInit {
       alreadyAccount: 'Déjà inscrit ? Se connecter ici',
       noAccount: 'Pas de compte ? S’inscrire ici',
       privacyPolicy: 'Politique de confidentialité',
-      termsOfService: 'Conditions d\'utilisation',
+      termsOfService: "Conditions d'utilisation",
       contact: 'Contact',
       editNametitle: 'Nom du tournoi',
       editDatetitle: 'Date de l’événement',
@@ -401,7 +632,8 @@ export class ManageTournamentComponent implements OnInit {
       cancelTournament: 'Annuler le tournoi',
       cancelButton: 'Annuler le tournoi',
       title: 'Es-tu sûr ?',
-      description: 'Veuillez entrer votre mot de passe pour annuler ce tournoi :',
+      description:
+        'Veuillez entrer votre mot de passe pour annuler ce tournoi :',
       placeholder: 'Entrez votre mot de passe',
       confirmBtn: 'Confirmer',
       cancelBtn: 'Annuler',
@@ -432,7 +664,7 @@ export class ManageTournamentComponent implements OnInit {
       inviteButton: 'Inviter',
       addGuestLabel: 'Ajouter un invité',
       guestNamePlaceholder: 'Nom',
-      guestTeamPlaceholder: "Nom de l’équipe",
+      guestTeamPlaceholder: 'Nom de l’équipe',
       addGuestButton: 'Ajouter un invité',
       participantsCount: 'Participants',
       withoutTeamCount: 'Sans équipe',
@@ -449,14 +681,14 @@ export class ManageTournamentComponent implements OnInit {
       prizesPlaceholder: 'Prix en argent ou médailles',
       leagueLabel: 'Ligue du tournoi',
       leaguePlaceholder: 'Ligue du tournoi',
-      tournamentResultsTitle: "Résultats du tournoi",
-      rank: "Rang",
-      team: "Équipe",
-      players: "Joueurs",
-      matches: "Matchs",
-      wins: "Victoires",
-      losses: "Défaites",
-      points: "Points",
+      tournamentResultsTitle: 'Résultats du tournoi',
+      rank: 'Rang',
+      team: 'Équipe',
+      players: 'Joueurs',
+      matches: 'Matchs',
+      wins: 'Victoires',
+      losses: 'Défaites',
+      points: 'Points',
       editHallFields: 'Modifier les terrains',
       hallEditorTitle: 'Éditeur de terrains',
       addField: 'Ajouter un terrain',
@@ -476,7 +708,8 @@ export class ManageTournamentComponent implements OnInit {
       Accuracy: 'Précision',
       Diff: 'Différence',
       Group: 'Groupe',
-      mobileWarning: 'La gestion du tournoi est recommandée sur ordinateur, car l’expérience mobile n’est pas optimale.',
+      mobileWarning:
+        'La gestion du tournoi est recommandée sur ordinateur, car l’expérience mobile n’est pas optimale.',
     },
     es: {
       home: 'Inicio',
@@ -505,8 +738,8 @@ export class ManageTournamentComponent implements OnInit {
       editNotestitle: 'Notas sobre el torneo',
       editTeamstitle: 'Número de equipos',
       editFormattitle: 'Formato del torneo',
-      editPrivatetitle: 'Torneo privado (por defecto: público)', 
-      editorganizertitle: 'Organizador', 
+      editPrivatetitle: 'Torneo privado (por defecto: público)',
+      editorganizertitle: 'Organizador',
       edit: 'Personalizar',
       participants: 'Participantes',
       bracket: 'Cuadro del torneo',
@@ -564,15 +797,15 @@ export class ManageTournamentComponent implements OnInit {
       prizesLabel: 'Premios en efectivo o en especie',
       prizesPlaceholder: 'Premio en efectivo o medallas',
       leagueLabel: 'Liga del torneo',
-      leaguePlaceholder: 'Liga del torneo',    
-      tournamentResultsTitle: "Resultados del torneo",
-      rank: "Puesto",
-      team: "Equipo",
-      players: "Jugadores",
-      matches: "Partidos",
-      wins: "Victorias",
-      losses: "Derrotas",
-      points: "Puntos",
+      leaguePlaceholder: 'Liga del torneo',
+      tournamentResultsTitle: 'Resultados del torneo',
+      rank: 'Puesto',
+      team: 'Equipo',
+      players: 'Jugadores',
+      matches: 'Partidos',
+      wins: 'Victorias',
+      losses: 'Derrotas',
+      points: 'Puntos',
       editHallFields: 'Editar campos de la sala',
       hallEditorTitle: 'Editor de campos',
       addField: 'Agregar campo',
@@ -592,7 +825,8 @@ export class ManageTournamentComponent implements OnInit {
       Accuracy: 'Aciertos',
       Diff: 'Diferencia',
       Group: 'Grupo',
-      mobileWarning: 'Se recomienda gestionar el torneo en escritorio, ya que la experiencia en móvil no es óptima.',
+      mobileWarning:
+        'Se recomienda gestionar el torneo en escritorio, ya que la experiencia en móvil no es óptima.',
     },
   };
 
@@ -627,10 +861,10 @@ export class ManageTournamentComponent implements OnInit {
     public globalAuth: GlobalAuth,
     private userProfileService: UserProfileService,
     private router: Router,
-    private tournamentService: TournamentService,
-      ) {}
+    private tournamentService: TournamentService
+  ) {}
 
-ngOnInit(): void {
+  ngOnInit(): void {
     this.checkMobileWarning();
     window.addEventListener('resize', this.checkMobileWarning);
     this.setInitialTheme();
@@ -638,14 +872,14 @@ ngOnInit(): void {
     if (saved && ['de', 'en', 'fr', 'es'].includes(saved)) {
       this.selectedLang = saved as LanguageCode;
     }
-    this.applyTranslations();  
-    this.loadUserProfile(); 
+    this.applyTranslations();
+    this.loadUserProfile();
 
     const teams = this.getTeamsFromPlayers(this.players);
     this.rounds = this.generateRounds(teams);
 
-    this.tournamentService.tournament$.subscribe(t => {
-    this.tournament = t;
+    this.tournamentService.tournament$.subscribe((t) => {
+      this.tournament = t;
     });
 
     this.loadSavedTournaments();
@@ -657,18 +891,18 @@ ngOnInit(): void {
 
   checkMobileWarning = () => {
     this.showMobileWarning = window.innerWidth < 900;
-  }
+  };
 
   loadUserProfile() {
     this.isProfileLoading = true;
     this.userProfileService.getProfile().subscribe({
-      next: data => {
+      next: (data) => {
         this.userProfile = data;
         this.isProfileLoading = false;
       },
       error: () => {
         this.isProfileLoading = false;
-      }
+      },
     });
   }
 
@@ -679,7 +913,7 @@ ngOnInit(): void {
   saveUserProfile(updated: { name: string; email: string; image?: File }) {
     this.isProfileLoading = true;
     this.userProfileService.updateProfile(updated).subscribe({
-      next: data => {
+      next: (data) => {
         this.userProfile = data;
         this.isProfileLoading = false;
         alert('Profil saved!');
@@ -687,9 +921,9 @@ ngOnInit(): void {
       error: () => {
         this.isProfileLoading = false;
         alert('Error Saving!');
-      }
+      },
     });
-    }
+  }
 
   requestReset() {
     if (!this.resetEmail) return;
@@ -699,7 +933,7 @@ ngOnInit(): void {
       },
       error: () => {
         alert('Error sending the request link please check the Email');
-      }
+      },
     });
   }
 
@@ -731,7 +965,7 @@ ngOnInit(): void {
     this.isNavOpen = !this.isNavOpen;
   }
 
-toggleLangDropdown() {
+  toggleLangDropdown() {
     this.langDropdownOpen = !this.langDropdownOpen;
   }
 
@@ -745,188 +979,196 @@ toggleLangDropdown() {
   }
 
   getFlagUrl(lang: string): string {
-  switch (lang) {
-    case 'de': return 'https://flagcdn.com/w40/de.png';
-    case 'en': return 'https://flagcdn.com/w40/gb.png';
-    case 'fr': return 'https://flagcdn.com/w40/fr.png';
-    case 'es': return 'https://flagcdn.com/w40/es.png';
-    default: return '';
-}
-  }
-    applyTranslations() {
-      this.t = this.translations[this.selectedLang];
+    switch (lang) {
+      case 'de':
+        return 'https://flagcdn.com/w40/de.png';
+      case 'en':
+        return 'https://flagcdn.com/w40/gb.png';
+      case 'fr':
+        return 'https://flagcdn.com/w40/fr.png';
+      case 'es':
+        return 'https://flagcdn.com/w40/es.png';
+      default:
+        return '';
     }
-
-matchSchedule = [
-  { time: '10:00', teamA: 'Team 1', teamB: 'Team 2', fieldIdx: 0 },
-  { time: '10:45', teamA: 'Team 3', teamB: 'Team 4', fieldIdx: 1 },
-  { time: '11:30', teamA: 'Team 5', teamB: 'Team 6', fieldIdx: 2 },
-  { time: '12:15', teamA: 'Team 7', teamB: 'Team 8', fieldIdx: 3 },
-  { time: '13:00', teamA: 'Team 9', teamB: 'Team 10', fieldIdx: 0 },
-];
-
-hallFields: { x: number; y: number }[] = [
-  { x: 20, y: 20 },
-  { x: 60, y: 20 },
-  { x: 20, y: 60 },
-  { x: 60, y: 60 },
-];
-selectedFieldIdx: number | null = null;
-
-selectField(idx: number) {
-  this.selectedFieldIdx = idx;
-}
-
-addField() {
-  this.hallFields.push({ x: 40 + Math.random() * 40, y: 40 + Math.random() * 40 });
-}
-
-removeField(idx: number) {
-  this.hallFields.splice(idx, 1);
-  this.matchSchedule.forEach(m => { if (m.fieldIdx === idx) m.fieldIdx});
-}
-
-getTeams(): string[] {
-  const teams = Array.from(new Set(this.players.map(p => p.team)));
-  return teams;
-}
-
-randomizeMatches() {
-  const teams = this.getTeams().filter(t => t && t.trim() !== '');
-  if (teams.length < 2) {
-    alert('Not enough teams to create matches.');
-    return;
   }
-  
-  const start = this.randomizerStartTime || '10:00';
-  const end = this.randomizerEndTime || '18:00';
-  const [startHour, startMin] = start.split(':').map(Number);
-  const [endHour, endMin] = end.split(':').map(Number);
-  const startMinutes = startHour * 60 + startMin;
-  const endMinutes = endHour * 60 + endMin;
-  if (endMinutes <= startMinutes) {
-    alert('End time must be after start time.');
-    return;
+  applyTranslations() {
+    this.t = this.translations[this.selectedLang];
   }
 
-  const shuffled = [...teams].sort(() => Math.random() - 0.5);
-  const matches = [];
-  const matchDuration = 45; // minutes per match
-  const fieldCount = this.hallFields.length;
-  const fieldTimes: number[] = Array(fieldCount).fill(startMinutes);
-  for (let i = 0; i < shuffled.length; i += 2) {
-    const teamA = shuffled[i];
-    const teamB = shuffled[i + 1] || '';
-    let minIdx = 0;
-    for (let f = 1; f < fieldCount; f++) {
-      if (fieldTimes[f] < fieldTimes[minIdx]) minIdx = f;
-    }
-    const matchTime = fieldTimes[minIdx];
-    if (matchTime + matchDuration > endMinutes + 1) break; 
-    matches.push({
-      time: (Math.floor(matchTime / 60)).toString().padStart(2, '0') + ':' + (matchTime % 60).toString().padStart(2, '0'),
-      teamA,
-      teamB,
-      fieldIdx: minIdx
+  matchSchedule = [
+    { time: '10:00', teamA: 'Team 1', teamB: 'Team 2', fieldIdx: 0 },
+    { time: '10:45', teamA: 'Team 3', teamB: 'Team 4', fieldIdx: 1 },
+    { time: '11:30', teamA: 'Team 5', teamB: 'Team 6', fieldIdx: 2 },
+    { time: '12:15', teamA: 'Team 7', teamB: 'Team 8', fieldIdx: 3 },
+    { time: '13:00', teamA: 'Team 9', teamB: 'Team 10', fieldIdx: 0 },
+  ];
+
+  hallFields: { x: number; y: number }[] = [
+    { x: 20, y: 20 },
+    { x: 60, y: 20 },
+    { x: 20, y: 60 },
+    { x: 60, y: 60 },
+  ];
+  selectedFieldIdx: number | null = null;
+
+  selectField(idx: number) {
+    this.selectedFieldIdx = idx;
+  }
+
+  addField() {
+    this.hallFields.push({
+      x: 40 + Math.random() * 40,
+      y: 40 + Math.random() * 40,
     });
-    fieldTimes[minIdx] += matchDuration;
   }
-  this.matchSchedule = matches;
-}
 
-    editSelect()
-    {
-      this.resetPhaseFlags();
-      this.editSelected = true;
-      this.participantsSelected = false;
-      this.bracketSelected = false;
-      this.scheduleSelected = false;
-      this.extendedSelected = false;
-      this.resultsSelected = false;
-      this.presentSelected = false;
-    }
+  removeField(idx: number) {
+    this.hallFields.splice(idx, 1);
+    this.matchSchedule.forEach((m) => {
+      if (m.fieldIdx === idx) m.fieldIdx;
+    });
+  }
 
-    participantsSelect()
-    {
-      this.resetPhaseFlags();
-      this.editSelected = false;
-      this.participantsSelected = true;
-      this.bracketSelected = false;
-      this.scheduleSelected = false;
-      this.extendedSelected = false;
-      this.resultsSelected = false;
-      this.presentSelected = false;
-    }
-    bracketSelect()
-    {
-      this.resetPhaseFlags();
-      this.editSelected = false;
-      this.participantsSelected = false;
-      this.bracketSelected = true;
-      this.scheduleSelected = false;
-      this.extendedSelected = false;
-      this.resultsSelected = false;
-      this.presentSelected = false;
-    }
-    scheduleSelect()
-    {
-      this.resetPhaseFlags();
-      this.editSelected = false;
-      this.participantsSelected = false;
-      this.bracketSelected = false;
-      this.scheduleSelected = true;
-      this.extendedSelected = false;
-      this.resultsSelected = false;
-      this.presentSelected = false;
-    }
-    extendedSelect()
-    {
-      this.resetPhaseFlags();
-      this.editSelected = false;
-      this.participantsSelected = false;
-      this.bracketSelected = false;
-      this.scheduleSelected = false;
-      this.extendedSelected = true;
-      this.resultsSelected = false;
-      this.presentSelected = false;
-    }
-    presentSelect()
-    {
-      this.resetPhaseFlags();
-      this.editSelected = false;
-      this.participantsSelected = false;
-      this.bracketSelected = false;
-      this.scheduleSelected = false;
-      this.extendedSelected = false;
-      this.resultsSelected = false;
-      this.presentSelected = true;
-    }
-    resultsSelect()
-    {
-      this.resetPhaseFlags();
-      this.editSelected = false;
-      this.participantsSelected = false;
-      this.bracketSelected = false;
-      this.scheduleSelected = false;
-      this.extendedSelected = false;
-      this.resultsSelected = true;
-      this.presentSelected = false;
+  getTeams(): string[] {
+    const teams = Array.from(new Set(this.players.map((p) => p.team)));
+    return teams;
+  }
+
+  randomizeMatches() {
+    const teams = this.getTeams().filter((t) => t && t.trim() !== '');
+    if (teams.length < 2) {
+      alert('Not enough teams to create matches.');
+      return;
     }
 
-    onImageChange(event: any) {
-      const file = event.target.files[0];
-      if (file) {
-        this.selectedImage = file;
-        const reader = new FileReader();
-        reader.onload = (e: any) => {
-          this.userProfile.imageUrl = e.target.result;
-          localStorage.setItem('profileImageUrl', e.target.result);
-          this.globalAuth.profileImageUrl = e.target.result;
-        };
-        reader.readAsDataURL(file);
+    const start = this.randomizerStartTime || '10:00';
+    const end = this.randomizerEndTime || '18:00';
+    const [startHour, startMin] = start.split(':').map(Number);
+    const [endHour, endMin] = end.split(':').map(Number);
+    const startMinutes = startHour * 60 + startMin;
+    const endMinutes = endHour * 60 + endMin;
+    if (endMinutes <= startMinutes) {
+      alert('End time must be after start time.');
+      return;
+    }
+
+    const shuffled = [...teams].sort(() => Math.random() - 0.5);
+    const matches = [];
+    const matchDuration = 45;
+    const fieldCount = this.hallFields.length;
+    const fieldTimes: number[] = Array(fieldCount).fill(startMinutes);
+    for (let i = 0; i < shuffled.length; i += 2) {
+      const teamA = shuffled[i];
+      const teamB = shuffled[i + 1] || '';
+      let minIdx = 0;
+      for (let f = 1; f < fieldCount; f++) {
+        if (fieldTimes[f] < fieldTimes[minIdx]) minIdx = f;
       }
+      const matchTime = fieldTimes[minIdx];
+      if (matchTime + matchDuration > endMinutes + 1) break;
+      matches.push({
+        time:
+          Math.floor(matchTime / 60)
+            .toString()
+            .padStart(2, '0') +
+          ':' +
+          (matchTime % 60).toString().padStart(2, '0'),
+        teamA,
+        teamB,
+        fieldIdx: minIdx,
+      });
+      fieldTimes[minIdx] += matchDuration;
     }
-    confirmCancel() {
+    this.matchSchedule = matches;
+  }
+
+  editSelect() {
+    this.resetPhaseFlags();
+    this.editSelected = true;
+    this.participantsSelected = false;
+    this.bracketSelected = false;
+    this.scheduleSelected = false;
+    this.extendedSelected = false;
+    this.resultsSelected = false;
+    this.presentSelected = false;
+  }
+
+  participantsSelect() {
+    this.resetPhaseFlags();
+    this.editSelected = false;
+    this.participantsSelected = true;
+    this.bracketSelected = false;
+    this.scheduleSelected = false;
+    this.extendedSelected = false;
+    this.resultsSelected = false;
+    this.presentSelected = false;
+  }
+  bracketSelect() {
+    this.resetPhaseFlags();
+    this.editSelected = false;
+    this.participantsSelected = false;
+    this.bracketSelected = true;
+    this.scheduleSelected = false;
+    this.extendedSelected = false;
+    this.resultsSelected = false;
+    this.presentSelected = false;
+  }
+  scheduleSelect() {
+    this.resetPhaseFlags();
+    this.editSelected = false;
+    this.participantsSelected = false;
+    this.bracketSelected = false;
+    this.scheduleSelected = true;
+    this.extendedSelected = false;
+    this.resultsSelected = false;
+    this.presentSelected = false;
+  }
+  extendedSelect() {
+    this.resetPhaseFlags();
+    this.editSelected = false;
+    this.participantsSelected = false;
+    this.bracketSelected = false;
+    this.scheduleSelected = false;
+    this.extendedSelected = true;
+    this.resultsSelected = false;
+    this.presentSelected = false;
+  }
+  presentSelect() {
+    this.resetPhaseFlags();
+    this.editSelected = false;
+    this.participantsSelected = false;
+    this.bracketSelected = false;
+    this.scheduleSelected = false;
+    this.extendedSelected = false;
+    this.resultsSelected = false;
+    this.presentSelected = true;
+  }
+  resultsSelect() {
+    this.resetPhaseFlags();
+    this.editSelected = false;
+    this.participantsSelected = false;
+    this.bracketSelected = false;
+    this.scheduleSelected = false;
+    this.extendedSelected = false;
+    this.resultsSelected = true;
+    this.presentSelected = false;
+  }
+
+  onImageChange(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      this.selectedImage = file;
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.userProfile.imageUrl = e.target.result;
+        localStorage.setItem('profileImageUrl', e.target.result);
+        this.globalAuth.profileImageUrl = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+  confirmCancel() {
     const correctPassword = 'Passwort123';
     if (this.confirmPassword.trim() === '') {
       this.passwordInvalid = true;
@@ -937,7 +1179,6 @@ randomizeMatches() {
     if (this.confirmPassword === correctPassword) {
       this.passwordInvalid = false;
       this.cancelSuccess = true;
-      
     } else {
       this.passwordInvalid = true;
       this.cancelSuccess = false;
@@ -961,24 +1202,25 @@ randomizeMatches() {
     this.modalImageSrc = '';
   }
 
-    showPlayerInfo(player: any) {
-      alert(`Hier noch Funktion mit Backend machen`);
-    }
+  showPlayerInfo(player: any) {
+    alert(`Hier noch Funktion mit Backend machen`);
+  }
 
   teamColors = new Map<string, string>();
   usedColors: string[] = [];
 
   filteredPlayers() {
     const query = this.searchQuery.toLowerCase();
-    return this.players.filter(player =>
-      player.name.toLowerCase().includes(query) ||
-      (player.team && player.team.toLowerCase().includes(query))
+    return this.players.filter(
+      (player) =>
+        player.name.toLowerCase().includes(query) ||
+        (player.team && player.team.toLowerCase().includes(query))
     );
   }
 
   kickPlayer(event: MouseEvent, player: any) {
     event.stopPropagation();
-    this.players = this.players.filter(p => p !== player);
+    this.players = this.players.filter((p) => p !== player);
   }
 
   addGuest() {
@@ -987,7 +1229,7 @@ randomizeMatches() {
     const newGuest = {
       name: this.guestName.trim(),
       team: this.guestTeam.trim() || '',
-      avatar: 'assets/images/default-profile.png'
+      avatar: 'assets/images/default-profile.png',
     };
 
     this.players.push(newGuest);
@@ -996,7 +1238,7 @@ randomizeMatches() {
   }
 
   countPlayersWithoutTeam() {
-    return this.players.filter(p => !p.team || p.team.trim() === '').length;
+    return this.players.filter((p) => !p.team || p.team.trim() === '').length;
   }
 
   getTeamColor(team: string): string {
@@ -1005,7 +1247,7 @@ randomizeMatches() {
     if (!this.teamColors.has(team)) {
       const newColor = this.generateUniqueColor();
       this.teamColors.set(team, newColor);
-      this.usedColors.push(newColor); 
+      this.usedColors.push(newColor);
     }
 
     return this.teamColors.get(team)!;
@@ -1013,19 +1255,30 @@ randomizeMatches() {
 
   generateUniqueColor(): string {
     const colors = [
-      '#f44336', '#2196f3', '#4caf50', '#ff9800',
-      '#9c27b0', '#00bcd4', '#ff5722', '#8bc34a',
-      '#ffc107', '#673ab7', '#3f51b5', '#e91e63'
+      '#f44336',
+      '#2196f3',
+      '#4caf50',
+      '#ff9800',
+      '#9c27b0',
+      '#00bcd4',
+      '#ff5722',
+      '#8bc34a',
+      '#ffc107',
+      '#673ab7',
+      '#3f51b5',
+      '#e91e63',
     ];
 
-    const available = colors.filter(c => !this.usedColors.includes(c));
+    const available = colors.filter((c) => !this.usedColors.includes(c));
     if (available.length) {
       return available[0];
     }
-    // Generate a truly unique color if all are used
+
     let color;
     do {
-      color = `#${Math.floor(Math.random()*16777215).toString(16).padStart(6, '0')}`;
+      color = `#${Math.floor(Math.random() * 16777215)
+        .toString(16)
+        .padStart(6, '0')}`;
     } while (this.usedColors.includes(color));
     return color;
   }
@@ -1038,12 +1291,12 @@ randomizeMatches() {
     }
   }
 
-    addSponsor() {
-      this.sponsors.push({ name: '', logoUrl: null });
+  addSponsor() {
+    this.sponsors.push({ name: '', logoUrl: null });
   }
 
   addPartner() {
-      this.partners.push({ name: '', logoUrl: null });
+    this.partners.push({ name: '', logoUrl: null });
   }
 
   deleteSponsor(index: number) {
@@ -1103,220 +1356,227 @@ randomizeMatches() {
       teamMap.get(team)!.push(player);
     }
 
-    const results = Array.from(teamMap.entries()).map(([teamName, players], i) => {
-      // Ensure color is assigned for every team
-      this.getTeamColor(teamName);
-      return {
-        teamName: teamName,
-        players: players,
-        matches: 5,
-        wins: 100 - i,
-        losses: i,
-        points: 300 - i * 10,
-      };
-    });
+    const results = Array.from(teamMap.entries()).map(
+      ([teamName, players], i) => {
+        this.getTeamColor(teamName);
+        return {
+          teamName: teamName,
+          players: players,
+          matches: 5,
+          wins: 100 - i,
+          losses: i,
+          points: 300 - i * 10,
+        };
+      }
+    );
 
     return results.sort((a, b) => b.points - a.points);
   }
 
-dropListId = 'match-schedule-drop-list';
+  dropListId = 'match-schedule-drop-list';
 
-defaultMatch() {
-  return {
-    time: '14:00',
-    teamA: this.getTeams()[0] || '',
-    teamB: this.getTeams()[1] || '',
-    fieldIdx: this.hallFields.length > 0 ? 0 : -1
-  };
-}
-
-addMatch() {
-  this.matchSchedule.push(this.defaultMatch());
-}
-
-deleteMatch(index: number) {
-  this.matchSchedule.splice(index, 1);
-}
-
-removeMatch(index: number) {
-  this.matchSchedule.splice(index, 1);
-}
-
-onMatchChange(index: number) {
-}
-
-onDragStart(index: number) {
-}
-
-onDrop(event: any) {
-  if (event.previousIndex === event.currentIndex) return;
-  const prev = this.matchSchedule[event.previousIndex];
-  const curr = this.matchSchedule[event.currentIndex];
-  const tempTime = prev.time;
-  prev.time = curr.time;
-  curr.time = tempTime;
-  const moved = this.matchSchedule.splice(event.previousIndex, 1)[0];
-  this.matchSchedule.splice(event.currentIndex, 0, moved);
-}
-
-hallEditorOpen = false;
-hallWidth = 400;
-hallHeight = 200;
-
-openHallEditor() {
-  this.hallEditorOpen = true;
-}
-
-closeHallEditor() {
-  this.hallEditorOpen = false;
-}
-
-onFieldDrop(event: any) {
-  if (event.previousIndex === event.currentIndex) return;
-  const moved = this.hallFields.splice(event.previousIndex, 1)[0];
-  this.hallFields.splice(event.currentIndex, 0, moved);
-}
-
-moveMatchUp(idx: number) {
-  if (idx > 0) {
-    const temp = this.matchSchedule[idx - 1];
-    this.matchSchedule[idx - 1] = this.matchSchedule[idx];
-    this.matchSchedule[idx] = temp;
-  }
-}
-
-moveMatchDown(idx: number) {
-  if (idx < this.matchSchedule.length - 1) {
-    const temp = this.matchSchedule[idx + 1];
-    this.matchSchedule[idx + 1] = this.matchSchedule[idx];
-    this.matchSchedule[idx] = temp;
-  }
-}
-
-draggedFieldIdx: number | null = null;
-dragOffset = { x: 0, y: 0 };
-isDragging = false;
-hallRect: DOMRect | null = null;
-
-startDragField(idx: number, event: MouseEvent | TouchEvent) {
-  event.preventDefault();
-  this.draggedFieldIdx = idx;
-  this.isDragging = true;
-  const hall = document.querySelector('.cornhole-hall-bg') as HTMLElement;
-  if (hall) this.hallRect = hall.getBoundingClientRect();
-  let clientX = 0, clientY = 0;
-  if (event instanceof MouseEvent) {
-    clientX = event.clientX;
-    clientY = event.clientY;
-  } else if (event.touches && event.touches.length > 0) {
-    clientX = event.touches[0].clientX;
-    clientY = event.touches[0].clientY;
-  }
-  const field = this.hallFields[idx];
-  if (this.hallRect) {
-    const fieldPx = {
-      x: (field.x / 100) * this.hallRect.width,
-      y: (field.y / 100) * this.hallRect.height,
-    };
-    this.dragOffset = {
-      x: clientX - (this.hallRect.left + fieldPx.x),
-      y: clientY - (this.hallRect.top + fieldPx.y),
+  defaultMatch() {
+    return {
+      time: '14:00',
+      teamA: this.getTeams()[0] || '',
+      teamB: this.getTeams()[1] || '',
+      fieldIdx: this.hallFields.length > 0 ? 0 : -1,
     };
   }
-  window.addEventListener('mousemove', this.onHallMouseMoveBound);
-  window.addEventListener('mouseup', this.onHallMouseUpBound);
-  window.addEventListener('touchmove', this.onHallMouseMoveBound, { passive: false });
-  window.addEventListener('touchend', this.onHallMouseUpBound);
-}
 
-onHallMouseMove = (event: MouseEvent | TouchEvent) => {
-  if (this.draggedFieldIdx === null || !this.isDragging || !this.hallRect) return;
-  let clientX = 0, clientY = 0;
-  if (event instanceof MouseEvent) {
-    clientX = event.clientX;
-    clientY = event.clientY;
-  } else if (event.touches && event.touches.length > 0) {
-    clientX = event.touches[0].clientX;
-    clientY = event.touches[0].clientY;
-    event.preventDefault();
+  addMatch() {
+    this.matchSchedule.push(this.defaultMatch());
   }
-  let newX = clientX - this.hallRect.left - this.dragOffset.x;
-  let newY = clientY - this.hallRect.top - this.dragOffset.y;
-  const fieldW = 120, fieldH = 60;
-  newX = Math.max(0, Math.min(newX, this.hallRect.width - fieldW));
-  newY = Math.max(0, Math.min(newY, this.hallRect.height - fieldH));
-  const percentX = (newX / this.hallRect.width) * 100;
-  const percentY = (newY / this.hallRect.height) * 100;
-  this.hallFields[this.draggedFieldIdx] = { x: percentX, y: percentY };
-};
 
-onHallMouseUp = (event: MouseEvent | TouchEvent) => {
-  this.isDragging = false;
-  this.draggedFieldIdx = null;
-  window.removeEventListener('mousemove', this.onHallMouseMoveBound);
-  window.removeEventListener('mouseup', this.onHallMouseUpBound);
-  window.removeEventListener('touchmove', this.onHallMouseMoveBound);
-  window.removeEventListener('touchend', this.onHallMouseUpBound);
-};
-
-onHallMouseDown(idx: number, event: MouseEvent | TouchEvent) {
-  this.startDragField(idx, event);
-}
-
-onHallMouseMoveBound = (e: any) => this.onHallMouseMove(e);
-onHallMouseUpBound = (e: any) => this.onHallMouseUp(e);
-
-saveFee() {
-  if (this.tournament) {
-    this.tournamentService.setTournament(this.tournament);
+  deleteMatch(index: number) {
+    this.matchSchedule.splice(index, 1);
   }
-  this.editFee = false;
-}
 
-selectPhase(phase: string) {
-  this.phaseNotSelected = false;
-  this.onlyGroupSelected = false;
-  this.onlyKoPhaseSelected = false;
-  this.groupAndKoSelected = false;
-  if (phase === 'Group') {
-    this.onlyGroupSelected = true;
-    this.generateGroups();
-    this.generateGroupMatches();
-    this.updateGroupTables();
+  removeMatch(index: number) {
+    this.matchSchedule.splice(index, 1);
   }
-  if (phase === 'Ko') {
-    this.onlyKoPhaseSelected = true;
+
+  onMatchChange(index: number) {}
+
+  onDragStart(index: number) {}
+
+  onDrop(event: any) {
+    if (event.previousIndex === event.currentIndex) return;
+    const prev = this.matchSchedule[event.previousIndex];
+    const curr = this.matchSchedule[event.currentIndex];
+    const tempTime = prev.time;
+    prev.time = curr.time;
+    curr.time = tempTime;
+    const moved = this.matchSchedule.splice(event.previousIndex, 1)[0];
+    this.matchSchedule.splice(event.currentIndex, 0, moved);
   }
-  if (phase === 'groupAndKo') {
-    this.groupAndKoSelected = true;
-    this.generateGroups();
-    this.generateGroupMatches();
-    this.updateGroupTables();
+
+  hallEditorOpen = false;
+  hallWidth = 400;
+  hallHeight = 200;
+
+  openHallEditor() {
+    this.hallEditorOpen = true;
   }
-}
 
-getRounds(participantCount: number) {
-  let rounds = [];
-  let currentRoundTeams = this.players.slice();
+  closeHallEditor() {
+    this.hallEditorOpen = false;
+  }
 
-  if (currentRoundTeams.length < 2) return [];
+  onFieldDrop(event: any) {
+    if (event.previousIndex === event.currentIndex) return;
+    const moved = this.hallFields.splice(event.previousIndex, 1)[0];
+    this.hallFields.splice(event.currentIndex, 0, moved);
+  }
 
-  while (currentRoundTeams.length > 1) {
-    let matches = [];
-    for (let i = 0; i < currentRoundTeams.length; i += 2) {
-      matches.push([
-        currentRoundTeams[i],
-        currentRoundTeams[i + 1] || { name: 'TBD', team: '', avatar: '' },
-      ]);
+  moveMatchUp(idx: number) {
+    if (idx > 0) {
+      const temp = this.matchSchedule[idx - 1];
+      this.matchSchedule[idx - 1] = this.matchSchedule[idx];
+      this.matchSchedule[idx] = temp;
     }
-    rounds.push(matches);
-    currentRoundTeams = new Array(Math.ceil(currentRoundTeams.length / 2)).fill({ name: 'TBD', team: '', avatar: '' });
   }
 
-  return rounds;
-}
+  moveMatchDown(idx: number) {
+    if (idx < this.matchSchedule.length - 1) {
+      const temp = this.matchSchedule[idx + 1];
+      this.matchSchedule[idx + 1] = this.matchSchedule[idx];
+      this.matchSchedule[idx] = temp;
+    }
+  }
 
-  groupCount = 4; 
+  draggedFieldIdx: number | null = null;
+  dragOffset = { x: 0, y: 0 };
+  isDragging = false;
+  hallRect: DOMRect | null = null;
+
+  startDragField(idx: number, event: MouseEvent | TouchEvent) {
+    event.preventDefault();
+    this.draggedFieldIdx = idx;
+    this.isDragging = true;
+    const hall = document.querySelector('.cornhole-hall-bg') as HTMLElement;
+    if (hall) this.hallRect = hall.getBoundingClientRect();
+    let clientX = 0,
+      clientY = 0;
+    if (event instanceof MouseEvent) {
+      clientX = event.clientX;
+      clientY = event.clientY;
+    } else if (event.touches && event.touches.length > 0) {
+      clientX = event.touches[0].clientX;
+      clientY = event.touches[0].clientY;
+    }
+    const field = this.hallFields[idx];
+    if (this.hallRect) {
+      const fieldPx = {
+        x: (field.x / 100) * this.hallRect.width,
+        y: (field.y / 100) * this.hallRect.height,
+      };
+      this.dragOffset = {
+        x: clientX - (this.hallRect.left + fieldPx.x),
+        y: clientY - (this.hallRect.top + fieldPx.y),
+      };
+    }
+    window.addEventListener('mousemove', this.onHallMouseMoveBound);
+    window.addEventListener('mouseup', this.onHallMouseUpBound);
+    window.addEventListener('touchmove', this.onHallMouseMoveBound, {
+      passive: false,
+    });
+    window.addEventListener('touchend', this.onHallMouseUpBound);
+  }
+
+  onHallMouseMove = (event: MouseEvent | TouchEvent) => {
+    if (this.draggedFieldIdx === null || !this.isDragging || !this.hallRect)
+      return;
+    let clientX = 0,
+      clientY = 0;
+    if (event instanceof MouseEvent) {
+      clientX = event.clientX;
+      clientY = event.clientY;
+    } else if (event.touches && event.touches.length > 0) {
+      clientX = event.touches[0].clientX;
+      clientY = event.touches[0].clientY;
+      event.preventDefault();
+    }
+    let newX = clientX - this.hallRect.left - this.dragOffset.x;
+    let newY = clientY - this.hallRect.top - this.dragOffset.y;
+    const fieldW = 120,
+      fieldH = 60;
+    newX = Math.max(0, Math.min(newX, this.hallRect.width - fieldW));
+    newY = Math.max(0, Math.min(newY, this.hallRect.height - fieldH));
+    const percentX = (newX / this.hallRect.width) * 100;
+    const percentY = (newY / this.hallRect.height) * 100;
+    this.hallFields[this.draggedFieldIdx] = { x: percentX, y: percentY };
+  };
+
+  onHallMouseUp = (event: MouseEvent | TouchEvent) => {
+    this.isDragging = false;
+    this.draggedFieldIdx = null;
+    window.removeEventListener('mousemove', this.onHallMouseMoveBound);
+    window.removeEventListener('mouseup', this.onHallMouseUpBound);
+    window.removeEventListener('touchmove', this.onHallMouseMoveBound);
+    window.removeEventListener('touchend', this.onHallMouseUpBound);
+  };
+
+  onHallMouseDown(idx: number, event: MouseEvent | TouchEvent) {
+    this.startDragField(idx, event);
+  }
+
+  onHallMouseMoveBound = (e: any) => this.onHallMouseMove(e);
+  onHallMouseUpBound = (e: any) => this.onHallMouseUp(e);
+
+  saveFee() {
+    if (this.tournament) {
+      this.tournamentService.setTournament(this.tournament);
+    }
+    this.editFee = false;
+  }
+
+  selectPhase(phase: string) {
+    this.phaseNotSelected = false;
+    this.onlyGroupSelected = false;
+    this.onlyKoPhaseSelected = false;
+    this.groupAndKoSelected = false;
+    if (phase === 'Group') {
+      this.onlyGroupSelected = true;
+      this.generateGroups();
+      this.generateGroupMatches();
+      this.updateGroupTables();
+    }
+    if (phase === 'Ko') {
+      this.onlyKoPhaseSelected = true;
+    }
+    if (phase === 'groupAndKo') {
+      this.groupAndKoSelected = true;
+      this.generateGroups();
+      this.generateGroupMatches();
+      this.updateGroupTables();
+    }
+  }
+
+  getRounds(participantCount: number) {
+    let rounds = [];
+    let currentRoundTeams = this.players.slice();
+
+    if (currentRoundTeams.length < 2) return [];
+
+    while (currentRoundTeams.length > 1) {
+      let matches = [];
+      for (let i = 0; i < currentRoundTeams.length; i += 2) {
+        matches.push([
+          currentRoundTeams[i],
+          currentRoundTeams[i + 1] || { name: 'TBD', team: '', avatar: '' },
+        ]);
+      }
+      rounds.push(matches);
+      currentRoundTeams = new Array(
+        Math.ceil(currentRoundTeams.length / 2)
+      ).fill({ name: 'TBD', team: '', avatar: '' });
+    }
+
+    return rounds;
+  }
+
+  groupCount = 4;
   groupSize = 0;
   groupMatches: any[] = [];
   groupTables: any[] = [];
@@ -1326,34 +1586,36 @@ getRounds(participantCount: number) {
 
   getTeamNames(): string[] {
     const teamSet = new Set<string>();
-    this.players.forEach(p => {
+    this.players.forEach((p) => {
       if (p.team && p.team.trim() !== '') teamSet.add(p.team);
     });
     return Array.from(teamSet);
   }
 
   generateGroups() {
-  const teamNames = this.getTeamNames();
-  const shuffled = [...teamNames].sort(() => Math.random() - 0.5);
-  this.groups = [];
+    const teamNames = this.getTeamNames();
+    const shuffled = [...teamNames].sort(() => Math.random() - 0.5);
+    this.groups = [];
 
-  for (let i = 0; i < shuffled.length; i += this.teamsPerGroup) {
-    const teamObjects = shuffled.slice(i, i + this.teamsPerGroup).map(name => ({
-      name,
-      games: 0,
-      points: 0,
-      throws: 0,
-      hits: 0,
-      accuracy: 0,
-      diff: 0
-    }));
+    for (let i = 0; i < shuffled.length; i += this.teamsPerGroup) {
+      const teamObjects = shuffled
+        .slice(i, i + this.teamsPerGroup)
+        .map((name) => ({
+          name,
+          games: 0,
+          points: 0,
+          throws: 0,
+          hits: 0,
+          accuracy: 0,
+          diff: 0,
+        }));
 
-    this.groups.push({
-      name: `Group ${Math.floor(i / this.teamsPerGroup) + 1}`,
-      teams: teamObjects
-    });
+      this.groups.push({
+        name: `Group ${Math.floor(i / this.teamsPerGroup) + 1}`,
+        teams: teamObjects,
+      });
+    }
   }
-}
 
   generateGroupMatches() {
     this.groupMatches = this.groups.map((group: any) => {
@@ -1364,7 +1626,7 @@ getRounds(participantCount: number) {
             teamA: group.teams[i],
             teamB: group.teams[j],
             scoreA: null,
-            scoreB: null
+            scoreB: null,
           });
         }
       }
@@ -1379,7 +1641,7 @@ getRounds(participantCount: number) {
         points: 0,
         goalsFor: 0,
         goalsAgainst: 0,
-        played: 0
+        played: 0,
       }));
       const matches = this.groupMatches[gIdx].matches;
       matches.forEach((match: any) => {
@@ -1402,10 +1664,11 @@ getRounds(participantCount: number) {
           }
         }
       });
-      table.sort((a: any, b: any) =>
-        b.points - a.points ||
-        (b.goalsFor - b.goalsAgainst) - (a.goalsFor - a.goalsAgainst) ||
-        b.goalsFor - a.goalsFor
+      table.sort(
+        (a: any, b: any) =>
+          b.points - a.points ||
+          b.goalsFor - b.goalsAgainst - (a.goalsFor - a.goalsAgainst) ||
+          b.goalsFor - a.goalsFor
       );
       return { groupName: group.name, table };
     });
@@ -1416,7 +1679,8 @@ getRounds(participantCount: number) {
     this.advancingTeams = [];
     this.groupTables.forEach((groupTable: any) => {
       this.advancingTeams.push(groupTable.table[0].team);
-      if (groupTable.table[1]) this.advancingTeams.push(groupTable.table[1].team);
+      if (groupTable.table[1])
+        this.advancingTeams.push(groupTable.table[1].team);
     });
   }
 
@@ -1424,7 +1688,8 @@ getRounds(participantCount: number) {
     const pairings = [];
     for (let i = 0; i < this.groupCount; i++) {
       const first = this.groupTables[i]?.table[0]?.team;
-      const second = this.groupTables[(i + 1) % this.groupCount]?.table[1]?.team;
+      const second =
+        this.groupTables[(i + 1) % this.groupCount]?.table[1]?.team;
       if (first && second) {
         pairings.push([first, second]);
       }
@@ -1432,71 +1697,74 @@ getRounds(participantCount: number) {
     return pairings;
   }
   getPlayersForTeam(teamName: string) {
-  return this.players.filter(player => player.team === teamName);
-}
-
-groups = [
-  {
-    name: 'Group A',
-    teams: [
-      {
-        name: 'Team 1',
-        games: 3,
-        points: 6,
-        throws: 50,
-        hits: 30,
-        accuracy: 60,
-        diff: 10
-      },
-      {
-        name: 'Team 2',
-        games: 3,
-        points: 4,
-        throws: 48,
-        hits: 28,
-        accuracy: 58,
-        diff: 5
-      }
-    ]
-  },
-  {
-    name: 'Group B',
-    teams: [
-      {
-        name: 'Team 3',
-        games: 3,
-        points: 5,
-        throws: 52,
-        hits: 29,
-        accuracy: 56,
-        diff: 7
-      }
-    ]
+    return this.players.filter((player) => player.team === teamName);
   }
-];
 
-getTeamsForBracket() {
-  const uniqueTeams = new Map<string, { name: string; team: string; avatar: string }>();
-  for (const p of this.players) {
-    if (!uniqueTeams.has(p.team)) {
-      uniqueTeams.set(p.team, {
-        name: p.team,
-        team: p.team,
-        avatar: p.avatar, 
-      });
+  groups = [
+    {
+      name: 'Group A',
+      teams: [
+        {
+          name: 'Team 1',
+          games: 3,
+          points: 6,
+          throws: 50,
+          hits: 30,
+          accuracy: 60,
+          diff: 10,
+        },
+        {
+          name: 'Team 2',
+          games: 3,
+          points: 4,
+          throws: 48,
+          hits: 28,
+          accuracy: 58,
+          diff: 5,
+        },
+      ],
+    },
+    {
+      name: 'Group B',
+      teams: [
+        {
+          name: 'Team 3',
+          games: 3,
+          points: 5,
+          throws: 52,
+          hits: 29,
+          accuracy: 56,
+          diff: 7,
+        },
+      ],
+    },
+  ];
+
+  getTeamsForBracket() {
+    const uniqueTeams = new Map<
+      string,
+      { name: string; team: string; avatar: string }
+    >();
+    for (const p of this.players) {
+      if (!uniqueTeams.has(p.team)) {
+        uniqueTeams.set(p.team, {
+          name: p.team,
+          team: p.team,
+          avatar: p.avatar,
+        });
+      }
     }
+    return Array.from(uniqueTeams.values());
   }
-  return Array.from(uniqueTeams.values());
-}
 
-getTeamsFromPlayers(players: any[]) {
+  getTeamsFromPlayers(players: any[]) {
     const map = new Map<string, any>();
-    players.forEach(p => {
+    players.forEach((p) => {
       if (!map.has(p.team)) {
         map.set(p.team, {
           name: p.team,
           team: p.team,
-          avatar: p.avatar
+          avatar: p.avatar,
         });
       }
     });
@@ -1512,77 +1780,91 @@ getTeamsFromPlayers(players: any[]) {
       for (let i = 0; i < currentRoundTeams.length; i += 2) {
         matches.push([
           currentRoundTeams[i],
-          currentRoundTeams[i + 1] || { name: 'TBD', team: '', avatar: '' }
+          currentRoundTeams[i + 1] || { name: 'TBD', team: '', avatar: '' },
         ]);
       }
       rounds.push(matches);
-      currentRoundTeams = new Array(matches.length).fill({ name: 'TBD', team: '', avatar: '' });
+      currentRoundTeams = new Array(matches.length).fill({
+        name: 'TBD',
+        team: '',
+        avatar: '',
+      });
     }
 
     return rounds;
   }
 
-advanceWinner(roundIndex: number, matchIndex: number) {
-  if (roundIndex >= this.rounds.length - 1) return;
+  advanceWinner(roundIndex: number, matchIndex: number) {
+    if (roundIndex >= this.rounds.length - 1) return;
 
-  const match = this.rounds[roundIndex][matchIndex];
-  if (!match[0].confirmed || !match[1].confirmed) return;
+    const match = this.rounds[roundIndex][matchIndex];
+    if (!match[0].confirmed || !match[1].confirmed) return;
 
-  const winnerIndex = match[0].score >= match[1].score ? 0 : 1;
+    const winnerIndex = match[0].score >= match[1].score ? 0 : 1;
 
-  const nextRound = this.rounds[roundIndex + 1];
-  const nextMatchIndex = Math.floor(matchIndex / 2);
-  const nextTeamIndex = matchIndex % 2 === 0 ? 0 : 1;
+    const nextRound = this.rounds[roundIndex + 1];
+    const nextMatchIndex = Math.floor(matchIndex / 2);
+    const nextTeamIndex = matchIndex % 2 === 0 ? 0 : 1;
 
-  if (!nextRound[nextMatchIndex]) nextRound[nextMatchIndex] = [{}, {}];
+    if (!nextRound[nextMatchIndex]) nextRound[nextMatchIndex] = [{}, {}];
 
-  nextRound[nextMatchIndex][nextTeamIndex] = { ...match[winnerIndex], score: null, confirmed: false };
-}
-resetPhaseFlags() {
+    nextRound[nextMatchIndex][nextTeamIndex] = {
+      ...match[winnerIndex],
+      score: null,
+      confirmed: false,
+    };
+  }
+  resetPhaseFlags() {
     this.phaseNotSelected = true;
     this.onlyGroupSelected = false;
     this.groupAndKoSelected = false;
     this.onlyKoPhaseSelected = false;
   }
 
-showTournamentMenu: boolean = false;
+  showTournamentMenu: boolean = false;
 
-// --- Tournament Storage ---
-savedTournaments: any[] = [];
-selectedTournamentId: string | null = null;
+  savedTournaments: any[] = [];
+  selectedTournamentId: string | null = null;
 
-saveTournamentToStorage(tournament: any) {
-  if (!tournament || !tournament.id) return;
-  const all = JSON.parse(localStorage.getItem('tournaments') || '[]');
-  const idx = all.findIndex((t: any) => t.id === tournament.id);
-  if (idx >= 0) {
-    all[idx] = tournament;
-  } else {
-    all.push(tournament);
+  saveTournamentToStorage(tournament: any) {
+    if (!tournament || !tournament.id) return;
+    const all = JSON.parse(localStorage.getItem('tournaments') || '[]');
+    const idx = all.findIndex((t: any) => t.id === tournament.id);
+    if (idx >= 0) {
+      all[idx] = tournament;
+    } else {
+      all.push(tournament);
+    }
+    localStorage.setItem('tournaments', JSON.stringify(all));
+    this.loadSavedTournaments();
   }
-  localStorage.setItem('tournaments', JSON.stringify(all));
-  this.loadSavedTournaments();
-}
 
-loadSavedTournaments() {
-  this.savedTournaments = JSON.parse(localStorage.getItem('tournaments') || '[]');
-}
+  loadSavedTournaments() {
+    this.savedTournaments = JSON.parse(
+      localStorage.getItem('tournaments') || '[]'
+    );
+  }
 
-selectTournament(id: string) {
-  const found = this.savedTournaments.find(t => t.id === id);
-  if (found) {
-    this.tournament = found;
-    this.selectedTournamentId = id;
+  selectTournament(id: string) {
+    const found = this.savedTournaments.find((t) => t.id === id);
+    if (found) {
+      this.tournament = found;
+      this.selectedTournamentId = id;
+    }
+  }
+
+  createOrUpdateTournament() {
+    if (!this.tournament) return;
+    if (!this.tournament.id) {
+      this.tournament.id = 't_' + Date.now();
+    }
+    this.saveTournamentToStorage(this.tournament);
+  }
+
+  cancelTournament(tournamentId: string) {
+    const all = JSON.parse(localStorage.getItem('tournaments') || '[]');
+    const updated = all.filter((t: any) => t.id !== tournamentId);
+    localStorage.setItem('tournaments', JSON.stringify(updated));
+    this.loadSavedTournaments();
   }
 }
-
-// Call this after creating or editing a tournament
-createOrUpdateTournament() {
-  if (!this.tournament) return;
-  if (!this.tournament.id) {
-    this.tournament.id = 't_' + Date.now();
-  }
-  this.saveTournamentToStorage(this.tournament);
-}
-}
-

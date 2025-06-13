@@ -1,6 +1,13 @@
-import { Component, OnInit, AfterViewInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  OnDestroy,
+  ElementRef,
+  ViewChild,
+} from '@angular/core';
 import { GlobalAuth } from '../../global-auth';
-import { UserProfileService } from '../../Services/user-profile.service'; 
+import { UserProfileService } from '../../Services/user-profile.service';
 import { Router } from '@angular/router';
 import { TournamentService } from '../../Services/tournament.service';
 type LanguageCode = 'de' | 'en' | 'fr' | 'es';
@@ -9,9 +16,11 @@ type LanguageCode = 'de' | 'en' | 'fr' | 'es';
   selector: 'app-join-tournament',
   standalone: false,
   templateUrl: './join-tournament.component.html',
-  styleUrl: './join-tournament.component.scss'
+  styleUrl: './join-tournament.component.scss',
 })
-export class JoinTournamentComponent implements OnInit, AfterViewInit, OnDestroy {
+export class JoinTournamentComponent
+  implements OnInit, AfterViewInit, OnDestroy
+{
   isNavOpen: boolean = false;
   hasTournament = false;
   isTournamentRegisterOpen = false;
@@ -20,7 +29,7 @@ export class JoinTournamentComponent implements OnInit, AfterViewInit, OnDestroy
   selectedTournamentId: number | null = null;
   selectedTournament: any = null;
   detailsModalVisible: boolean = false;
-  joinStatus: string = "join";
+  joinStatus: string = 'join';
   searchTerm: string = '';
   filteredTournaments: any[] = [];
   showPassword = false;
@@ -30,16 +39,16 @@ export class JoinTournamentComponent implements OnInit, AfterViewInit, OnDestroy
   selectedMaxTeams: number = 0;
   selectedTournamentImage: string | null = null;
 
-  joinFeedback: { message: string, type: 'success' | 'error' } | null = null;
+  joinFeedback: { message: string; type: 'success' | 'error' } | null = null;
   showCelebration = false;
 
   languages = [
     { code: 'de' as LanguageCode, label: 'Deutsch' },
     { code: 'en' as LanguageCode, label: 'English' },
     { code: 'fr' as LanguageCode, label: 'Français' },
-    { code: 'es' as LanguageCode, label: 'Español' }
+    { code: 'es' as LanguageCode, label: 'Español' },
   ];
-  
+
   selectedLang: LanguageCode = 'en';
   langDropdownOpen = false;
 
@@ -72,9 +81,11 @@ export class JoinTournamentComponent implements OnInit, AfterViewInit, OnDestroy
       teams: 'Teams',
       teamsInfo: 'Anzahl der Teams, die teilnehmen können.',
       notes: 'Notizen',
-      notesInfo: 'Füge zusätzliche Informationen oder Regeln für das Turnier hinzu.',
+      notesInfo:
+        'Füge zusätzliche Informationen oder Regeln für das Turnier hinzu.',
       privateTournament: 'Privates Turnier',
-      privateInfo: '<strong>Privat:</strong> Nur eingeladene Personen können teilnehmen, nicht öffentlich gelistet.<br><strong>Öffentlich:</strong> Turnier ist öffentlich gelistet und jeder kann teilnehmen.',
+      privateInfo:
+        '<strong>Privat:</strong> Nur eingeladene Personen können teilnehmen, nicht öffentlich gelistet.<br><strong>Öffentlich:</strong> Turnier ist öffentlich gelistet und jeder kann teilnehmen.',
       createTournamentBtn: 'Turnier erstellen',
       privacyPolicy: 'Datenschutz',
       termsOfService: 'Nutzungsbedingungen',
@@ -101,7 +112,8 @@ export class JoinTournamentComponent implements OnInit, AfterViewInit, OnDestroy
       loginToJoin: 'Melde dich an, um einem Turnier beizutreten',
       Formattitle: 'Format',
       TeamName: 'Wähle einen Namen für dein Team',
-      TeamNameInfo: 'Bitte wähle einen kurzen und passenden Teamnamen. Beleidigende oder zu lange Namen sind nicht erlaubt. Der gewählte Name wird während des gesamten Turniers verwendet.',
+      TeamNameInfo:
+        'Bitte wähle einen kurzen und passenden Teamnamen. Beleidigende oder zu lange Namen sind nicht erlaubt. Der gewählte Name wird während des gesamten Turniers verwendet.',
       back: 'Zurück',
       Particitant: 'Teilnehmer',
       tournamentFull: 'Das Turnier ist voll',
@@ -137,7 +149,8 @@ export class JoinTournamentComponent implements OnInit, AfterViewInit, OnDestroy
       notes: 'Notes',
       notesInfo: 'Add any additional information or rules for the tournament.',
       privateTournament: 'Private Tournament',
-      privateInfo: '<strong>Private:</strong> Only invited people can join, not listed globally.<br><strong>Public:</strong> Tournament is listed globally and everyone can join.',
+      privateInfo:
+        '<strong>Private:</strong> Only invited people can join, not listed globally.<br><strong>Public:</strong> Tournament is listed globally and everyone can join.',
       createTournamentBtn: 'Create Tournament',
       privacyPolicy: 'Privacy Policy',
       termsOfService: 'Terms of Service',
@@ -164,7 +177,8 @@ export class JoinTournamentComponent implements OnInit, AfterViewInit, OnDestroy
       loginToJoin: 'Log in to join a tournament',
       Formattitle: 'format',
       TeamName: 'Choose a name for your team',
-      TeamNameInfo: 'Choose a short and appropriate name for your team. Offensive or overly long names wont be accepted. This name will represent your team throughout the tournament.',
+      TeamNameInfo:
+        'Choose a short and appropriate name for your team. Offensive or overly long names wont be accepted. This name will represent your team throughout the tournament.',
       back: 'Back',
       Particitant: 'Participant',
       tournamentFull: 'Tournament is full',
@@ -196,14 +210,16 @@ export class JoinTournamentComponent implements OnInit, AfterViewInit, OnDestroy
       location: 'Lieu',
       locationInfo: 'Entrez le lieu où se déroulera le tournoi.',
       teams: 'Équipes',
-      teamsInfo: 'Nombre d\'équipes pouvant participer à ce tournoi.',
+      teamsInfo: "Nombre d'équipes pouvant participer à ce tournoi.",
       notes: 'Notes',
-      notesInfo: 'Ajoutez des informations ou règles supplémentaires pour le tournoi.',
+      notesInfo:
+        'Ajoutez des informations ou règles supplémentaires pour le tournoi.',
       privateTournament: 'Tournoi privé',
-      privateInfo: '<strong>Privé :</strong> Seules les personnes invitées peuvent participer, non listé publiquement.<br><strong>Public :</strong> Le tournoi est listé publiquement et tout le monde peut participer.',
+      privateInfo:
+        '<strong>Privé :</strong> Seules les personnes invitées peuvent participer, non listé publiquement.<br><strong>Public :</strong> Le tournoi est listé publiquement et tout le monde peut participer.',
       createTournamentBtn: 'Créer le tournoi',
       privacyPolicy: 'Politique de confidentialité',
-      termsOfService: 'Conditions d\'utilisation',
+      termsOfService: "Conditions d'utilisation",
       contact: 'Contact',
       join: 'Rejoindre',
       leave: 'Quitter',
@@ -227,7 +243,8 @@ export class JoinTournamentComponent implements OnInit, AfterViewInit, OnDestroy
       loginToJoin: 'Connecte-toi pour rejoindre un tournoi',
       Formattitle: 'format',
       TeamName: 'Choisis un nom pour ton équipe',
-      TeamNameInfo: 'Choisis un nom court et respectueux pour ton équipe. Les noms offensants ou trop longs ne seront pas acceptés. Ce nom sera utilisé pendant tout le tournoi.',
+      TeamNameInfo:
+        'Choisis un nom court et respectueux pour ton équipe. Les noms offensants ou trop longs ne seront pas acceptés. Ce nom sera utilisé pendant tout le tournoi.',
       back: 'Retour',
       Particitant: 'Participant',
       tournamentFull: 'Le tournoi est complet',
@@ -263,7 +280,8 @@ export class JoinTournamentComponent implements OnInit, AfterViewInit, OnDestroy
       notes: 'Notas',
       notesInfo: 'Agrega información adicional o reglas para el torneo.',
       privateTournament: 'Torneo privado',
-      privateInfo: '<strong>Privado:</strong> Solo personas invitadas pueden unirse, no aparece globalmente.<br><strong>Público:</strong> El torneo aparece globalmente y cualquiera puede unirse.',
+      privateInfo:
+        '<strong>Privado:</strong> Solo personas invitadas pueden unirse, no aparece globalmente.<br><strong>Público:</strong> El torneo aparece globalmente y cualquiera puede unirse.',
       createTournamentBtn: 'Crear torneo',
       privacyPolicy: 'Política de privacidad',
       termsOfService: 'Términos de servicio',
@@ -290,17 +308,18 @@ export class JoinTournamentComponent implements OnInit, AfterViewInit, OnDestroy
       loginToJoin: 'Inicia sesión para unirte a un torneo',
       Formattitle: 'formato',
       TeamName: 'Elige un nombre para tu equipo',
-      TeamNameInfo: 'Elige un nombre corto y apropiado para tu equipo. No se permiten nombres ofensivos ni demasiado largos. Este nombre se usará durante todo el torneo.',
+      TeamNameInfo:
+        'Elige un nombre corto y apropiado para tu equipo. No se permiten nombres ofensivos ni demasiado largos. Este nombre se usará durante todo el torneo.',
       back: 'Atrás',
       Particitant: 'Participante',
       tournamentFull: 'El torneo está completo',
       joinSuccess: '¡Te has unido al torneo con éxito!',
-    }
+    },
   };
 
   t = this.translations[this.selectedLang];
 
-   userProfile: any = null;
+  userProfile: any = null;
   isProfileLoading = false;
 
   showResetForm = false;
@@ -312,46 +331,77 @@ export class JoinTournamentComponent implements OnInit, AfterViewInit, OnDestroy
 
   showImageModal: boolean = false;
   players = [
-  { name: 'Lena Schmidt', image: 'https://randomuser.me/api/portraits/women/68.jpg', team: 'CornStars' },
-  { name: 'Tom Wagner', image: 'https://randomuser.me/api/portraits/men/45.jpg', team: 'Baggers' },
-  { name: 'Julia Becker', image: 'https://randomuser.me/api/portraits/women/32.jpg', team: 'Board Kings' },
-  { name: 'Kevin Braun', image: 'https://randomuser.me/api/portraits/men/12.jpg', team: 'Bean Baggers' },
-  { name: 'Sarah Neumann', image: 'assets/images/default-profile.png', team: 'Cornhole Crew' },
-  { name: 'Chris Müller', image: 'https://randomuser.me/api/portraits/men/27.jpg', team: 'Bag Masters' }
-];
+    {
+      name: 'Lena Schmidt',
+      image: 'https://randomuser.me/api/portraits/women/68.jpg',
+      team: 'CornStars',
+    },
+    {
+      name: 'Tom Wagner',
+      image: 'https://randomuser.me/api/portraits/men/45.jpg',
+      team: 'Baggers',
+    },
+    {
+      name: 'Julia Becker',
+      image: 'https://randomuser.me/api/portraits/women/32.jpg',
+      team: 'Board Kings',
+    },
+    {
+      name: 'Kevin Braun',
+      image: 'https://randomuser.me/api/portraits/men/12.jpg',
+      team: 'Bean Baggers',
+    },
+    {
+      name: 'Sarah Neumann',
+      image: 'assets/images/default-profile.png',
+      team: 'Cornhole Crew',
+    },
+    {
+      name: 'Chris Müller',
+      image: 'https://randomuser.me/api/portraits/men/27.jpg',
+      team: 'Bag Masters',
+    },
+  ];
 
-@ViewChild('confettiCanvas', { static: false }) confettiCanvasRef!: ElementRef<HTMLCanvasElement>;
-private confettiActive = false;
-private confettiTimeout: any;
+  @ViewChild('confettiCanvas', { static: false })
+  confettiCanvasRef!: ElementRef<HTMLCanvasElement>;
+  private confettiActive = false;
+  private confettiTimeout: any;
 
-teamNameValue: string = '';
-hideTeamNameInput = false;
+  teamNameValue: string = '';
+  hideTeamNameInput = false;
 
-constructor(
+  constructor(
     public globalAuth: GlobalAuth,
     private userProfileService: UserProfileService,
     private router: Router,
-    private tournamentService: TournamentService,
+    private tournamentService: TournamentService
   ) {}
 
   ngOnInit(): void {
     this.setInitialTheme();
     this.loadJoinedTournaments();
     const saved = localStorage.getItem('lang');
-    if (saved && ['de', 'en', 'fr', 'es'].includes(saved)) { this.selectedLang = saved as LanguageCode; }
+    if (saved && ['de', 'en', 'fr', 'es'].includes(saved)) {
+      this.selectedLang = saved as LanguageCode;
+    }
     this.applyTranslations();
     this.filteredTournaments = this.tournaments;
     this.loadUserProfile();
     this.showTournamentView = false;
 
-    // Check for saved tournaments in localStorage
-    const savedTournaments = JSON.parse(localStorage.getItem('tournaments') || '[]');
-    this.hasTournament = Array.isArray(savedTournaments) && savedTournaments.length > 0;
+    const savedTournaments = JSON.parse(
+      localStorage.getItem('tournaments') || '[]'
+    );
+    this.hasTournament =
+      Array.isArray(savedTournaments) && savedTournaments.length > 0;
 
-    this.tournamentService.tournament$.subscribe(t => {
-      // Also keep hasTournament true if there are saved tournaments
-      const savedTournaments = JSON.parse(localStorage.getItem('tournaments') || '[]');
-      this.hasTournament = !!t || (Array.isArray(savedTournaments) && savedTournaments.length > 0);
+    this.tournamentService.tournament$.subscribe((t) => {
+      const savedTournaments = JSON.parse(
+        localStorage.getItem('tournaments') || '[]'
+      );
+      this.hasTournament =
+        !!t || (Array.isArray(savedTournaments) && savedTournaments.length > 0);
     });
   }
 
@@ -372,20 +422,20 @@ constructor(
   loadUserProfile() {
     this.isProfileLoading = true;
     this.userProfileService.getProfile().subscribe({
-      next: data => {
+      next: (data) => {
         this.userProfile = data;
         this.isProfileLoading = false;
       },
       error: () => {
         this.isProfileLoading = false;
-      }
+      },
     });
   }
 
   saveUserProfile(updated: { name: string; email: string; image?: File }) {
     this.isProfileLoading = true;
     this.userProfileService.updateProfile(updated).subscribe({
-      next: data => {
+      next: (data) => {
         this.userProfile = data;
         this.isProfileLoading = false;
         alert('Profil saved!');
@@ -393,7 +443,7 @@ constructor(
       error: () => {
         this.isProfileLoading = false;
         alert('Error Saving!');
-      }
+      },
     });
   }
 
@@ -405,7 +455,7 @@ constructor(
       },
       error: () => {
         alert('Error sending the request link please check the Email');
-      }
+      },
     });
   }
 
@@ -588,15 +638,18 @@ constructor(
     let joinedTournaments = this.getJoinedTournaments();
 
     if (joinedTournaments.includes(tournamentId)) {
-      joinedTournaments = joinedTournaments.filter(id => id !== tournamentId);
-      localStorage.setItem('joinedTournaments', JSON.stringify(joinedTournaments));
-      alert("You left the tournament");
+      joinedTournaments = joinedTournaments.filter((id) => id !== tournamentId);
+      localStorage.setItem(
+        'joinedTournaments',
+        JSON.stringify(joinedTournaments)
+      );
+      alert('You left the tournament');
       this.loadJoinedTournaments();
       return;
     }
 
     if (currentTeams >= maxTeams) {
-      alert("The tournament is full");
+      alert('The tournament is full');
       return;
     }
 
@@ -615,17 +668,31 @@ constructor(
   joinTournamentfinish() {
     this.hideTeamNameInput = true;
     if (this.selectedCurrentTeams >= this.selectedMaxTeams) {
-      this.joinFeedback = { message: this.t.tournamentFull || 'Tournament is full', type: 'error' };
-      setTimeout(() => { this.joinFeedback = null; }, 3000);
+      this.joinFeedback = {
+        message: this.t.tournamentFull || 'Tournament is full',
+        type: 'error',
+      };
+      setTimeout(() => {
+        this.joinFeedback = null;
+      }, 3000);
       return;
     }
     let joinedTournaments = this.getJoinedTournaments();
-    if (this.selectedTournamentForJoin && !joinedTournaments.includes(this.selectedTournamentForJoin)) {
+    if (
+      this.selectedTournamentForJoin &&
+      !joinedTournaments.includes(this.selectedTournamentForJoin)
+    ) {
       joinedTournaments.push(this.selectedTournamentForJoin);
-      localStorage.setItem('joinedTournaments', JSON.stringify(joinedTournaments));
+      localStorage.setItem(
+        'joinedTournaments',
+        JSON.stringify(joinedTournaments)
+      );
       this.loadJoinedTournaments();
     }
-    this.joinFeedback = { message: this.t.joinSuccess || 'Successfully joined!', type: 'success' };
+    this.joinFeedback = {
+      message: this.t.joinSuccess || 'Successfully joined!',
+      type: 'success',
+    };
     this.showCelebration = true;
     setTimeout(() => {
       this.showCelebration = false;
@@ -634,11 +701,11 @@ constructor(
       this.showTournamentView = false;
       this.showTournamentListFade = true;
     }, 3000);
-    setTimeout(() => this.startConfetti(), 50); 
+    setTimeout(() => this.startConfetti(), 50);
   }
 
   openDetails(tournamentId: number): void {
-    const found = this.tournaments.find(t => t.id === tournamentId);
+    const found = this.tournaments.find((t) => t.id === tournamentId);
     if (found) {
       this.selectedTournamentId = tournamentId;
       this.selectedTournament = found;
@@ -679,14 +746,14 @@ constructor(
   }
 
   isTournamentJoined(tournamentId: number): boolean {
-  const joinedTournaments = this.getJoinedTournaments();
-  return joinedTournaments.includes(tournamentId);
-}
-
+    const joinedTournaments = this.getJoinedTournaments();
+    return joinedTournaments.includes(tournamentId);
+  }
 
   private loadJoinedTournaments(): void {
     const joinedTournaments = this.getJoinedTournaments();
-    this.selectedTournamentId = joinedTournaments.length > 0 ? joinedTournaments[0] : null;
+    this.selectedTournamentId =
+      joinedTournaments.length > 0 ? joinedTournaments[0] : null;
   }
 
   private getJoinedTournaments(): number[] {
@@ -704,14 +771,19 @@ constructor(
   }
 
   getFlagUrl(lang: string): string {
-  switch (lang) {
-    case 'de': return 'https://flagcdn.com/w40/de.png';
-    case 'en': return 'https://flagcdn.com/w40/gb.png';
-    case 'fr': return 'https://flagcdn.com/w40/fr.png';
-    case 'es': return 'https://flagcdn.com/w40/es.png';
-    default: return '';
-}
-}
+    switch (lang) {
+      case 'de':
+        return 'https://flagcdn.com/w40/de.png';
+      case 'en':
+        return 'https://flagcdn.com/w40/gb.png';
+      case 'fr':
+        return 'https://flagcdn.com/w40/fr.png';
+      case 'es':
+        return 'https://flagcdn.com/w40/es.png';
+      default:
+        return '';
+    }
+  }
 
   applyTranslations() {
     this.t = this.translations[this.selectedLang];
@@ -723,10 +795,11 @@ constructor(
       this.filteredTournaments = this.tournaments;
       return;
     }
-    this.filteredTournaments = this.tournaments.filter(tour =>
-      tour.name.toLowerCase().includes(term) ||
-      tour.location.toLowerCase().includes(term) ||
-      tour.meetingPoint.toLowerCase().includes(term)
+    this.filteredTournaments = this.tournaments.filter(
+      (tour) =>
+        tour.name.toLowerCase().includes(term) ||
+        tour.location.toLowerCase().includes(term) ||
+        tour.meetingPoint.toLowerCase().includes(term)
     );
   }
 
@@ -745,98 +818,112 @@ constructor(
     }
   }
 
-private startConfetti() {
-  if (this.confettiActive) return;
-  this.confettiActive = true;
-  const canvas = document.getElementById('confetti-canvas') as HTMLCanvasElement;
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  if (!ctx) return;
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-  const confettiCount = window.innerWidth < 768 ? 60 : 180;
-  const confettiColors = ['#ffecb3', '#ff9800', '#b3e5fc', '#03a9f4', '#c8e6c9', '#4caf50', '#ffcdd2', '#e91e63', '#fff9c4', '#ffeb3b'];
-  const confetti: any[] = [];
-
-  for (let i = 0; i < confettiCount; i++) {
-    let xPos;
-    if (Math.random() < 0.7) {
-      xPos = Math.random() * canvas.width * 0.6; // 70% der Konfetti links bis 60% Breite
-    } else {
-      xPos = canvas.width * 0.6 + Math.random() * canvas.width * 0.4; // 30% rechts
-    }
-    confetti.push({
-      x: xPos,
-      y: Math.random() * -canvas.height,
-      r: 6 + Math.random() * 10,
-      d: 8 + Math.random() * 12,
-      color: confettiColors[Math.floor(Math.random() * confettiColors.length)],
-      tilt: Math.random() * 10 - 5,
-      tiltAngle: 0,
-      tiltAngleIncremental: (Math.random() * 0.07) + 0.05
-    });
-  }
-
-  let angle = 0;
-  let tiltAngle = 0;
-
-  const draw = () => {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    for (let i = 0; i < confetti.length; i++) {
-      const c = confetti[i];
-      ctx.beginPath();
-      ctx.lineWidth = c.r;
-      ctx.strokeStyle = c.color;
-      ctx.moveTo(c.x + c.tilt + (c.r / 3), c.y);
-      ctx.lineTo(c.x + c.tilt, c.y + c.d);
-      ctx.stroke();
-    }
-    update();
-  };
-
-  const update = () => {
-    angle += 0.01;
-    tiltAngle += 0.1;
-    for (let i = 0; i < confetti.length; i++) {
-      const c = confetti[i];
-      c.y += (Math.cos(angle + c.d) + 3 + c.r / 2) * 0.8;
-      c.x += Math.sin(angle);
-      c.tiltAngle += c.tiltAngleIncremental;
-      c.tilt = Math.sin(c.tiltAngle) * 15;
-
-      if (c.y > canvas.height) {
-        if (Math.random() < 0.7) {
-          c.x = Math.random() * canvas.width * 0.6;
-        } else {
-          c.x = canvas.width * 0.6 + Math.random() * canvas.width * 0.4;
-        }
-        c.y = -10;
-      }
-
-      if (c.x > canvas.width + 30) c.x = -30;
-      if (c.x < -30) c.x = canvas.width + 30;
-    }
-  };
-
-  const animate = () => {
-    if (!this.confettiActive) return;
-    draw();
-    requestAnimationFrame(animate);
-  };
-
-  animate();
-  this.confettiTimeout = setTimeout(() => this.stopConfetti(), 2500);
-}
-
-private stopConfetti() {
-  this.confettiActive = false;
-  const canvas = document.getElementById('confetti-canvas') as HTMLCanvasElement;
-  if (canvas) {
+  private startConfetti() {
+    if (this.confettiActive) return;
+    this.confettiActive = true;
+    const canvas = document.getElementById(
+      'confetti-canvas'
+    ) as HTMLCanvasElement;
+    if (!canvas) return;
     const ctx = canvas.getContext('2d');
-    if (ctx) ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (!ctx) return;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const confettiCount = window.innerWidth < 768 ? 60 : 180;
+    const confettiColors = [
+      '#ffecb3',
+      '#ff9800',
+      '#b3e5fc',
+      '#03a9f4',
+      '#c8e6c9',
+      '#4caf50',
+      '#ffcdd2',
+      '#e91e63',
+      '#fff9c4',
+      '#ffeb3b',
+    ];
+    const confetti: any[] = [];
+
+    for (let i = 0; i < confettiCount; i++) {
+      let xPos;
+      if (Math.random() < 0.7) {
+        xPos = Math.random() * canvas.width * 0.6;
+      } else {
+        xPos = canvas.width * 0.6 + Math.random() * canvas.width * 0.4; // 30% rechts
+      }
+      confetti.push({
+        x: xPos,
+        y: Math.random() * -canvas.height,
+        r: 6 + Math.random() * 10,
+        d: 8 + Math.random() * 12,
+        color:
+          confettiColors[Math.floor(Math.random() * confettiColors.length)],
+        tilt: Math.random() * 10 - 5,
+        tiltAngle: 0,
+        tiltAngleIncremental: Math.random() * 0.07 + 0.05,
+      });
+    }
+
+    let angle = 0;
+    let tiltAngle = 0;
+
+    const draw = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = 0; i < confetti.length; i++) {
+        const c = confetti[i];
+        ctx.beginPath();
+        ctx.lineWidth = c.r;
+        ctx.strokeStyle = c.color;
+        ctx.moveTo(c.x + c.tilt + c.r / 3, c.y);
+        ctx.lineTo(c.x + c.tilt, c.y + c.d);
+        ctx.stroke();
+      }
+      update();
+    };
+
+    const update = () => {
+      angle += 0.01;
+      tiltAngle += 0.1;
+      for (let i = 0; i < confetti.length; i++) {
+        const c = confetti[i];
+        c.y += (Math.cos(angle + c.d) + 3 + c.r / 2) * 0.8;
+        c.x += Math.sin(angle);
+        c.tiltAngle += c.tiltAngleIncremental;
+        c.tilt = Math.sin(c.tiltAngle) * 15;
+
+        if (c.y > canvas.height) {
+          if (Math.random() < 0.7) {
+            c.x = Math.random() * canvas.width * 0.6;
+          } else {
+            c.x = canvas.width * 0.6 + Math.random() * canvas.width * 0.4;
+          }
+          c.y = -10;
+        }
+
+        if (c.x > canvas.width + 30) c.x = -30;
+        if (c.x < -30) c.x = canvas.width + 30;
+      }
+    };
+
+    const animate = () => {
+      if (!this.confettiActive) return;
+      draw();
+      requestAnimationFrame(animate);
+    };
+
+    animate();
+    this.confettiTimeout = setTimeout(() => this.stopConfetti(), 2500);
   }
-  if (this.confettiTimeout) clearTimeout(this.confettiTimeout);
-}
-}
 
-
+  private stopConfetti() {
+    this.confettiActive = false;
+    const canvas = document.getElementById(
+      'confetti-canvas'
+    ) as HTMLCanvasElement;
+    if (canvas) {
+      const ctx = canvas.getContext('2d');
+      if (ctx) ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+    if (this.confettiTimeout) clearTimeout(this.confettiTimeout);
+  }
+}

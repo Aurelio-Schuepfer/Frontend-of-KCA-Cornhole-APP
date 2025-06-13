@@ -13,7 +13,7 @@ $btn-hover-light: #f1f1f1;
 $btn-active-light: rgba(0, 120, 215, 0.3);
 
 $transition: 0.3s ease;
-$font: 'Poppins', sans-serif;
+$font: "Poppins", sans-serif;
 
 :root {
   --bg: #{$bg-dark};
@@ -41,14 +41,14 @@ main::before {
   top: 30%;
   left: 110%;
   width: 250px;
-  height: 400px; 
+  height: 400px;
   background-color: #0ae4f4;
   border-radius: 10px;
-  transform: translateX(-50%) rotate(-15deg); 
+  transform: translateX(-50%) rotate(-15deg);
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
   z-index: -1;
   opacity: 0.5;
-  transition: width 0.3s ease, height 0.3s ease; 
+  transition: width 0.3s ease, height 0.3s ease;
 }
 
 main::after {
@@ -57,7 +57,7 @@ main::after {
   top: 37.5%;
   left: 111.3%;
   width: 80px;
-  height: 80px; 
+  height: 80px;
   background-color: rgb(0, 0, 0);
   border-radius: 50%;
   transform: translateX(-50%) rotate(10deg);
@@ -67,7 +67,7 @@ main::after {
 
 main::before {
   content: "KCA";
-  font-size: 3rem; 
+  font-size: 3rem;
   font-weight: bold;
   color: var(--fg);
   position: absolute;
@@ -85,14 +85,14 @@ main::before {
     top: 30%;
     left: 105%;
     width: 250px;
-    height: 400px; 
+    height: 400px;
     background-color: #0ae4f4;
     border-radius: 10px;
-    transform: translateX(-50%) rotate(-15deg); 
+    transform: translateX(-50%) rotate(-15deg);
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
     z-index: -1;
     opacity: 0.5;
-    transition: width 0.3s ease, height 0.3s ease; 
+    transition: width 0.3s ease, height 0.3s ease;
   }
   main::after {
     content: "";
@@ -100,7 +100,7 @@ main::before {
     top: 37.5%;
     left: 106%;
     width: 80px;
-    height: 80px; 
+    height: 80px;
     background-color: rgb(0, 0, 0);
     border-radius: 50%;
     transform: translateX(-50%) rotate(10deg);
@@ -109,7 +109,7 @@ main::before {
   }
   main::before {
     content: "KCA";
-    font-size: 3rem; 
+    font-size: 3rem;
     font-weight: bold;
     color: var(--fg);
     position: absolute;
@@ -128,14 +128,14 @@ main::before {
     top: 30%;
     left: 95%;
     width: 250px;
-    height: 400px; 
+    height: 400px;
     background-color: #0ae4f4;
     border-radius: 10px;
-    transform: translateX(-50%) rotate(-15deg); 
+    transform: translateX(-50%) rotate(-15deg);
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
     z-index: -10;
     opacity: 0.5;
-    transition: width 0.3s ease, height 0.3s ease; 
+    transition: width 0.3s ease, height 0.3s ease;
   }
   main::after {
     content: "";
@@ -143,7 +143,7 @@ main::before {
     top: 37.5%;
     left: 96%;
     width: 80px;
-    height: 80px; 
+    height: 80px;
     background-color: rgb(0, 0, 0);
     border-radius: 50%;
     transform: translateX(-50%) rotate(10deg);
@@ -152,7 +152,7 @@ main::before {
   }
   main::before {
     content: "KCA";
-    font-size: 3rem; 
+    font-size: 3rem;
     font-weight: bold;
     color: var(--fg);
     position: absolute;
@@ -171,14 +171,14 @@ main::before {
     top: 30%;
     left: 95%;
     width: 250px;
-    height: 400px; 
+    height: 400px;
     background-color: #0ae4f4;
     border-radius: 10px;
-    transform: translateX(-50%) rotate(-15deg); 
+    transform: translateX(-50%) rotate(-15deg);
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
     z-index: -10;
     opacity: 0.5;
-    transition: width 0.3s ease, height 0.3s ease; 
+    transition: width 0.3s ease, height 0.3s ease;
   }
   main::after {
     content: "";
@@ -186,7 +186,7 @@ main::before {
     top: 37.5%;
     left: 96%;
     width: 80px;
-    height: 80px; 
+    height: 80px;
     background-color: rgb(0, 0, 0);
     border-radius: 50%;
     transform: translateX(-50%) rotate(10deg);
@@ -195,7 +195,7 @@ main::before {
   }
   main::before {
     content: "KCA";
-    font-size: 3rem; 
+    font-size: 3rem;
     font-weight: bold;
     color: var(--fg);
     position: absolute;
@@ -214,14 +214,14 @@ main::before {
     top: 15%;
     left: 90%;
     width: 250px;
-    height: 400px; 
+    height: 400px;
     background-color: #0ae4f4;
     border-radius: 10px;
-    transform: translateX(-50%) rotate(-15deg); 
+    transform: translateX(-50%) rotate(-15deg);
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
     z-index: -10;
     opacity: 0.5;
-    transition: width 0.3s ease, height 0.3s ease; 
+    transition: width 0.3s ease, height 0.3s ease;
   }
   main::after {
     content: "";
@@ -229,7 +229,7 @@ main::before {
     top: 17.5%;
     left: 91%;
     width: 80px;
-    height: 80px; 
+    height: 80px;
     background-color: rgb(0, 0, 0);
     border-radius: 50%;
     transform: translateX(-50%) rotate(10deg);
@@ -238,7 +238,7 @@ main::before {
   }
   main::before {
     content: "KCA";
-    font-size: 3rem; 
+    font-size: 3rem;
     font-weight: bold;
     color: var(--fg);
     position: absolute;
@@ -257,14 +257,14 @@ main::before {
     top: 15%;
     left: 90%;
     width: 200px;
-    height: 325px; 
+    height: 325px;
     background-color: #0ae4f4;
     border-radius: 10px;
-    transform: translateX(-50%) rotate(-15deg); 
+    transform: translateX(-50%) rotate(-15deg);
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
     z-index: -10;
     opacity: 0.5;
-    transition: width 0.3s ease, height 0.3s ease; 
+    transition: width 0.3s ease, height 0.3s ease;
   }
   main::after {
     content: "";
@@ -272,7 +272,7 @@ main::before {
     top: 17.5%;
     left: 87%;
     width: 60px;
-    height: 60px; 
+    height: 60px;
     background-color: rgb(0, 0, 0);
     border-radius: 50%;
     transform: translateX(-50%) rotate(10deg);
@@ -281,7 +281,7 @@ main::before {
   }
   main::before {
     content: "KCA";
-    font-size: 3rem; 
+    font-size: 3rem;
     font-weight: bold;
     color: var(--fg);
     position: absolute;
@@ -295,10 +295,10 @@ main::before {
 
 @media (max-width: 1175px) {
   main::before {
-    display: none; 
+    display: none;
   }
   main::after {
-    display: none; 
+    display: none;
   }
 }
 
@@ -312,8 +312,7 @@ main::before {
   border-radius: 35% 38% 33% 36% / 40% 30% 38% 35%;
   transform: translate(0, 0) rotate(12deg);
   box-shadow: inset -8px -8px 15px rgba(255, 255, 255, 0.15),
-              inset 8px 8px 15px rgba(0, 0, 0, 0.2),
-              0 8px 15px rgba(0, 0, 0, 0.3);
+    inset 8px 8px 15px rgba(0, 0, 0, 0.2), 0 8px 15px rgba(0, 0, 0, 0.3);
   opacity: 0.5;
   z-index: 1;
 
@@ -323,7 +322,7 @@ main::before {
   font-size: 2rem;
   font-weight: bold;
   color: var(--fg);
-   transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
 
 .cornhole-bag::after {
@@ -334,7 +333,11 @@ main::before {
   transform: translateX(-50%);
   width: 200px;
   height: 28px;
-  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.3) 0%, transparent 80%);
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0, 0, 0, 0.3) 0%,
+    transparent 80%
+  );
   border-radius: 50%;
   filter: blur(6px);
   z-index: -1;
@@ -342,9 +345,9 @@ main::before {
 
 @media (max-width: 1700px) {
   .cornhole-bag {
-  position: absolute;
-  top: 15%;
-  left: 0%;
+    position: absolute;
+    top: 15%;
+    left: 0%;
   }
 }
 
@@ -354,7 +357,8 @@ main::before {
   }
 }
 
-html, body {
+html,
+body {
   font-weight: 700;
   background: var(--bg);
   color: var(--fg);
@@ -410,24 +414,25 @@ html, body {
       font-size: 1rem;
       font-weight: 600;
       cursor: pointer;
-      transition: background $transition, color $transition, transform $transition, box-shadow $transition;
+      transition: background $transition, color $transition,
+        transform $transition, box-shadow $transition;
       animation: fadeInButtons $transition ease-in-out both;
-  
+
       &:hover {
-        background: var(--accent); 
-        color: white; 
+        background: var(--accent);
+        color: white;
         transform: translateY(-2px);
         box-shadow: 0 5px 15px var(--btn-active);
       }
     }
-  
+
     .outline {
       background: transparent;
       border: 2px solid var(--accent);
       color: var(--accent);
-  
+
       &:hover {
-        background: var(--accent); 
+        background: var(--accent);
       }
     }
   }

@@ -17,17 +17,33 @@
     <div class="header-inner">
       <h1 id="title">KCA Cornhole Tournaments</h1>
     </div>
-    <div class="lang-dropdown-global" [class.open]="langDropdownOpen" (mouseleave)="langDropdownOpen = false">
-      <button class="lang-btn" (click)="toggleLangDropdown()" aria-label="Sprache wählen">
-        <img [src]="getFlagUrl(selectedLang)" [alt]="selectedLang" style="height: 1em; vertical-align: middle;" />
+    <div
+      class="lang-dropdown-global"
+      [class.open]="langDropdownOpen"
+      (mouseleave)="langDropdownOpen = false"
+    >
+      <button
+        class="lang-btn"
+        (click)="toggleLangDropdown()"
+        aria-label="Sprache wählen"
+      >
+        <img
+          [src]="getFlagUrl(selectedLang)"
+          [alt]="selectedLang"
+          style="height: 1em; vertical-align: middle"
+        />
         <span class="arrow">&#9662;</span>
       </button>
       <ul class="lang-list" *ngIf="langDropdownOpen">
-  <li *ngFor="let lang of languages" (click)="setLang(lang.code)">
-    <img [src]="getFlagUrl(lang.code)" [alt]="lang.label" style="height: 1em; vertical-align: middle;" />
-    {{ lang.label }}
-  </li>
-</ul>
+        <li *ngFor="let lang of languages" (click)="setLang(lang.code)">
+          <img
+            [src]="getFlagUrl(lang.code)"
+            [alt]="lang.label"
+            style="height: 1em; vertical-align: middle"
+          />
+          {{ lang.label }}
+        </li>
+      </ul>
     </div>
   </header>
   <nav>
@@ -38,47 +54,78 @@
     </div>
     <div class="nav-links" [ngClass]="{ open: isNavOpen }">
       <button routerLink="/" class="nav-btn">{{ t.home }}</button>
-      <button routerLink="/join" class="nav-btn  active">{{ t.joinTournament }}</button>
-      <button routerLink="/create" class="nav-btn">{{ t.createTournament }}</button>
-      <button *ngIf="hasTournament" routerLink="/manage" class="nav-btn">{{ t.manageTournaments }}</button>
+      <button routerLink="/join" class="nav-btn active">
+        {{ t.joinTournament }}
+      </button>
+      <button routerLink="/create" class="nav-btn">
+        {{ t.createTournament }}
+      </button>
+      <button *ngIf="hasTournament" routerLink="/manage" class="nav-btn">
+        {{ t.manageTournaments }}
+      </button>
       <button routerLink="/stats" class="nav-btn">{{ t.statistics }}</button>
       <button routerLink="/about" class="nav-btn">{{ t.about }}</button>
     </div>
     <div class="auth-buttons">
       <ng-container *ngIf="!globalAuth.isLoggedIn">
-        <button id="loginBtn" class="sign-buttons" (click)="globalAuth.openLoginModal()">{{ t.login }}</button>
-        <button id="registerBtn" class="sign-buttons outline" (click)="globalAuth.openRegisterModal()">{{ t.register }}</button>
+        <button
+          id="loginBtn"
+          class="sign-buttons"
+          (click)="globalAuth.openLoginModal()"
+        >
+          {{ t.login }}
+        </button>
+        <button
+          id="registerBtn"
+          class="sign-buttons outline"
+          (click)="globalAuth.openRegisterModal()"
+        >
+          {{ t.register }}
+        </button>
       </ng-container>
       <ng-container *ngIf="globalAuth.isLoggedIn">
         <div class="auth-row">
           <div class="user-info">
-            <p id="username">{{globalAuth.username}}</p>
+            <p id="username">{{ globalAuth.username }}</p>
             <button
-            id="profileBtn"
-            class="profile-btn"
-            (click)="goToProfile()"
-            title="Profil"
-            type="button"
-          >
-            <img
-              [src]="globalAuth.profileImageUrl || 'assets/images/default-profile.png'"
-              alt="Profil"
-              class="profile-icon"
-            />
+              id="profileBtn"
+              class="profile-btn"
+              (click)="goToProfile()"
+              title="Profil"
+              type="button"
+            >
+              <img
+                [src]="
+                  globalAuth.profileImageUrl ||
+                  'assets/images/default-profile.png'
+                "
+                alt="Profil"
+                class="profile-icon"
+              />
             </button>
           </div>
-          <button id="registerBtn"
-                  class="sign-buttons outline"
-                  *ngIf="globalAuth.isLoggedIn && (selectedLang === 'fr' || selectedLang === 'es')"
-                  [attr.lang-fr]="selectedLang === 'fr' ? true : null"
-                  [attr.lang-es]="selectedLang === 'es' ? true : null"
-                  (click)="globalAuth.logout()">
+          <button
+            id="registerBtn"
+            class="sign-buttons outline"
+            *ngIf="
+              globalAuth.isLoggedIn &&
+              (selectedLang === 'fr' || selectedLang === 'es')
+            "
+            [attr.lang-fr]="selectedLang === 'fr' ? true : null"
+            [attr.lang-es]="selectedLang === 'es' ? true : null"
+            (click)="globalAuth.logout()"
+          >
             {{ t.logout }}
           </button>
-          <button id="registerBtn"
-                  class="sign-buttons outline"
-                  *ngIf="globalAuth.isLoggedIn && !(selectedLang === 'fr' || selectedLang === 'es')"
-                  (click)="globalAuth.logout()">
+          <button
+            id="registerBtn"
+            class="sign-buttons outline"
+            *ngIf="
+              globalAuth.isLoggedIn &&
+              !(selectedLang === 'fr' || selectedLang === 'es')
+            "
+            (click)="globalAuth.logout()"
+          >
             {{ t.logout }}
           </button>
         </div>
@@ -96,9 +143,13 @@
   <div *ngIf="globalAuth.isAuthModalOpen" class="auth-modal">
     <div class="auth-modal-content">
       <span class="close-btn" (click)="globalAuth.closeModal()">&times;</span>
-      <h2 class="auth-title">{{ globalAuth.isRegisterMode ? t.register : t.login }}</h2>
+      <h2 class="auth-title">
+        {{ globalAuth.isRegisterMode ? t.register : t.login }}
+      </h2>
       <form #authForm="ngForm" (ngSubmit)="globalAuth.onSubmit()">
-        <label for="username" class="auth-label">{{ globalAuth.isRegisterMode ? t.username : t.usernameOrEmail }}</label>
+        <label for="username" class="auth-label">{{
+          globalAuth.isRegisterMode ? t.username : t.usernameOrEmail
+        }}</label>
         <input
           id="username"
           class="auth-input"
@@ -121,98 +172,107 @@
         </ng-container>
 
         <label for="password" class="auth-label">{{ t.password }}</label>
-<div class="input-wrapper">
-  <input
-    id="password"
-    class="auth-input"
-    name="password"
-    [type]="showPassword ? 'text' : 'password'"
-    [(ngModel)]="globalAuth.loginModel.password"
-    required
-  />
-  <button
-    type="button"
-    class="eye-btn"
-    (click)="showPassword = !showPassword"
-    aria-label="Toggle password visibility"
-  >
-    <svg
-      *ngIf="!showPassword"
-      xmlns="http://www.w3.org/2000/svg"
-      width="20"
-      height="20"
-      viewBox="0 0 24 24"
-    >
-      <path d="M12 5c-7.633 0-12 7-12 7s4.367 7 12 7 12-7 12-7-4.367-7-12-7zm0 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10z" />
-      <circle cx="12" cy="12" r="2.5" />
-    </svg>
+        <div class="input-wrapper">
+          <input
+            id="password"
+            class="auth-input"
+            name="password"
+            [type]="showPassword ? 'text' : 'password'"
+            [(ngModel)]="globalAuth.loginModel.password"
+            required
+          />
+          <button
+            type="button"
+            class="eye-btn"
+            (click)="showPassword = !showPassword"
+            aria-label="Toggle password visibility"
+          >
+            <svg
+              *ngIf="!showPassword"
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M12 5c-7.633 0-12 7-12 7s4.367 7 12 7 12-7 12-7-4.367-7-12-7zm0 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10z"
+              />
+              <circle cx="12" cy="12" r="2.5" />
+            </svg>
 
-    <svg
-      *ngIf="showPassword"
-      xmlns="http://www.w3.org/2000/svg"
-      width="20"
-      height="20"
-      viewBox="0 0 24 24"
-    >
-      <path
-        d="M12 5c-7.633 0-12 7-12 7s4.367 7 12 7 12-7 12-7-4.367-7-12-7zm0 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10z"
-        stroke-width="2"
-      />
-      <line x1="1" y1="1" x2="23" y2="23" stroke-width="2" />
-    </svg>
-  </button>
-</div>
+            <svg
+              *ngIf="showPassword"
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M12 5c-7.633 0-12 7-12 7s4.367 7 12 7 12-7 12-7-4.367-7-12-7zm0 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10z"
+                stroke-width="2"
+              />
+              <line x1="1" y1="1" x2="23" y2="23" stroke-width="2" />
+            </svg>
+          </button>
+        </div>
 
-<label *ngIf="!showResetForm && !globalAuth.isRegisterMode" class="forgot-link">
-  <a href="#" (click)="showResetForm = true; $event.preventDefault()"
-    >{{ t.passwordReset }}</a
-  >
-</label>
+        <label
+          *ngIf="!showResetForm && !globalAuth.isRegisterMode"
+          class="forgot-link"
+        >
+          <a href="#" (click)="showResetForm = true; $event.preventDefault()">{{
+            t.passwordReset
+          }}</a>
+        </label>
 
-<ng-container *ngIf="globalAuth.isRegisterMode">
-  <label for="confirmPassword" class="auth-label">{{ t.confirmPassword }}</label>
-  <div class="input-wrapper">
-    <input
-      id="confirmPassword"
-      class="auth-input"
-      name="confirmPassword"
-      [type]="showConfirmPassword ? 'text' : 'password'"
-      [(ngModel)]="globalAuth.loginModel.confirmPassword"
-      required
-    />
-    <button
-      type="button"
-      class="eye-btn eye-register"
-      (click)="showConfirmPassword = !showConfirmPassword"
-      aria-label="Toggle password visibility"
-    >
-      <svg
-        *ngIf="!showConfirmPassword"
-        xmlns="http://www.w3.org/2000/svg"
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-      >
-        <path d="M12 5c-7.633 0-12 7-12 7s4.367 7 12 7 12-7 12-7-4.367-7-12-7zm0 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10z" />
-        <circle cx="12" cy="12" r="2.5" />
-      </svg>
+        <ng-container *ngIf="globalAuth.isRegisterMode">
+          <label for="confirmPassword" class="auth-label">{{
+            t.confirmPassword
+          }}</label>
+          <div class="input-wrapper">
+            <input
+              id="confirmPassword"
+              class="auth-input"
+              name="confirmPassword"
+              [type]="showConfirmPassword ? 'text' : 'password'"
+              [(ngModel)]="globalAuth.loginModel.confirmPassword"
+              required
+            />
+            <button
+              type="button"
+              class="eye-btn eye-register"
+              (click)="showConfirmPassword = !showConfirmPassword"
+              aria-label="Toggle password visibility"
+            >
+              <svg
+                *ngIf="!showConfirmPassword"
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M12 5c-7.633 0-12 7-12 7s4.367 7 12 7 12-7 12-7-4.367-7-12-7zm0 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10z"
+                />
+                <circle cx="12" cy="12" r="2.5" />
+              </svg>
 
-      <svg
-        *ngIf="showConfirmPassword"
-        xmlns="http://www.w3.org/2000/svg"
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-      >
-        <path
-          d="M12 5c-7.633 0-12 7-12 7s4.367 7 12 7 12-7 12-7-4.367-7-12-7zm0 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10z"
-          stroke-width="2"
-        />
-        <line x1="1" y1="1" x2="23" y2="23" stroke-width="2" />
-      </svg>
-    </button>
-  </div>
-</ng-container>
+              <svg
+                *ngIf="showConfirmPassword"
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M12 5c-7.633 0-12 7-12 7s4.367 7 12 7 12-7 12-7-4.367-7-12-7zm0 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10z"
+                  stroke-width="2"
+                />
+                <line x1="1" y1="1" x2="23" y2="23" stroke-width="2" />
+              </svg>
+            </button>
+          </div>
+        </ng-container>
         <div class="remember-me-row">
           <label class="remember-me-label">
             <input
@@ -226,16 +286,25 @@
           </label>
         </div>
 
-        <div *ngIf="globalAuth.errorMessage" class="auth-error">{{ globalAuth.errorMessage }}</div>
-        <div *ngIf="globalAuth.infoMessage" class="auth-error">{{ globalAuth.infoMessage}}</div>
+        <div *ngIf="globalAuth.errorMessage" class="auth-error">
+          {{ globalAuth.errorMessage }}
+        </div>
+        <div *ngIf="globalAuth.infoMessage" class="auth-error">
+          {{ globalAuth.infoMessage }}
+        </div>
 
         <button class="LogButton" type="submit">
           {{ globalAuth.isRegisterMode ? t.createAccount : t.login }}
         </button>
       </form>
 
-      <div *ngIf="showResetForm && !globalAuth.isRegisterMode" class="reset-form">
-        <label for="resetEmail" class="auth-label">{{ t.resetEmailLabel }}</label>
+      <div
+        *ngIf="showResetForm && !globalAuth.isRegisterMode"
+        class="reset-form"
+      >
+        <label for="resetEmail" class="auth-label">{{
+          t.resetEmailLabel
+        }}</label>
         <input
           id="resetEmail"
           class="auth-input"
@@ -244,9 +313,23 @@
           [(ngModel)]="globalAuth.resetEmail"
           required
         />
-        <button class="LogButton" (click)="globalAuth.requestReset()" type="button">{{ t.resetSend }}</button>
-        <button class="LogButton outline" (click)="showResetForm = false" type="button">{{ t.resetBack }}</button>
-        <div *ngIf="resetRequested" class="reset-success">{{ t.resetSuccess }}</div>
+        <button
+          class="LogButton"
+          (click)="globalAuth.requestReset()"
+          type="button"
+        >
+          {{ t.resetSend }}
+        </button>
+        <button
+          class="LogButton outline"
+          (click)="showResetForm = false"
+          type="button"
+        >
+          {{ t.resetBack }}
+        </button>
+        <div *ngIf="resetRequested" class="reset-success">
+          {{ t.resetSuccess }}
+        </div>
       </div>
 
       <div class="register-link">
@@ -259,36 +342,80 @@
 </div>
 
 <main>
-  <section *ngIf="showTournamentView && selectedTournament" class="single-tournament-view">
-    <button class="back-btn tButton" (click)="closeTournamentView()">&larr; {{ t.back || 'Back' }}</button>
+  <section
+    *ngIf="showTournamentView && selectedTournament"
+    class="single-tournament-view"
+  >
+    <button class="back-btn tButton" (click)="closeTournamentView()">
+      &larr; {{ t.back || "Back" }}
+    </button>
     <div class="single-tournament-card">
-      <img class="tournament-image" [src]="selectedTournamentImage" alt="Tournament Image" (click)="openImageModal()" style="cursor:pointer" />
+      <img
+        class="tournament-image"
+        [src]="selectedTournamentImage"
+        alt="Tournament Image"
+        (click)="openImageModal()"
+        style="cursor: pointer"
+      />
       <div class="single-tournament-info">
         <h1>{{ selectedTournament.name }}</h1>
         <div class="date">{{ selectedTournament.date }}</div>
-        <div><strong>{{ t.location }}:</strong> {{ selectedTournament.location }}</div>
-        <div><strong>{{ t.meetingPoint }}:</strong> {{ selectedTournament.meetingPoint }}</div>
-        <div><strong>{{ t.teams }}:</strong> {{ selectedTournament.currentTeams }} / {{ selectedTournament.maxTeams }}</div>
-        <div><strong>{{ t.Formattitle }}:</strong> {{ selectedTournament.format }}</div>
-        <div><strong>{{ t.rules }}:</strong> {{ selectedTournament.rules }}</div>
-        <div><strong>{{ t.notes }}:</strong> {{ selectedTournament.notes }}</div>
+        <div>
+          <strong>{{ t.location }}:</strong> {{ selectedTournament.location }}
+        </div>
+        <div>
+          <strong>{{ t.meetingPoint }}:</strong>
+          {{ selectedTournament.meetingPoint }}
+        </div>
+        <div>
+          <strong>{{ t.teams }}:</strong>
+          {{ selectedTournament.currentTeams }} /
+          {{ selectedTournament.maxTeams }}
+        </div>
+        <div>
+          <strong>{{ t.Formattitle }}:</strong> {{ selectedTournament.format }}
+        </div>
+        <div>
+          <strong>{{ t.rules }}:</strong> {{ selectedTournament.rules }}
+        </div>
+        <div>
+          <strong>{{ t.notes }}:</strong> {{ selectedTournament.notes }}
+        </div>
       </div>
       <div class="single-tournament-actions">
-        <button *ngIf="globalAuth.isLoggedIn" class="tButton" (click)="joinTournament(selectedTournament.id, selectedTournament.currentTeams, selectedTournament.maxTeams)">
+        <button
+          *ngIf="globalAuth.isLoggedIn"
+          class="tButton"
+          (click)="
+            joinTournament(
+              selectedTournament.id,
+              selectedTournament.currentTeams,
+              selectedTournament.maxTeams
+            )
+          "
+        >
           {{ isTournamentJoined(selectedTournament.id) ? t.leave : t.join }}
         </button>
-        <button *ngIf="!globalAuth.isLoggedIn" class="tButton outline" (click)="globalAuth.openLoginModal()">
+        <button
+          *ngIf="!globalAuth.isLoggedIn"
+          class="tButton outline"
+          (click)="globalAuth.openLoginModal()"
+        >
           {{ t.loginToJoin }}
         </button>
       </div>
       <div class="participants-section">
-        <h3 class="participants-title">{{t.Particitant}}</h3>
+        <h3 class="participants-title">{{ t.Particitant }}</h3>
         <div class="participants-list">
           <div class="participant" *ngFor="let player of players">
-            <img [src]="player.image" alt="{{player.name}}" class="participant-image" />
+            <img
+              [src]="player.image"
+              alt="{{ player.name }}"
+              class="participant-image"
+            />
             <div class="participant-info">
-              <span class="participant-name">{{player.name}}</span>
-              <span class="participant-team">{{player.team}}</span>
+              <span class="participant-name">{{ player.name }}</span>
+              <span class="participant-team">{{ player.team }}</span>
             </div>
           </div>
         </div>
@@ -298,12 +425,17 @@
       <div class="image-modal-backdrop" (click)="closeImageModal()"></div>
       <div class="image-modal-content">
         <img [src]="selectedTournamentImage" alt="Tournament Large" />
-        <button class="close-image-btn tButton" (click)="closeImageModal()">&times;</button>
+        <button class="close-image-btn tButton" (click)="closeImageModal()">
+          &times;
+        </button>
       </div>
     </div>
   </section>
-  <section class="join-tournament-container" *ngIf="!isTournamentRegisterOpen && !showTournamentView"
-    [class.fade-in]="showTournamentListFade">
+  <section
+    class="join-tournament-container"
+    *ngIf="!isTournamentRegisterOpen && !showTournamentView"
+    [class.fade-in]="showTournamentListFade"
+  >
     <h1 id="tournamentTitle">{{ t.tournamentTitle }}</h1>
     <div class="search-container">
       <input
@@ -315,51 +447,93 @@
       />
     </div>
     <div class="tournament-list">
-      <div class="tournament-card" [class.active]="globalAuth.isLoggedIn && isTournamentJoined(tour.id)" *ngFor="let tour of filteredTournaments" (click)="openTournamentView(tour)">
+      <div
+        class="tournament-card"
+        [class.active]="globalAuth.isLoggedIn && isTournamentJoined(tour.id)"
+        *ngFor="let tour of filteredTournaments"
+        (click)="openTournamentView(tour)"
+      >
         <div class="card-header">
           <h2>{{ tour.name }}</h2>
           <div class="date">{{ tour.date }}</div>
         </div>
 
         <div class="card-body">
-          <div><strong>{{ t.location }}:</strong> {{ tour.location }}</div>
-          <div><strong>{{ t.meetingPoint }}:</strong> {{ tour.meetingPoint }}</div>
           <div>
-            <strong>{{ t.teams }}:</strong> {{ tour.currentTeams }} / {{ tour.maxTeams }}
+            <strong>{{ t.location }}:</strong> {{ tour.location }}
           </div>
-          <div><strong>{{ t.Formattitle }}:</strong> {{ tour.format }}</div>
+          <div>
+            <strong>{{ t.meetingPoint }}:</strong> {{ tour.meetingPoint }}
+          </div>
+          <div>
+            <strong>{{ t.teams }}:</strong> {{ tour.currentTeams }} /
+            {{ tour.maxTeams }}
+          </div>
+          <div>
+            <strong>{{ t.Formattitle }}:</strong> {{ tour.format }}
+          </div>
         </div>
 
         <div class="card-footer">
-          <button *ngIf="globalAuth.isLoggedIn" class="tButton" (click)="$event.stopPropagation(); joinTournament(tour.id, tour.currentTeams, tour.maxTeams)">
+          <button
+            *ngIf="globalAuth.isLoggedIn"
+            class="tButton"
+            (click)="
+              $event.stopPropagation();
+              joinTournament(tour.id, tour.currentTeams, tour.maxTeams)
+            "
+          >
             {{ isTournamentJoined(tour.id) ? t.leave : t.join }}
           </button>
-          <button *ngIf="globalAuth.isLoggedIn" class="tButton" (click)="$event.stopPropagation(); openDetails(tour.id)">{{ t.details }}</button>
-          <button *ngIf="!globalAuth.isLoggedIn" class="tButton outline" (click)="$event.stopPropagation(); globalAuth.openLoginModal()">
+          <button
+            *ngIf="globalAuth.isLoggedIn"
+            class="tButton"
+            (click)="$event.stopPropagation(); openDetails(tour.id)"
+          >
+            {{ t.details }}
+          </button>
+          <button
+            *ngIf="!globalAuth.isLoggedIn"
+            class="tButton outline"
+            (click)="$event.stopPropagation(); globalAuth.openLoginModal()"
+          >
             {{ t.loginToJoin }}
           </button>
         </div>
       </div>
     </div>
 
-    <div id="detailsModal" class="details-modal" [class.visible]="detailsModalVisible">
+    <div
+      id="detailsModal"
+      class="details-modal"
+      [class.visible]="detailsModalVisible"
+    >
       <div class="details-overlay"></div>
       <div class="details-content">
         <div id="DetailsPage">
-          <h2 id="DetailsTitle">{{ t.detailsFor }} {{ selectedTournament?.name }}</h2>
+          <h2 id="DetailsTitle">
+            {{ t.detailsFor }} {{ selectedTournament?.name }}
+          </h2>
           <h3 id="RulesTitle">{{ t.rules }}</h3>
           <ul id="RuleList">
             <li>{{ selectedTournament?.rules }}</li>
           </ul>
           <h3 id="NotesTitle">{{ t.notes }}</h3>
           <p>{{ selectedTournament?.notes }}</p>
-          <button class="tButton" (click)="closeDetails()">{{ t.close }}</button>
+          <button class="tButton" (click)="closeDetails()">
+            {{ t.close }}
+          </button>
         </div>
       </div>
     </div>
   </section>
-  <section *ngIf="isTournamentRegisterOpen && !showCelebration" class="TournamentRegister">
-    <button class="back-btn tButton" (click)="backFromTeamName()">&larr; {{ t.back || 'Back' }}</button>
+  <section
+    *ngIf="isTournamentRegisterOpen && !showCelebration"
+    class="TournamentRegister"
+  >
+    <button class="back-btn tButton" (click)="backFromTeamName()">
+      &larr; {{ t.back || "Back" }}
+    </button>
     <label for="tournamentTeamName">
       {{ t.TeamName }}
       <span class="info-icon" tabindex="0">
@@ -369,14 +543,28 @@
         </span>
       </span>
     </label>
-    <input id="tournamentTeamName" name="teamname" type="text" class="form-input" required (input)="onTeamNameInput($event)" />
+    <input
+      id="tournamentTeamName"
+      name="teamname"
+      type="text"
+      class="form-input"
+      required
+      (input)="onTeamNameInput($event)"
+    />
     <button id="JoinTournamentButton" (click)="joinTournamentfinish()">
-      {{t.join}}
+      {{ t.join }}
     </button>
   </section>
-  <div *ngIf="showCelebration && joinFeedback?.type === 'success'" class="cornhole-celebration-overlay confetti-overlay">
+  <div
+    *ngIf="showCelebration && joinFeedback?.type === 'success'"
+    class="cornhole-celebration-overlay confetti-overlay"
+  >
     <div class="join-feedback-fixed" [ngClass]="joinFeedback?.type">
-      <span *ngIf="joinFeedback?.type === 'success'" class="celebration-animation">🎉</span>
+      <span
+        *ngIf="joinFeedback?.type === 'success'"
+        class="celebration-animation"
+        >🎉</span
+      >
       {{ joinFeedback?.message }}
     </div>
     <div class="confetti-canvas-wrapper">
@@ -393,5 +581,3 @@
     <a routerLink="/contact">{{ t.contact }}</a>
   </div>
 </footer>
-
-
