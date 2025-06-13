@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { GlobalAuth } from '../../global-auth';
-import { UserProfileService } from '../../user-profile.service'; 
+import { UserProfileService } from '../../Services/user-profile.service'; 
 import { Router } from '@angular/router';
+import { TournamentService } from '../../Services/tournament.service';
 
 type LanguageCode = 'de' | 'en' | 'fr' | 'es';
 @Component({
@@ -23,12 +24,16 @@ export class ContactComponent {
 
   selectedLang: LanguageCode = 'en';
   langDropdownOpen = false;
+  showPassword = false;
+  showConfirmPassword = false;
+  hasTournament = false;
 
   translations: Record<LanguageCode, any> = {
     de: {
       home: 'Home',
       joinTournament: 'Turnier beitreten',
       createTournament: 'Turnier erstellen',
+      manageTournaments: 'Turnier verwalten',
       statistics: 'Statistiken',
       about: 'Über',
       logout: 'Logout',
@@ -78,6 +83,7 @@ export class ContactComponent {
       home: 'Home',
       joinTournament: 'Join Tournament',
       createTournament: 'Create Tournament',
+      manageTournaments: 'Manage Tournament',
       statistics: 'Statistics',
       about: 'About',
       logout: 'Logout',
@@ -127,6 +133,7 @@ export class ContactComponent {
       home: 'Accueil',
       joinTournament: 'Rejoindre un tournoi',
       createTournament: 'Créer un tournoi',
+      manageTournaments: 'Gérer le tournoi',
       statistics: 'Statistiques',
       about: 'À propos',
       logout: 'Déconnexion',
@@ -176,6 +183,7 @@ export class ContactComponent {
       home: 'Inicio',
       joinTournament: 'Unirse a un torneo',
       createTournament: 'Crear torneo',
+      manageTournaments: 'Gestionar el torneo',
       statistics: 'Estadísticas',
       about: 'Acerca de',
       logout: 'Cerrar sesión',
@@ -236,7 +244,9 @@ export class ContactComponent {
 constructor(
     public globalAuth: GlobalAuth,
     private userProfileService: UserProfileService,
-    private router: Router
+    private router: Router,
+    private tournamentService: TournamentService,
+
   ) {}
   ngOnInit(): void {
     this.setInitialTheme();
@@ -245,7 +255,16 @@ constructor(
       this.selectedLang = saved as LanguageCode;
     }
     this.applyTranslations();  
-        this.loadUserProfile(); 
+    this.loadUserProfile(); 
+
+    // Check for saved tournaments in localStorage
+    const savedTournaments = JSON.parse(localStorage.getItem('tournaments') || '[]');
+    this.hasTournament = Array.isArray(savedTournaments) && savedTournaments.length > 0;
+    this.tournamentService.tournament$.subscribe(t => {
+      // Also keep hasTournament true if there are saved tournaments
+      const savedTournaments = JSON.parse(localStorage.getItem('tournaments') || '[]');
+      this.hasTournament = !!t || (Array.isArray(savedTournaments) && savedTournaments.length > 0);
+    });
   }
 
   // Profil laden

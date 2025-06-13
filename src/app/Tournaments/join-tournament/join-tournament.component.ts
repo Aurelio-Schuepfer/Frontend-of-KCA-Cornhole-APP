@@ -1,7 +1,8 @@
 import { Component, OnInit, AfterViewInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
 import { GlobalAuth } from '../../global-auth';
-import { UserProfileService } from '../../user-profile.service'; 
+import { UserProfileService } from '../../Services/user-profile.service'; 
 import { Router } from '@angular/router';
+import { TournamentService } from '../../Services/tournament.service';
 type LanguageCode = 'de' | 'en' | 'fr' | 'es';
 
 @Component({
@@ -12,6 +13,7 @@ type LanguageCode = 'de' | 'en' | 'fr' | 'es';
 })
 export class JoinTournamentComponent implements OnInit, AfterViewInit, OnDestroy {
   isNavOpen: boolean = false;
+  hasTournament = false;
   isTournamentRegisterOpen = false;
   expandedId: number | null = null;
   username: string | null = null;
@@ -21,7 +23,8 @@ export class JoinTournamentComponent implements OnInit, AfterViewInit, OnDestroy
   joinStatus: string = "join";
   searchTerm: string = '';
   filteredTournaments: any[] = [];
-
+  showPassword = false;
+  showConfirmPassword = false;
   selectedTournamentForJoin: number | null = null;
   selectedCurrentTeams: number = 0;
   selectedMaxTeams: number = 0;
@@ -36,7 +39,7 @@ export class JoinTournamentComponent implements OnInit, AfterViewInit, OnDestroy
     { code: 'fr' as LanguageCode, label: 'Français' },
     { code: 'es' as LanguageCode, label: 'Español' }
   ];
-
+  
   selectedLang: LanguageCode = 'en';
   langDropdownOpen = false;
 
@@ -45,6 +48,7 @@ export class JoinTournamentComponent implements OnInit, AfterViewInit, OnDestroy
       home: 'Home',
       joinTournament: 'Turnier beitreten',
       createTournament: 'Turnier erstellen',
+      manageTournaments: 'Turnier verwalten',
       statistics: 'Statistiken',
       about: 'Über',
       logout: 'Logout',
@@ -107,6 +111,7 @@ export class JoinTournamentComponent implements OnInit, AfterViewInit, OnDestroy
       home: 'Home',
       joinTournament: 'Join Tournament',
       createTournament: 'Create Tournament',
+      manageTournaments: 'Manage Tournament',
       statistics: 'Statistics',
       about: 'About',
       logout: 'Logout',
@@ -169,6 +174,7 @@ export class JoinTournamentComponent implements OnInit, AfterViewInit, OnDestroy
       home: 'Accueil',
       joinTournament: 'Rejoindre un tournoi',
       createTournament: 'Créer un tournoi',
+      manageTournaments: 'Gérer le tournoi',
       statistics: 'Statistiques',
       about: 'À propos',
       logout: 'Déconnexion',
@@ -231,6 +237,7 @@ export class JoinTournamentComponent implements OnInit, AfterViewInit, OnDestroy
       home: 'Inicio',
       joinTournament: 'Unirse a un torneo',
       createTournament: 'Crear torneo',
+      manageTournaments: 'Gestionar el torneo',
       statistics: 'Estadísticas',
       about: 'Acerca de',
       logout: 'Cerrar sesión',
@@ -323,7 +330,8 @@ hideTeamNameInput = false;
 constructor(
     public globalAuth: GlobalAuth,
     private userProfileService: UserProfileService,
-    private router: Router
+    private router: Router,
+    private tournamentService: TournamentService,
   ) {}
 
   ngOnInit(): void {
@@ -335,10 +343,19 @@ constructor(
     this.filteredTournaments = this.tournaments;
     this.loadUserProfile();
     this.showTournamentView = false;
+
+    // Check for saved tournaments in localStorage
+    const savedTournaments = JSON.parse(localStorage.getItem('tournaments') || '[]');
+    this.hasTournament = Array.isArray(savedTournaments) && savedTournaments.length > 0;
+
+    this.tournamentService.tournament$.subscribe(t => {
+      // Also keep hasTournament true if there are saved tournaments
+      const savedTournaments = JSON.parse(localStorage.getItem('tournaments') || '[]');
+      this.hasTournament = !!t || (Array.isArray(savedTournaments) && savedTournaments.length > 0);
+    });
   }
 
   ngAfterViewInit(): void {
-    // If celebration is already active on init, start confetti
     if (this.showCelebration) {
       this.startConfetti();
     }
@@ -728,76 +745,98 @@ constructor(
     }
   }
 
-  private startConfetti() {
-    if (this.confettiActive) return;
-    this.confettiActive = true;
-    const canvas = document.getElementById('confetti-canvas') as HTMLCanvasElement;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    const confettiCount = 180;
-    const confettiColors = ['#ffecb3', '#ff9800', '#b3e5fc', '#03a9f4', '#c8e6c9', '#4caf50', '#ffcdd2', '#e91e63', '#fff9c4', '#ffeb3b'];
-    const confetti: any[] = [];
-    for (let i = 0; i < confettiCount; i++) {
-      confetti.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * -canvas.height,
-        r: 6 + Math.random() * 10,
-        d: 8 + Math.random() * 12,
-        color: confettiColors[Math.floor(Math.random() * confettiColors.length)],
-        tilt: Math.random() * 10 - 5,
-        tiltAngle: 0,
-        tiltAngleIncremental: (Math.random() * 0.07) + 0.05
-      });
+private startConfetti() {
+  if (this.confettiActive) return;
+  this.confettiActive = true;
+  const canvas = document.getElementById('confetti-canvas') as HTMLCanvasElement;
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  const confettiCount = window.innerWidth < 768 ? 60 : 180;
+  const confettiColors = ['#ffecb3', '#ff9800', '#b3e5fc', '#03a9f4', '#c8e6c9', '#4caf50', '#ffcdd2', '#e91e63', '#fff9c4', '#ffeb3b'];
+  const confetti: any[] = [];
+
+  for (let i = 0; i < confettiCount; i++) {
+    let xPos;
+    if (Math.random() < 0.7) {
+      xPos = Math.random() * canvas.width * 0.6; // 70% der Konfetti links bis 60% Breite
+    } else {
+      xPos = canvas.width * 0.6 + Math.random() * canvas.width * 0.4; // 30% rechts
     }
-    let angle = 0;
-    let tiltAngle = 0;
-    const draw = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      for (let i = 0; i < confetti.length; i++) {
-        const c = confetti[i];
-        ctx.beginPath();
-        ctx.lineWidth = c.r;
-        ctx.strokeStyle = c.color;
-        ctx.moveTo(c.x + c.tilt + (c.r / 3), c.y);
-        ctx.lineTo(c.x + c.tilt, c.y + c.d);
-        ctx.stroke();
-      }
-      update();
-    };
-    const update = () => {
-      angle += 0.01;
-      tiltAngle += 0.1;
-      for (let i = 0; i < confetti.length; i++) {
-        const c = confetti[i];
-        c.y += (Math.cos(angle + c.d) + 3 + c.r / 2) * 0.8;
-        c.x += Math.sin(angle);
-        c.tiltAngle += c.tiltAngleIncremental;
-        c.tilt = Math.sin(c.tiltAngle) * 15;
-        if (c.y > canvas.height) {
-          c.x = Math.random() * canvas.width;
-          c.y = -10;
-        }
-      }
-    };
-    const animate = () => {
-      if (!this.confettiActive) return;
-      draw();
-      requestAnimationFrame(animate);
-    };
-    animate();
-    this.confettiTimeout = setTimeout(() => this.stopConfetti(), 2500);
+    confetti.push({
+      x: xPos,
+      y: Math.random() * -canvas.height,
+      r: 6 + Math.random() * 10,
+      d: 8 + Math.random() * 12,
+      color: confettiColors[Math.floor(Math.random() * confettiColors.length)],
+      tilt: Math.random() * 10 - 5,
+      tiltAngle: 0,
+      tiltAngleIncremental: (Math.random() * 0.07) + 0.05
+    });
   }
 
-  private stopConfetti() {
-    this.confettiActive = false;
-    const canvas = document.getElementById('confetti-canvas') as HTMLCanvasElement;
-    if (canvas) {
-      const ctx = canvas.getContext('2d');
-      if (ctx) ctx.clearRect(0, 0, canvas.width, canvas.height);
+  let angle = 0;
+  let tiltAngle = 0;
+
+  const draw = () => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (let i = 0; i < confetti.length; i++) {
+      const c = confetti[i];
+      ctx.beginPath();
+      ctx.lineWidth = c.r;
+      ctx.strokeStyle = c.color;
+      ctx.moveTo(c.x + c.tilt + (c.r / 3), c.y);
+      ctx.lineTo(c.x + c.tilt, c.y + c.d);
+      ctx.stroke();
     }
-    if (this.confettiTimeout) clearTimeout(this.confettiTimeout);
-  }
+    update();
+  };
+
+  const update = () => {
+    angle += 0.01;
+    tiltAngle += 0.1;
+    for (let i = 0; i < confetti.length; i++) {
+      const c = confetti[i];
+      c.y += (Math.cos(angle + c.d) + 3 + c.r / 2) * 0.8;
+      c.x += Math.sin(angle);
+      c.tiltAngle += c.tiltAngleIncremental;
+      c.tilt = Math.sin(c.tiltAngle) * 15;
+
+      if (c.y > canvas.height) {
+        if (Math.random() < 0.7) {
+          c.x = Math.random() * canvas.width * 0.6;
+        } else {
+          c.x = canvas.width * 0.6 + Math.random() * canvas.width * 0.4;
+        }
+        c.y = -10;
+      }
+
+      if (c.x > canvas.width + 30) c.x = -30;
+      if (c.x < -30) c.x = canvas.width + 30;
+    }
+  };
+
+  const animate = () => {
+    if (!this.confettiActive) return;
+    draw();
+    requestAnimationFrame(animate);
+  };
+
+  animate();
+  this.confettiTimeout = setTimeout(() => this.stopConfetti(), 2500);
 }
+
+private stopConfetti() {
+  this.confettiActive = false;
+  const canvas = document.getElementById('confetti-canvas') as HTMLCanvasElement;
+  if (canvas) {
+    const ctx = canvas.getContext('2d');
+    if (ctx) ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+  if (this.confettiTimeout) clearTimeout(this.confettiTimeout);
+}
+}
+
+

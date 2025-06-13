@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AuthService } from './auth.service';
+import { AuthService } from './Services/auth.service';
 import { AuthModel } from './global-auth.model';
 import { Observable } from 'rxjs';
 import { jwtDecode } from "jwt-decode";
@@ -14,6 +14,7 @@ export class GlobalAuth {
   errorMessage: string = '';
   infoMessage: string = '';
   profileImageUrl: string = localStorage.getItem('profileImageUrl') || 'assets/images/default-profile.png';
+  rememberMe = false;
 
   resetRequested: boolean = false;
   resetEmail: string = '';
@@ -64,7 +65,6 @@ export class GlobalAuth {
           } else {
             this.infoMessage = 'Registrierung erfolgreich!';
           }
-          this.isAuthModalOpen = false;
           if (successCallback) successCallback();
         },
         error: err => {
@@ -91,6 +91,7 @@ export class GlobalAuth {
           const token = res.token;
           if (this.loginModel.rememberMe) {
             localStorage.setItem('token', token);
+            this.rememberMe = true;
           } else {
             sessionStorage.setItem('token', token);
             localStorage.removeItem('token');

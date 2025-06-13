@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { JoinTournamentComponent } from './Tournaments/join-tournament/join-tournament.component';
 import { CreateTournamentComponent } from './Tournaments/create-tournament/create-tournament.component';
+import { ManageTournamentComponent } from './Tournaments/manage-tournament/manage-tournament.component';
 import { StatshomeComponent } from './Statistics/statshome/statshome.component';
 import { StatsplayerComponent } from './Statistics/statsplayer/statsplayer.component';
 import { StatssiteComponent } from './Statistics/statssite/statssite.component';
@@ -25,6 +26,7 @@ const routes: Routes = [
   { path: 'PrivacyPolicy', component: PrivacyPolicyComponent},
   { path: 'contact', component: ContactComponent},
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+  { path: 'manage', component: ManageTournamentComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({

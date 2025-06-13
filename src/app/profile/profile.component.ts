@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { GlobalAuth } from '../global-auth';
-import { UserProfileService } from '../user-profile.service'; 
+import { UserProfileService } from '../Services/user-profile.service'; 
 import { Router } from '@angular/router';
 import { jwtDecode } from "jwt-decode";
-
+import { TournamentService } from '../Services/tournament.service';
 type LanguageCode = 'de' | 'en' | 'fr' | 'es';
 
 @Component({
@@ -22,8 +22,10 @@ export class ProfileComponent implements OnInit {
   editName = false;
   editEmail = false;
   editBio = false;
-
+  showPassword = false;
+  showConfirmPassword = false;
   isNavOpen = false;
+  hasTournament = false;
 
   languages = [
     { code: 'de' as LanguageCode, label: 'Deutsch' },
@@ -40,6 +42,7 @@ export class ProfileComponent implements OnInit {
       home: 'Home',
       joinTournament: 'Turnier beitreten',
       createTournament: 'Turnier erstellen',
+      manageTournaments: 'Turnier verwalten',
       statistics: 'Statistiken',
       about: 'Über',
       logout: 'Logout',
@@ -104,6 +107,7 @@ export class ProfileComponent implements OnInit {
       home: 'Home',
       joinTournament: 'Join Tournament',
       createTournament: 'Create Tournament',
+      manageTournaments: 'Manage Tournament',
       statistics: 'Statistics',
       about: 'About',
       logout: 'Logout',
@@ -168,6 +172,7 @@ export class ProfileComponent implements OnInit {
       home: 'Accueil',
       joinTournament: 'Rejoindre un tournoi',
       createTournament: 'Créer un tournoi',
+      manageTournaments: 'Gérer le tournoi',
       statistics: 'Statistiques',
       about: 'À propos',
       logout: 'Déconnexion',
@@ -232,6 +237,7 @@ export class ProfileComponent implements OnInit {
       home: 'Inicio',
       joinTournament: 'Unirse a un torneo',
       createTournament: 'Crear torneo',
+      manageTournaments: 'Gestionar el torneo',
       statistics: 'Estadísticas',
       about: 'Acerca de',
       logout: 'Cerrar sesión',
@@ -312,9 +318,19 @@ export class ProfileComponent implements OnInit {
     public globalAuth: GlobalAuth,
     private userProfileService: UserProfileService,
     private router: Router,
+    private tournamentService: TournamentService,
+
   ) {}
 
   ngOnInit(): void {
+    // Check for saved tournaments in localStorage
+    const savedTournaments = JSON.parse(localStorage.getItem('tournaments') || '[]');
+    this.hasTournament = Array.isArray(savedTournaments) && savedTournaments.length > 0;
+    this.tournamentService.tournament$.subscribe(t => {
+      // Also keep hasTournament true if there are saved tournaments
+      const savedTournaments = JSON.parse(localStorage.getItem('tournaments') || '[]');
+      this.hasTournament = !!t || (Array.isArray(savedTournaments) && savedTournaments.length > 0);
+    });
     this.setInitialTheme();
     const saved = localStorage.getItem('lang');
     if (saved && ['de', 'en', 'fr', 'es'].includes(saved)) {
@@ -347,13 +363,11 @@ export class ProfileComponent implements OnInit {
             let backendEmail = data?.email || data?.mail || data?.user_email;
             this.userProfile = {
               ...this.userProfile,
-              ...data,
-              email: backendEmail || this.userProfile.email || 'demo@example.com' 
+              email: backendEmail || this.userProfile.email,
+              name: data?.name || this.userProfile.name,
+              bio: data?.bio || this.userProfile.bio,
+              imageUrl: data?.imageUrl || this.userProfile.imageUrl
             };
-            if (this.userProfile.imageUrl) {
-              localStorage.setItem('profileImageUrl', this.userProfile.imageUrl);
-              this.globalAuth.profileImageUrl = this.userProfile.imageUrl;
-            }
           },
           error: () => {}
         });
@@ -361,20 +375,6 @@ export class ProfileComponent implements OnInit {
         this.username = '';
         this.isLoggedIn = false;
       }
-    } else {
-      const storedImage = localStorage.getItem('profileImageUrl');
-      this.userProfile = {
-        name: 'Demo User',
-        email: 'demo@example.com',
-        imageUrl: storedImage || 'assets/images/default-profile.png',
-        gamesPlayed: 0,
-        matchesWon: 0,
-        matchesLost: 0,
-        points: 0,
-        winRate: 0,
-        partner: '',
-        bio: ''
-      };
     }
   }
   loadProfile() {

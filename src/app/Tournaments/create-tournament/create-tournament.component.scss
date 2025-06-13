@@ -1,27 +1,5 @@
 @use 'sass:color';
 
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-  overflow-y: auto;
-}
-
-.create-tournament-container {
-  min-height: 100vh;
-  height: auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  overflow-y: auto;
-  overflow-x: hidden;
-
-  &.invis
-  {
-    display: none;
-  }
-
   #tournamentTitle {
     font-size: 3rem;
     display: flex;
@@ -35,7 +13,6 @@ html, body {
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  max-height: 100%;
   box-sizing: border-box;
 
   .form-grid {
@@ -143,14 +120,15 @@ html, body {
         cursor: not-allowed;
       }
     }
-  }
 
 .form-private {
   display: flex;
   align-items: flex-start;
   gap: 1.5rem;
-  margin-left: 0.2rem;
-  margin-top: -2rem;
+  position: relative;
+  left: 87%;
+  margin-left: 5rem;
+  margin-top: -3.5rem;
   flex-wrap: wrap;
   grid-column: 1 / 2; 
 
@@ -259,7 +237,7 @@ html, body {
 
   #tournamentTitle {
     position: relative;
-    bottom: 7rem;
+    bottom: 6rem;
   }
 
   .form-footer {
@@ -298,38 +276,14 @@ html, body {
     margin-top: 6rem;
   }
 
-@media (max-width: 1015px) 
-{
-    .form-private {
-    margin-top: 2.5rem !important; 
-  }
-  #tournamentTitle {
-    margin-bottom: -5rem !important;
-  }
-}
-
-footer {
-  margin-top: -8.1rem !important; 
-  // Design bleibt unverändert
-  width: 100%;
-  position: static;
-  left: 0;
-  bottom: 0;
-  z-index: 100;
-}
-
 @media (max-width: 600px) {
   .form-grid {
     grid-template-columns: 1fr;
     > div, > .form-notes, > .form-private { grid-column: 1; }
   }
-  footer {
-  margin-top: -0rem !important; 
-}
 }
 
 #createTournamentForm {
-  max-height: 100%;
   box-sizing: border-box;
   .form-grid > div {
     min-width: 0;
@@ -343,117 +297,11 @@ footer {
   }
 }
 
-html, body, .create-tournament-container {
-  height: 100%;
-}
-
-@media (max-width: 900px) {
-  .form-grid {
-    grid-template-columns: 1fr;
-    > div,
-    > .form-notes,
-    > .form-private {
-      grid-column: 1;
-    }
-  }
-}
-
-@media (max-width: 420px) {
-  .create-tournament-container {
-    width: 90vw;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    overflow-x: auto;
-  }
-}
-
-.tournament-wrapper {
-  background-color: #0e0e0e;
-  color: #e6f1ff;
-  padding: 2rem;
-  font-family: 'Poppins', sans-serif;
-}
-
-h2 {
-  color: #00ff88;
-  text-align: center;
-  margin-bottom: 1rem;
-}
-
-.group-stage,
-.bracket-stage {
-  margin-bottom: 3rem;
-}
-
-.groups-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 1rem;
-}
-
-.group-card {
-  background: #1a1a1a;
-  border: 2px solid #00ff88;
-  border-radius: 1rem;
-  padding: 1rem;
-
-  h3 {
-    color: #00ffcc;
-    text-align: center;
-    margin-bottom: 0.5rem;
-  }
-
-  ul {
-    list-style: none;
-    padding: 0;
-
-    li {
-      padding: 0.25rem 0;
-      border-bottom: 1px solid #444;
-    }
-  }
-}
-
-.bracket-container {
-  display: flex;
-  overflow-x: auto;
-  gap: 2rem;
-  padding-bottom: 1rem;
-}
-
-.round {
-  min-width: 200px;
-
-  h3 {
-    color: #00bfff;
-    text-align: center;
-    margin-bottom: 0.5rem;
-  }
-
-  .match {
-    background: #1a1a1a;
-    border: 1px solid #00bfff;
-    border-radius: 0.5rem;
-    padding: 0.5rem;
-    margin-bottom: 1rem;
-    text-align: center;
-
-    .team {
-      margin: 0.25rem 0;
-    }
-
-    .vs {
-      color: #999;
-    }
-  }
-}
-
 .dropdown-label {
   display: flex;
   align-items: center;
   font-weight: 600;
   font-size: 1rem;
-  margin-bottom: -5rem;
   margin-left: 0.3rem;
   color: var(--fg);
 }
@@ -478,12 +326,6 @@ h2 {
   transition: border-color 0.3s ease;
 }
 
-.main-content {
-  flex: 1 0 auto;
-  overflow-y: auto;
-  min-height: 0;
-}
-
 .form-format {
     display: flex;
     flex-direction: column;
@@ -504,26 +346,150 @@ h2 {
     font-family: inherit;
   }
 
-@media (min-width: 900px) {
-  .create-tournament-container {
-    height: 100vh;
-    overflow-y: hidden;
+.success-popup {
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--bg, #181c24);
+  color: var(--fg, #ffffff);
+  border: 2px solid var(--accent, #4caf50);
+  border-radius: 1.5rem;
+  padding: 1.5rem 2.5rem;
+  box-shadow: 0 0 20px var(--accent, #4caf50);
+  z-index: 9999;
+  animation: fadeSlideIn 0.4s ease-out, fadeOut 0.5s ease-in 2.5s forwards;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.success-popup .material-icons {
+  font-size: 2rem;
+  color: var(--accent, #4caf50);
+}
+
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -20%);
   }
-  main {
-    min-height: 0;
-    overflow-y: hidden;
-  }
-  html, body {
-    overflow-y: hidden;
-  }
-  footer {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    margin-top: -8.1rem !important;
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
   }
 }
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    transform: translate(-50%, -10%);
+    pointer-events: none;
+  }
+}
+
+.blurred {
+  filter: blur(3px) brightness(0.6);
+  pointer-events: none;
+  user-select: none;
+  transition: filter 0.3s ease;
+}
+.form-row-equal {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1.5rem;
+  grid-column: span 3;
+
+  .form-notes,
+  .form-fee,
+  .form-private {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .form-private {
+    justify-content: flex-end;
+    padding-top: 1.8rem;
+
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.05rem;
+    }
+  }
+}
+
+@media (max-width: 900px) {
+  .form-row-equal {
+    grid-template-columns: 1fr;
+    > div {
+      width: 100%;
+    }
+  }
+}
+
+@media (max-width: 1000px) {
+  .form-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .form-row-equal {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .form-grid,
+  .form-row-equal {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 952px) {
+  .form-private {
+    left: -17%;
+    top: 50%;
+  }
+}
+
+@media (max-width: 500px) {
+  .form-private {
+    left: 10%;
+    top: -80%;
+  }
+}
+
+@media (max-width: 648px) {
+  .form-private {
+    left: 25%;
+    top: -80%;
+  }
+}
+@media (max-width: 648px) {
+  .form-private {
+    position: static !important;
+    margin: 1.5rem 0 0 0 !important;
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .form-footer {
+    margin-top: 2rem !important;
+  }
+}
+
+
+
+
+
+
+
+
+
+
 
 
 

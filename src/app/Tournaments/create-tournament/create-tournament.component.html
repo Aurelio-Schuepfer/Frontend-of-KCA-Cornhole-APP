@@ -41,6 +41,7 @@
       <button routerLink="/" class="nav-btn">{{ t.home }}</button>
       <button routerLink="/join" class="nav-btn">{{ t.joinTournament }}</button>
       <button routerLink="/create" class="nav-btn  active">{{ t.createTournament }}</button>
+      <button *ngIf="hasTournament" routerLink="/manage" class="nav-btn">{{ t.manageTournaments }}</button>
       <button routerLink="/stats" class="nav-btn">{{ t.statistics }}</button>
       <button routerLink="/about" class="nav-btn">{{ t.about }}</button>
     </div>
@@ -121,30 +122,98 @@
         </ng-container>
 
         <label for="password" class="auth-label">{{ t.password }}</label>
-        <input
-          id="password"
-          class="auth-input"
-          name="password"
-          type="password"
-          [(ngModel)]="globalAuth.loginModel.password"
-          required
+<div class="input-wrapper">
+  <input
+    id="password"
+    class="auth-input"
+    name="password"
+    [type]="showPassword ? 'text' : 'password'"
+    [(ngModel)]="globalAuth.loginModel.password"
+    required
+  />
+  <button
+    type="button"
+    class="eye-btn"
+    (click)="showPassword = !showPassword"
+    aria-label="Toggle password visibility"
+  >
+    <svg
+      *ngIf="!showPassword"
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+    >
+      <path d="M12 5c-7.633 0-12 7-12 7s4.367 7 12 7 12-7 12-7-4.367-7-12-7zm0 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10z" />
+      <circle cx="12" cy="12" r="2.5" />
+    </svg>
+
+    <svg
+      *ngIf="showPassword"
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+    >
+      <path
+        d="M12 5c-7.633 0-12 7-12 7s4.367 7 12 7 12-7 12-7-4.367-7-12-7zm0 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10z"
+        stroke-width="2"
+      />
+      <line x1="1" y1="1" x2="23" y2="23" stroke-width="2" />
+    </svg>
+  </button>
+</div>
+
+<label *ngIf="!showResetForm && !globalAuth.isRegisterMode" class="forgot-link">
+  <a href="#" (click)="showResetForm = true; $event.preventDefault()"
+    >{{ t.passwordReset }}</a
+  >
+</label>
+
+<ng-container *ngIf="globalAuth.isRegisterMode">
+  <label for="confirmPassword" class="auth-label">{{ t.confirmPassword }}</label>
+  <div class="input-wrapper">
+    <input
+      id="confirmPassword"
+      class="auth-input"
+      name="confirmPassword"
+      [type]="showConfirmPassword ? 'text' : 'password'"
+      [(ngModel)]="globalAuth.loginModel.confirmPassword"
+      required
+    />
+    <button
+      type="button"
+      class="eye-btn eye-register"
+      (click)="showConfirmPassword = !showConfirmPassword"
+      aria-label="Toggle password visibility"
+    >
+      <svg
+        *ngIf="!showConfirmPassword"
+        xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+      >
+        <path d="M12 5c-7.633 0-12 7-12 7s4.367 7 12 7 12-7 12-7-4.367-7-12-7zm0 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10z" />
+        <circle cx="12" cy="12" r="2.5" />
+      </svg>
+
+      <svg
+        *ngIf="showConfirmPassword"
+        xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M12 5c-7.633 0-12 7-12 7s4.367 7 12 7 12-7 12-7-4.367-7-12-7zm0 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10z"
+          stroke-width="2"
         />
-
-        <label *ngIf="!showResetForm && !globalAuth.isRegisterMode" class="forgot-link">
-          <a href="#" (click)="showResetForm = true; $event.preventDefault()">{{ t.passwordReset }}</a>
-        </label>
-
-        <ng-container *ngIf="globalAuth.isRegisterMode">
-          <label for="confirmPassword" class="auth-label">{{ t.confirmPassword }}</label>
-          <input
-            id="confirmPassword"
-            class="auth-input"
-            name="confirmPassword"
-            type="password"
-            [(ngModel)]="globalAuth.loginModel.confirmPassword"
-            required
-          />
-        </ng-container>
+        <line x1="1" y1="1" x2="23" y2="23" stroke-width="2" />
+      </svg>
+    </button>
+  </div>
+</ng-container>
         <div class="remember-me-row">
           <label class="remember-me-label">
             <input
@@ -172,10 +241,10 @@
           class="auth-input"
           name="resetEmail"
           type="email"
-          [(ngModel)]="resetEmail"
+          [(ngModel)]="globalAuth.resetEmail"
           required
         />
-        <button class="LogButton" (click)="requestReset()" type="button">{{ t.resetSend }}</button>
+        <button class="LogButton" (click)="globalAuth.requestReset()" type="button">{{ t.resetSend }}</button>
         <button class="LogButton outline" (click)="showResetForm = false" type="button">{{ t.resetBack }}</button>
         <div *ngIf="resetRequested" class="reset-success">{{ t.resetSuccess }}</div>
       </div>
@@ -190,78 +259,67 @@
 </div>
 
 <main>
-  <section *ngIf="isCreateTournamentStart" class="create-tournament-container">
+  <section class="create-tournament-container">
+   <div [class.blurred]="showSuccess">
     <h1 id="tournamentTitle">{{ t.tournamentTitle }}</h1>
     <form #tournamentForm="ngForm" (ngSubmit)="onCreateTournament()" id="createTournamentForm">
-      <div class="form-grid">
-        <div>
-          <label for="tournamentName">
-            {{ t.name }}
-            <span class="info-icon" tabindex="0">
-              <i class="fa fa-info-circle"></i>
-              <span class="privacy-tooltip small">
-                {{ t.nameInfo }}
-              </span>
-            </span>
-          </label>
-          <input id="tournamentName" name="tournamentName" [(ngModel)]="tournament.name" class="form-input" required />
-        </div>
-        <div>
-          <label for="tournamentDate">
-            {{ t.date }}
-            <span class="info-icon" tabindex="0">
-              <i class="fa fa-info-circle"></i>
-              <span class="privacy-tooltip small">
-                {{ t.dateInfo }}
-              </span>
-            </span>
-          </label>
-          <input id="tournamentDate" name="tournamentDate" type="date" [(ngModel)]="tournament.date" class="form-input" required />
-        </div>
-        <div>
-          <label for="tournamentLocation">
-            {{ t.location }}
-            <span class="info-icon" tabindex="0">
-              <i class="fa fa-info-circle"></i>
-              <span class="privacy-tooltip small">
-                {{ t.locationInfo }}
-              </span>
-            </span>
-          </label>
-          <input id="tournamentLocation" name="tournamentLocation" [(ngModel)]="tournament.location" class="form-input" required />
-        </div>
-        <div>
-          <label for="tournamentTeams">
-            {{ t.teams }}
-            <span class="info-icon" tabindex="0">
-              <i class="fa fa-info-circle"></i>
-              <span class="privacy-tooltip small">
-                {{ t.teamsInfo }}
-              </span>
-            </span>
-          </label>
-          <input id="tournamentTeams" name="tournamentTeams" type="number" [(ngModel)]="tournament.teams" class="form-input" min="2" />
-        </div>
-        <div class="form-notes">
-          <label for="tournamentNotes">
-            {{ t.notes }}
-            <span class="info-icon" tabindex="0">
-              <i class="fa fa-info-circle"></i>
-              <span class="privacy-tooltip small">
-                {{ t.notesInfo }}
-              </span>
-            </span>
-          </label>
-          <textarea id="tournamentNotes" name="tournamentNotes" [(ngModel)]="tournament.notes" class="form-textarea"></textarea>
-        </div>
-        <div class="form-format">
+  <div class="form-grid">
+    <div>
+      <label for="tournamentName">
+        {{ t.name }}
+        <span class="info-icon" tabindex="0">
+          <i class="fa fa-info-circle"></i>
+          <span class="privacy-tooltip small">{{ t.nameInfo }}</span>
+        </span>
+      </label>
+      <input id="tournamentName" name="tournamentName" [(ngModel)]="tournament.name" class="form-input" required />
+    </div>
+    <div>
+      <label for="tournamentOrganizer">
+        {{ t.organizer }}
+        <span class="info-icon" tabindex="0">
+          <i class="fa fa-info-circle"></i>
+          <span class="privacy-tooltip small">{{ t.organizerInfo }}</span>
+        </span>
+      </label>
+      <input id="tournamentOrganizer" name="tournamentOrganizer" [(ngModel)]="tournament.organizer" class="form-input" />
+    </div>
+    <div>
+      <label for="tournamentDate">
+        {{ t.date }}
+        <span class="info-icon" tabindex="0">
+          <i class="fa fa-info-circle"></i>
+          <span class="privacy-tooltip small">{{ t.dateInfo }}</span>
+        </span>
+      </label>
+      <input id="tournamentDate" name="tournamentDate" type="date" [(ngModel)]="tournament.date" class="form-input" required />
+    </div>
+    <div>
+      <label for="tournamentLocation">
+        {{ t.location }}
+        <span class="info-icon" tabindex="0">
+          <i class="fa fa-info-circle"></i>
+          <span class="privacy-tooltip small">{{ t.locationInfo }}</span>
+        </span>
+      </label>
+      <input id="tournamentLocation" name="tournamentLocation" [(ngModel)]="tournament.location" class="form-input" required />
+    </div>
+    <div>
+      <label for="tournamentTeams">
+        {{ t.teams }}
+        <span class="info-icon" tabindex="0">
+          <i class="fa fa-info-circle"></i>
+          <span class="privacy-tooltip small">{{ t.teamsInfo }}</span>
+        </span>
+      </label>
+      <input id="tournamentTeams" name="tournamentTeams" type="number" [(ngModel)]="tournament.teams" class="form-input" min="2" />
+    </div>
+    <div class="form-format">
       <label for="tournamentFormatSelect" class="dropdown-label">
         {{ t.tournamentFormat }}
         <span class="info-icon" tabindex="0">
           <i class="fa fa-info-circle"></i>
-          <span class="privacy-tooltip form-format-tooltip">
-            {{ t.tournamentFormatInfo }}
-          </span>
+          <span class="privacy-tooltip form-format-tooltip">{{ t.tournamentFormatInfo }}</span>
         </span>
       </label>
       <select id="tournamentFormatSelect" name="tournamentFormat" [(ngModel)]="tournament.format" class="styled-select" required>
@@ -270,35 +328,63 @@
         <option value="duo">Duo</option>
       </select>
     </div>
-        <div class="form-private">
-          <label class="checkbox-label">
-            <input type="checkbox" name="private" [(ngModel)]="tournament.private" class="styled-checkbox" />
-            <span class="custom-checkbox"></span>
-            {{ t.privateTournament }}
-            <span class="info-icon" tabindex="0">
-              <i class="fa fa-info-circle"></i>
-              <span class="privacy-tooltip" [innerHTML]="t.privateInfo"></span>
-            </span>
-          </label>
-        </div>
+    <div>
+      <label for="tournamentNotes">
+        {{ t.notes }}
+        <span class="info-icon" tabindex="0">
+          <i class="fa fa-info-circle"></i>
+          <span class="privacy-tooltip small">{{ t.notesInfo }}</span>
+        </span>
+      </label>
+      <textarea id="tournamentNotes" name="tournamentNotes" [(ngModel)]="tournament.notes" class="form-textarea"></textarea>
+    </div>
+    <div class="form-fee-private">
+      <div class="form-fee">
+        <label for="tournamentFee">
+          {{ t.fee }}
+          <span class="info-icon" tabindex="0">
+            <i class="fa fa-info-circle"></i>
+            <span class="privacy-tooltip small">{{ t.feeInfo }}</span>
+          </span>
+        </label>
+        <input id="tournamentFee" name="tournamentFee" type="number" [(ngModel)]="tournament.fee" class="form-input" min="0" step="0.01" />
       </div>
-      <div class="form-footer">
-        <button *ngIf="globalAuth.isLoggedIn" type="submit" class="tButton">{{ t.createTournamentBtn }}</button>
-        <button
-          *ngIf="!globalAuth.isLoggedIn"
-          class="tButton outline"
-          (click)="globalAuth.openLoginModal()"
-        >
-          {{ t.loginToJoin }}
-        </button>
+      <div class="form-private">
+        <label class="checkbox-label">
+          <input type="checkbox" name="private" [(ngModel)]="tournament.private" class="styled-checkbox" />
+          <span class="custom-checkbox"></span>
+          {{ t.privateTournament }}
+          <span class="info-icon" tabindex="0">
+            <i class="fa fa-info-circle"></i>
+            <span class="privacy-tooltip" [innerHTML]="t.privateInfo"></span>
+          </span>
+        </label>
       </div>
-    </form>
-  <div class="kca-decoration"></div>
-  <div class="kca-hole"></div>
-  </section>
-
-  <section *ngIf="!isCreateTournamentStart">
-  
+    </div>
+  </div>
+  <div class="form-footer">
+    <button  
+      *ngIf="globalAuth.isLoggedIn"
+      type="submit" 
+      class="tButton"
+      [disabled]="!tournamentForm.valid">
+      {{ t.createTournamentBtn }}
+    </button>
+    <button
+      *ngIf="!globalAuth.isLoggedIn"
+      class="tButton outline"
+      (click)="globalAuth.openLoginModal()">
+      {{ t.loginToJoin }}
+    </button>
+  </div>
+</form>
+    </div>
+    <div *ngIf="showSuccess" class="success-popup">
+  <div class="success-content">
+    <span class="material-icons">check_circle</span>
+    <p>{{t.tournamentcreatesucces}}</p>
+  </div>
+</div>
   </section>
 </main>
 

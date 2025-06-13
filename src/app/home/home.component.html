@@ -41,6 +41,7 @@
       <button routerLink="/" class="nav-btn active">{{ t.home }}</button>
       <button routerLink="/join" class="nav-btn">{{ t.joinTournament }}</button>
       <button routerLink="/create" class="nav-btn">{{ t.createTournament }}</button>
+      <button *ngIf="hasTournament" routerLink="/manage" class="nav-btn">{{ t.manageTournaments }}</button>
       <button routerLink="/stats" class="nav-btn">{{ t.statistics }}</button>
       <button routerLink="/about" class="nav-btn">{{ t.about }}</button>
     </div>
@@ -121,30 +122,98 @@
         </ng-container>
 
         <label for="password" class="auth-label">{{ t.password }}</label>
-        <input
-          id="password"
-          class="auth-input"
-          name="password"
-          type="password"
-          [(ngModel)]="globalAuth.loginModel.password"
-          required
+<div class="input-wrapper">
+  <input
+    id="password"
+    class="auth-input"
+    name="password"
+    [type]="showPassword ? 'text' : 'password'"
+    [(ngModel)]="globalAuth.loginModel.password"
+    required
+  />
+  <button
+    type="button"
+    class="eye-btn"
+    (click)="showPassword = !showPassword"
+    aria-label="Toggle password visibility"
+  >
+    <svg
+      *ngIf="!showPassword"
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+    >
+      <path d="M12 5c-7.633 0-12 7-12 7s4.367 7 12 7 12-7 12-7-4.367-7-12-7zm0 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10z" />
+      <circle cx="12" cy="12" r="2.5" />
+    </svg>
+
+    <svg
+      *ngIf="showPassword"
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+    >
+      <path
+        d="M12 5c-7.633 0-12 7-12 7s4.367 7 12 7 12-7 12-7-4.367-7-12-7zm0 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10z"
+        stroke-width="2"
+      />
+      <line x1="1" y1="1" x2="23" y2="23" stroke-width="2" />
+    </svg>
+  </button>
+</div>
+
+<label *ngIf="!showResetForm && !globalAuth.isRegisterMode" class="forgot-link">
+  <a href="#" (click)="showResetForm = true; $event.preventDefault()"
+    >{{ t.passwordReset }}</a
+  >
+</label>
+
+<ng-container *ngIf="globalAuth.isRegisterMode">
+  <label for="confirmPassword" class="auth-label">{{ t.confirmPassword }}</label>
+  <div class="input-wrapper">
+    <input
+      id="confirmPassword"
+      class="auth-input"
+      name="confirmPassword"
+      [type]="showConfirmPassword ? 'text' : 'password'"
+      [(ngModel)]="globalAuth.loginModel.confirmPassword"
+      required
+    />
+    <button
+      type="button"
+      class="eye-btn eye-register"
+      (click)="showConfirmPassword = !showConfirmPassword"
+      aria-label="Toggle password visibility"
+    >
+      <svg
+        *ngIf="!showConfirmPassword"
+        xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+      >
+        <path d="M12 5c-7.633 0-12 7-12 7s4.367 7 12 7 12-7 12-7-4.367-7-12-7zm0 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10z" />
+        <circle cx="12" cy="12" r="2.5" />
+      </svg>
+
+      <svg
+        *ngIf="showConfirmPassword"
+        xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M12 5c-7.633 0-12 7-12 7s4.367 7 12 7 12-7 12-7-4.367-7-12-7zm0 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10z"
+          stroke-width="2"
         />
-
-        <label *ngIf="!showResetForm && !globalAuth.isRegisterMode" class="forgot-link">
-          <a href="#" (click)="showResetForm = true; $event.preventDefault()">{{ t.passwordReset }}</a>
-        </label>
-
-        <ng-container *ngIf="globalAuth.isRegisterMode">
-          <label for="confirmPassword" class="auth-label">{{ t.confirmPassword }}</label>
-          <input
-            id="confirmPassword"
-            class="auth-input"
-            name="confirmPassword"
-            type="password"
-            [(ngModel)]="globalAuth.loginModel.confirmPassword"
-            required
-          />
-        </ng-container>
+        <line x1="1" y1="1" x2="23" y2="23" stroke-width="2" />
+      </svg>
+    </button>
+  </div>
+</ng-container>
         <div class="remember-me-row">
           <label class="remember-me-label">
             <input
@@ -172,10 +241,10 @@
           class="auth-input"
           name="resetEmail"
           type="email"
-          [(ngModel)]="resetEmail"
+          [(ngModel)]="globalAuth.resetEmail"
           required
         />
-        <button class="LogButton" (click)="requestReset()" type="button">{{ t.resetSend }}</button>
+        <button class="LogButton" (click)="globalAuth.requestReset()" type="button">{{ t.resetSend }}</button>
         <button class="LogButton outline" (click)="showResetForm = false" type="button">{{ t.resetBack }}</button>
         <div *ngIf="resetRequested" class="reset-success">{{ t.resetSuccess }}</div>
       </div>
