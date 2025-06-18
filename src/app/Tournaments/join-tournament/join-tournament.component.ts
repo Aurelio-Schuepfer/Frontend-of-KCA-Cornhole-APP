@@ -26,7 +26,8 @@ export class JoinTournamentComponent
   isTournamentRegisterOpen = false;
   expandedId: number | null = null;
   username: string | null = null;
-  selectedTournamentId: number | null = null;
+  selectedTournamentId: string | null = null;
+  selectedTournamentForJoin: string | null = null;
   selectedTournament: any = null;
   detailsModalVisible: boolean = false;
   joinStatus: string = 'join';
@@ -34,7 +35,6 @@ export class JoinTournamentComponent
   filteredTournaments: any[] = [];
   showPassword = false;
   showConfirmPassword = false;
-  selectedTournamentForJoin: number | null = null;
   selectedCurrentTeams: number = 0;
   selectedMaxTeams: number = 0;
   selectedTournamentImage: string | null = null;
@@ -330,38 +330,7 @@ export class JoinTournamentComponent
   lastView: 'list' | 'single' = 'list';
 
   showImageModal: boolean = false;
-  players = [
-    {
-      name: 'Lena Schmidt',
-      image: 'https://randomuser.me/api/portraits/women/68.jpg',
-      team: 'CornStars',
-    },
-    {
-      name: 'Tom Wagner',
-      image: 'https://randomuser.me/api/portraits/men/45.jpg',
-      team: 'Baggers',
-    },
-    {
-      name: 'Julia Becker',
-      image: 'https://randomuser.me/api/portraits/women/32.jpg',
-      team: 'Board Kings',
-    },
-    {
-      name: 'Kevin Braun',
-      image: 'https://randomuser.me/api/portraits/men/12.jpg',
-      team: 'Bean Baggers',
-    },
-    {
-      name: 'Sarah Neumann',
-      image: 'assets/images/default-profile.png',
-      team: 'Cornhole Crew',
-    },
-    {
-      name: 'Chris Müller',
-      image: 'https://randomuser.me/api/portraits/men/27.jpg',
-      team: 'Bag Masters',
-    },
-  ];
+  players: any[] = [];
 
   @ViewChild('confettiCanvas', { static: false })
   confettiCanvasRef!: ElementRef<HTMLCanvasElement>;
@@ -380,7 +349,7 @@ export class JoinTournamentComponent
 
   ngOnInit(): void {
     this.setInitialTheme();
-    this.loadJoinedTournaments();
+    this.loadAllTournaments();
     const saved = localStorage.getItem('lang');
     if (saved && ['de', 'en', 'fr', 'es'].includes(saved)) {
       this.selectedLang = saved as LanguageCode;
@@ -390,18 +359,11 @@ export class JoinTournamentComponent
     this.loadUserProfile();
     this.showTournamentView = false;
 
-    const savedTournaments = JSON.parse(
-      localStorage.getItem('tournaments') || '[]'
-    );
-    this.hasTournament =
-      Array.isArray(savedTournaments) && savedTournaments.length > 0;
+    this.hasTournament = this.tournaments.length > 0;
 
-    this.tournamentService.tournament$.subscribe((t) => {
-      const savedTournaments = JSON.parse(
-        localStorage.getItem('tournaments') || '[]'
-      );
-      this.hasTournament =
-        !!t || (Array.isArray(savedTournaments) && savedTournaments.length > 0);
+    this.tournamentService.tournament$.subscribe(() => {
+      this.loadAllTournaments();
+      this.hasTournament = this.tournaments.length > 0;
     });
   }
 
@@ -487,154 +449,9 @@ export class JoinTournamentComponent
     this.isNavOpen = !this.isNavOpen;
   }
 
-  tournaments = [
-    {
-      id: 1,
-      name: 'Spring Clash',
-      date: '2025-05-20',
-      location: 'Berlin',
-      meetingPoint: 'Alexanderplatz',
-      maxTeams: 16,
-      currentTeams: 10,
-      rules: 'Standard Cornhole rules apply.',
-      notes: 'Bring your own bags.',
-      format: 'Solo',
-    },
-    {
-      id: 2,
-      name: 'Summer Showdown',
-      date: '2025-06-15',
-      location: 'Hamburg',
-      meetingPoint: 'Hauptbahnhof',
-      maxTeams: 20,
-      currentTeams: 19,
-      rules: 'Double elimination format.',
-      notes: 'Snacks will be provided.',
-      format: 'Solo',
-    },
-    {
-      id: 3,
-      name: 'Spring Clash',
-      date: '2025-05-20',
-      location: 'Berlin',
-      meetingPoint: 'Alexanderplatz',
-      maxTeams: 16,
-      currentTeams: 10,
-      rules: 'Standard Cornhole rules apply.',
-      notes: 'Bring your own bags.',
-      format: 'Duo',
-    },
-    {
-      id: 4,
-      name: 'Summer Showdown',
-      date: '2025-06-15',
-      location: 'Hamburg',
-      meetingPoint: 'Hauptbahnhof',
-      maxTeams: 20,
-      currentTeams: 19,
-      rules: 'Double elimination format.',
-      notes: 'Snacks will be provided.',
-      format: 'Duo',
-    },
-    {
-      id: 5,
-      name: 'Spring Clash',
-      date: '2025-05-20',
-      location: 'Berlin',
-      meetingPoint: 'Alexanderplatz',
-      maxTeams: 16,
-      currentTeams: 10,
-      rules: 'Standard Cornhole rules apply.',
-      notes: 'Bring your own bags.',
-      format: 'Solo',
-    },
-    {
-      id: 6,
-      name: 'Summer Showdown',
-      date: '2025-06-15',
-      location: 'Hamburg',
-      meetingPoint: 'Hauptbahnhof',
-      maxTeams: 20,
-      currentTeams: 19,
-      rules: 'Double elimination format.',
-      notes: 'Snacks will be provided.',
-      format: 'Solo',
-    },
-    {
-      id: 7,
-      name: 'Spring Clash',
-      date: '2025-05-20',
-      location: 'Berlin',
-      meetingPoint: 'Alexanderplatz',
-      maxTeams: 16,
-      currentTeams: 10,
-      rules: 'Standard Cornhole rules apply.',
-      notes: 'Bring your own bags.',
-      format: 'Duo',
-    },
-    {
-      id: 8,
-      name: 'Summer Showdown',
-      date: '2025-06-15',
-      location: 'Hamburg',
-      meetingPoint: 'Hauptbahnhof',
-      maxTeams: 20,
-      currentTeams: 19,
-      rules: 'Double elimination format.',
-      notes: 'Snacks will be provided.',
-      format: 'Solo',
-    },
-    {
-      id: 9,
-      name: 'Spring Clash',
-      date: '2025-05-20',
-      location: 'Berlin',
-      meetingPoint: 'Alexanderplatz',
-      maxTeams: 16,
-      currentTeams: 10,
-      rules: 'Standard Cornhole rules apply.',
-      notes: 'Bring your own bags.',
-      format: 'Duo',
-    },
-    {
-      id: 10,
-      name: 'Summer Showdown',
-      date: '2025-06-15',
-      location: 'Hamburg',
-      meetingPoint: 'Hauptbahnhof',
-      maxTeams: 20,
-      currentTeams: 19,
-      rules: 'Double elimination format.',
-      notes: 'Snacks will be provided.',
-      format: 'Solo',
-    },
-    {
-      id: 11,
-      name: 'Spring Clash',
-      date: '2025-05-20',
-      location: 'Berlin',
-      meetingPoint: 'Alexanderplatz',
-      maxTeams: 16,
-      currentTeams: 10,
-      rules: 'Standard Cornhole rules apply.',
-      notes: 'Bring your own bags.',
-      format: 'Solo',
-    },
-    {
-      id: 12,
-      name: 'Summer Showdown',
-      date: '2025-06-15',
-      location: 'Hamburg',
-      meetingPoint: 'Hauptbahnhof',
-      maxTeams: 20,
-      currentTeams: 20,
-      rules: 'Double elimination format.',
-      notes: 'Snacks will be provided.',
-      format: 'Duo',
-    },
-  ];
+  tournaments: any[] = [];
 
-  joinTournament(tournamentId: number, currentTeams: number, maxTeams: number) {
+  joinTournament(tournamentId: string, currentTeams: number, maxTeams: number) {
     let joinedTournaments = this.getJoinedTournaments();
 
     if (joinedTournaments.includes(tournamentId)) {
@@ -645,6 +462,7 @@ export class JoinTournamentComponent
       );
       alert('You left the tournament');
       this.loadJoinedTournaments();
+      this.loadAllTournaments();
       return;
     }
 
@@ -687,7 +505,25 @@ export class JoinTournamentComponent
         'joinedTournaments',
         JSON.stringify(joinedTournaments)
       );
+
+      // Teilnehmer zum Turnierobjekt hinzufügen
+      const all = JSON.parse(localStorage.getItem('tournaments') || '[]');
+      const idx = all.findIndex(
+        (t: any) => t.id === this.selectedTournamentForJoin
+      );
+      if (idx >= 0) {
+        if (!all[idx].participants) all[idx].participants = [];
+        all[idx].participants.push({
+          name: this.userProfile?.name || 'Gast',
+          team: this.teamNameValue || '',
+          avatar:
+            this.userProfile?.imageUrl || 'assets/images/default-profile.png',
+        });
+        localStorage.setItem('tournaments', JSON.stringify(all));
+        this.tournamentService.setTournament(all[idx]);
+      }
       this.loadJoinedTournaments();
+      this.loadAllTournaments();
     }
     this.joinFeedback = {
       message: this.t.joinSuccess || 'Successfully joined!',
@@ -704,7 +540,7 @@ export class JoinTournamentComponent
     setTimeout(() => this.startConfetti(), 50);
   }
 
-  openDetails(tournamentId: number): void {
+  openDetails(tournamentId: string): void {
     const found = this.tournaments.find((t) => t.id === tournamentId);
     if (found) {
       this.selectedTournamentId = tournamentId;
@@ -745,7 +581,7 @@ export class JoinTournamentComponent
     }
   }
 
-  isTournamentJoined(tournamentId: number): boolean {
+  isTournamentJoined(tournamentId: string): boolean {
     const joinedTournaments = this.getJoinedTournaments();
     return joinedTournaments.includes(tournamentId);
   }
@@ -756,7 +592,7 @@ export class JoinTournamentComponent
       joinedTournaments.length > 0 ? joinedTournaments[0] : null;
   }
 
-  private getJoinedTournaments(): number[] {
+  private getJoinedTournaments(): string[] {
     const joinedTournaments = localStorage.getItem('joinedTournaments');
     return joinedTournaments ? JSON.parse(joinedTournaments) : [];
   }
@@ -849,7 +685,7 @@ export class JoinTournamentComponent
       if (Math.random() < 0.7) {
         xPos = Math.random() * canvas.width * 0.6;
       } else {
-        xPos = canvas.width * 0.6 + Math.random() * canvas.width * 0.4; // 30% rechts
+        xPos = canvas.width * 0.6 + Math.random() * canvas.width * 0.4;
       }
       confetti.push({
         x: xPos,
@@ -925,5 +761,20 @@ export class JoinTournamentComponent
       if (ctx) ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
     if (this.confettiTimeout) clearTimeout(this.confettiTimeout);
+  }
+
+  private loadAllTournaments(): void {
+    // Nur noch gespeicherte Turniere aus dem Local Storage laden (keine statischen mehr)
+    const savedTournaments = JSON.parse(
+      localStorage.getItem('tournaments') || '[]'
+    ).filter((t: any) => !t.private);
+
+    this.tournaments = savedTournaments;
+    this.filteredTournaments = savedTournaments;
+  }
+
+  // 2. Zeige Teilnehmer eines Turniers immer aus tournament.participants an
+  getCurrentParticipants(tournament: any) {
+    return tournament?.participants?.length ? tournament.participants : [];
   }
 }

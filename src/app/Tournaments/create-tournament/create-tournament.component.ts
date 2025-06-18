@@ -3,6 +3,7 @@ import { GlobalAuth } from '../../global-auth';
 import { UserProfileService } from '../../Services/user-profile.service';
 import { Router } from '@angular/router';
 import { TournamentService } from '../../Services/tournament.service';
+import { Tournament } from '../../tournament.interface';
 
 type LanguageCode = 'de' | 'en' | 'fr' | 'es';
 
@@ -52,12 +53,13 @@ export class CreateTournamentComponent implements OnInit {
   showSuccess = false;
 
   tournament = {
-    id: undefined as string | undefined,
+    id: '',
     name: '',
     date: '',
     location: '',
     teams: '',
     notes: '',
+    rules: '',
     private: false,
     format: '',
     organizer: '',
@@ -647,12 +649,13 @@ export class CreateTournamentComponent implements OnInit {
       Array.isArray(savedTournaments) && savedTournaments.length > 0;
 
     this.tournament = {
-      id: undefined as string | undefined,
+      id: '',
       name: '',
       date: '',
       location: '',
       teams: '',
       notes: '',
+      rules: '',
       private: false,
       format: '',
       organizer: '',
@@ -756,16 +759,26 @@ export class CreateTournamentComponent implements OnInit {
         't_' + Date.now() + '_' + Math.floor(Math.random() * 10000);
     }
 
+    // Initialisiere alle Felder
+    const tournamentObj = {
+      ...this.tournament,
+      participants: [],
+      bracket: null,
+      results: [],
+      schedule: [],
+      rules: this.tournament.rules || '',
+    };
+
     const all = JSON.parse(localStorage.getItem('tournaments') || '[]');
-    const idx = all.findIndex((t: any) => t.id === this.tournament.id);
+    const idx = all.findIndex((t: any) => t.id === tournamentObj.id);
     if (idx >= 0) {
-      all[idx] = this.tournament;
+      all[idx] = tournamentObj;
     } else {
-      all.push(this.tournament);
+      all.push(tournamentObj);
     }
     localStorage.setItem('tournaments', JSON.stringify(all));
 
-    this.tournamentService.setTournament(this.tournament);
+    this.tournamentService.setTournament(tournamentObj);
     this.showSuccess = true;
 
     setTimeout(() => {

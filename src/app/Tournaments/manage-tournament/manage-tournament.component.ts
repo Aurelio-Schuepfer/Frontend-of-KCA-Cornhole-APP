@@ -33,6 +33,7 @@ export class ManageTournamentComponent implements OnInit {
   editLocation = false;
   editTeams = false;
   editNotes = false;
+  editRules = false;
   editFormat = false;
   editPrivate = false;
   editOrganizer = false;
@@ -383,6 +384,7 @@ export class ManageTournamentComponent implements OnInit {
       editDatetitle: 'Veranstaltungsdatum',
       editLocationtitle: 'Austragungsort',
       editNotestitle: 'Hinweise zum Turnier',
+      editRulestitle: 'Regeln',
       editTeamstitle: 'Max Anzahl an Teams',
       editFormattitle: 'Turnierformat',
       editPrivatetitle: 'Privates Turnier (Standard: öffentlich)',
@@ -447,7 +449,7 @@ export class ManageTournamentComponent implements OnInit {
       leagueLabel: 'Liga des Turniers',
       leaguePlaceholder: 'Liga des Turniers',
       tournamentResultsTitle: 'Turnier-Ergebnisse',
-      rank: 'Platz',
+      rank: '#',
       team: 'Team',
       players: 'Spieler',
       matches: 'Spiele',
@@ -468,13 +470,27 @@ export class ManageTournamentComponent implements OnInit {
       Team: 'Team',
       Games: 'Spiele',
       Points: 'Punkte',
-      Throws: '1 Punkt',
-      Hits: '3 Punkte',
+      Wins: 'Siege',
+      Losses: 'Niederlagen',
       Accuracy: 'Trefferrate',
       Diff: 'Differenz',
       Group: 'Gruppe',
       mobileWarning:
         'Die Turnierverwaltung ist auf dem Desktop empfohlen, da sie auf Mobilgeräten nicht optimal funktioniert.',
+      presentModePresentation: 'Präsentation',
+      presentModeResults: 'Ergebnisse',
+      presentModeResultsView: 'Ergebnisse anzeigen',
+      presentModePlaying: 'Spielen',
+      exitPresent: 'Präsentationsmodus verlassen',
+      presentationSlide: 'Präsentations-Slide',
+      slideContent: 'Inhalt für Slide',
+      enterResults: 'Ergebnisse eintragen',
+      Results: 'Ergebnisse',
+      matchSchedule: 'Spielplan',
+      groupPhase: 'Gruppenphase',
+      gameOn: 'Es wird gespielt!',
+      ruleHint:
+        'Hinweis: Für jede Regel bitte eine neue Zeile verwenden (Enter drücken), damit sie als eigener Listenpunkt erscheint.',
     },
     en: {
       home: 'Home',
@@ -501,14 +517,15 @@ export class ManageTournamentComponent implements OnInit {
       editDatetitle: 'Event Date',
       editLocationtitle: 'Tournament Location',
       editNotestitle: 'Tournament Notes',
+      editRulestitle: 'Rules',
       editTeamstitle: 'Max Number of Teams',
       editFormattitle: 'Tournament Format',
       editPrivatetitle: 'Private Tournament (default: public)',
       editorganizertitle: 'Organizer',
       edit: 'Customize',
       participants: 'Participants',
-      bracket: 'Tournament Bracket',
-      schedule: 'Match Schedule',
+      bracket: 'Bracket',
+      schedule: 'Fixture',
       Advanced: 'Advanced',
       present: 'Present',
       results: 'Results',
@@ -564,7 +581,7 @@ export class ManageTournamentComponent implements OnInit {
       leagueLabel: 'Tournament league',
       leaguePlaceholder: 'Tournament league',
       tournamentResultsTitle: 'Tournament Results',
-      rank: 'Rank',
+      rank: '#',
       team: 'Team',
       players: 'Player',
       matches: 'Matches',
@@ -585,13 +602,22 @@ export class ManageTournamentComponent implements OnInit {
       Team: 'Team',
       Games: 'Games',
       Points: 'Points',
-      Throws: 'Throws',
-      Hits: '1 Point',
-      Accuracy: '3 Point',
+      Wins: 'Wins',
+      Losses: 'Losses',
+      Accuracy: 'Hit Rate',
       Diff: 'Difference',
       Group: 'Group',
       mobileWarning:
         'Managing tournaments is recommended on desktop, as the experience on mobile is not optimal.',
+      presentationSlide: 'Presentation Slide',
+      slideContent: 'Slide Content',
+      enterResults: 'Enter Results',
+      Results: 'Results',
+      matchSchedule: 'Match Schedule',
+      groupPhase: 'Group Phase',
+      gameOn: 'Game On!',
+      ruleHint:
+        'Note: Please press Enter after each rule so it appears as a separate item in the list.',
     },
     fr: {
       home: 'Accueil',
@@ -618,14 +644,15 @@ export class ManageTournamentComponent implements OnInit {
       editDatetitle: 'Date de l’événement',
       editLocationtitle: 'Lieu du tournoi',
       editNotestitle: 'Remarques sur le tournoi	',
-      editTeamstitle: 'Nombre max d’équipes',
+      editRulestitle: 'Règles',
+      editTeamstitle: 'Max d’équipes',
       editFormattitle: 'Format du tournoi',
       editPrivatetitle: 'Tournoi privé (par défaut : public)',
       editorganizertitle: 'Organisateur',
       edit: 'Personnaliser',
       participants: 'Participants',
-      bracket: 'Arbre du tournoi',
-      schedule: 'Calendrier des matchs',
+      bracket: 'Tableau',
+      schedule: 'Calendrier',
       Advanced: 'Avancé',
       present: 'Présenter',
       results: 'Résultats',
@@ -682,7 +709,7 @@ export class ManageTournamentComponent implements OnInit {
       leagueLabel: 'Ligue du tournoi',
       leaguePlaceholder: 'Ligue du tournoi',
       tournamentResultsTitle: 'Résultats du tournoi',
-      rank: 'Rang',
+      rank: '#',
       team: 'Équipe',
       players: 'Joueurs',
       matches: 'Matchs',
@@ -703,13 +730,22 @@ export class ManageTournamentComponent implements OnInit {
       Team: 'Équipe',
       Games: 'Matchs',
       Points: 'Points',
-      Throws: '1 Point',
-      Hits: '3 Point',
+      Wins: 'Victoires',
+      Losses: 'Défaites',
       Accuracy: 'Précision',
       Diff: 'Différence',
       Group: 'Groupe',
       mobileWarning:
         'La gestion du tournoi est recommandée sur ordinateur, car l’expérience mobile n’est pas optimale.',
+      presentationSlide: 'Diapositive de présentation',
+      slideContent: 'Contenu de la diapositive',
+      enterResults: 'Saisir les résultats',
+      Results: 'Résultats',
+      matchSchedule: 'Calendrier des matchs',
+      groupPhase: 'Phase de groupes',
+      gameOn: 'C’est parti !',
+      ruleHint:
+        'Remarque : Veuillez appuyer sur Entrée après chaque règle afin quelle apparaisse comme un élément distinct dans la liste.',
     },
     es: {
       home: 'Inicio',
@@ -736,14 +772,15 @@ export class ManageTournamentComponent implements OnInit {
       editDatetitle: 'Fecha del evento',
       editLocationtitle: 'Lugar del torneo',
       editNotestitle: 'Notas sobre el torneo',
+      editRulestitle: 'Reglas',
       editTeamstitle: 'Número de equipos',
       editFormattitle: 'Formato del torneo',
       editPrivatetitle: 'Torneo privado (por defecto: público)',
       editorganizertitle: 'Organizador',
       edit: 'Personalizar',
       participants: 'Participantes',
-      bracket: 'Cuadro del torneo',
-      schedule: 'Calendario de partidos',
+      bracket: 'Cuadro',
+      schedule: 'Calendario',
       Advanced: 'Avanzado',
       present: 'Presentar',
       results: 'Resultados',
@@ -799,7 +836,7 @@ export class ManageTournamentComponent implements OnInit {
       leagueLabel: 'Liga del torneo',
       leaguePlaceholder: 'Liga del torneo',
       tournamentResultsTitle: 'Resultados del torneo',
-      rank: 'Puesto',
+      rank: '#',
       team: 'Equipo',
       players: 'Jugadores',
       matches: 'Partidos',
@@ -820,17 +857,29 @@ export class ManageTournamentComponent implements OnInit {
       Team: 'Equipo',
       Games: 'Partidos',
       Points: 'Puntos',
-      Throws: '1 	Punto',
-      Hits: '3 Punto',
+      Wins: 'Victorias',
+      Losses: 'Derrotas',
       Accuracy: 'Aciertos',
       Diff: 'Diferencia',
       Group: 'Grupo',
       mobileWarning:
         'Se recomienda gestionar el torneo en escritorio, ya que la experiencia en móvil no es óptima.',
+      presentationSlide: 'Diapositiva de presentación',
+      slideContent: 'Contenido de la diapositiva',
+      enterResults: 'Registrar resultados',
+      Results: 'Resultados',
+      matchSchedule: 'Calendario de partidos',
+      groupPhase: 'Fase de grupos',
+      gameOn: 'A jugar!',
+      ruleHint:
+        'Nota: Por favor, presiona Enter después de cada regla para que aparezca como un elemento separado en la lista.',
     },
   };
 
-  t = this.translations[this.selectedLang];
+  t = {
+    ...this.translations[this.selectedLang],
+    presentModeResultsView: 'Ergebnisse anzeigen',
+  };
 
   userProfile: any = null;
   isProfileLoading = false;
@@ -862,7 +911,7 @@ export class ManageTournamentComponent implements OnInit {
     private userProfileService: UserProfileService,
     private router: Router,
     private tournamentService: TournamentService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.checkMobileWarning();
@@ -879,10 +928,19 @@ export class ManageTournamentComponent implements OnInit {
     this.rounds = this.generateRounds(teams);
 
     this.tournamentService.tournament$.subscribe((t) => {
-      this.tournament = t;
+      if (t) {
+        this.tournament = t;
+        this.players = t.participants || [];
+        this.matchSchedule = t.schedule || [];
+      }
     });
 
     this.loadSavedTournaments();
+
+    const savedPhase = localStorage.getItem('selectedPhase');
+    if (savedPhase) {
+      this.selectPhase(savedPhase);
+    }
   }
 
   ngOnDestroy() {
@@ -993,15 +1051,22 @@ export class ManageTournamentComponent implements OnInit {
     }
   }
   applyTranslations() {
-    this.t = this.translations[this.selectedLang];
+    this.t = {
+      ...this.translations[this.selectedLang],
+      presentModeResultsView: 'Ergebnisse anzeigen',
+    };
   }
 
   matchSchedule = [
-    { time: '10:00', teamA: 'Team 1', teamB: 'Team 2', fieldIdx: 0 },
-    { time: '10:45', teamA: 'Team 3', teamB: 'Team 4', fieldIdx: 1 },
-    { time: '11:30', teamA: 'Team 5', teamB: 'Team 6', fieldIdx: 2 },
-    { time: '12:15', teamA: 'Team 7', teamB: 'Team 8', fieldIdx: 3 },
-    { time: '13:00', teamA: 'Team 9', teamB: 'Team 10', fieldIdx: 0 },
+    {
+      time: '',
+      teamA: '',
+      teamB: '',
+      fieldIdx: 0,
+      scoreA: null,
+      scoreB: null,
+      confirmed: false,
+    }
   ];
 
   hallFields: { x: number; y: number }[] = [
@@ -1043,7 +1108,7 @@ export class ManageTournamentComponent implements OnInit {
     }
 
     const start = this.randomizerStartTime || '10:00';
-    const end = this.randomizerEndTime || '18:00';
+    const end = this.randomizerEndTime || '17:00';
     const [startHour, startMin] = start.split(':').map(Number);
     const [endHour, endMin] = end.split(':').map(Number);
     const startMinutes = startHour * 60 + startMin;
@@ -1077,6 +1142,9 @@ export class ManageTournamentComponent implements OnInit {
         teamA,
         teamB,
         fieldIdx: minIdx,
+        scoreA: null,
+        scoreB: null,
+        confirmed: false,
       });
       fieldTimes[minIdx] += matchDuration;
     }
@@ -1084,7 +1152,6 @@ export class ManageTournamentComponent implements OnInit {
   }
 
   editSelect() {
-    this.resetPhaseFlags();
     this.editSelected = true;
     this.participantsSelected = false;
     this.bracketSelected = false;
@@ -1095,7 +1162,6 @@ export class ManageTournamentComponent implements OnInit {
   }
 
   participantsSelect() {
-    this.resetPhaseFlags();
     this.editSelected = false;
     this.participantsSelected = true;
     this.bracketSelected = false;
@@ -1105,7 +1171,6 @@ export class ManageTournamentComponent implements OnInit {
     this.presentSelected = false;
   }
   bracketSelect() {
-    this.resetPhaseFlags();
     this.editSelected = false;
     this.participantsSelected = false;
     this.bracketSelected = true;
@@ -1115,7 +1180,6 @@ export class ManageTournamentComponent implements OnInit {
     this.presentSelected = false;
   }
   scheduleSelect() {
-    this.resetPhaseFlags();
     this.editSelected = false;
     this.participantsSelected = false;
     this.bracketSelected = false;
@@ -1125,7 +1189,6 @@ export class ManageTournamentComponent implements OnInit {
     this.presentSelected = false;
   }
   extendedSelect() {
-    this.resetPhaseFlags();
     this.editSelected = false;
     this.participantsSelected = false;
     this.bracketSelected = false;
@@ -1135,7 +1198,6 @@ export class ManageTournamentComponent implements OnInit {
     this.presentSelected = false;
   }
   presentSelect() {
-    this.resetPhaseFlags();
     this.editSelected = false;
     this.participantsSelected = false;
     this.bracketSelected = false;
@@ -1145,7 +1207,6 @@ export class ManageTournamentComponent implements OnInit {
     this.presentSelected = true;
   }
   resultsSelect() {
-    this.resetPhaseFlags();
     this.editSelected = false;
     this.participantsSelected = false;
     this.bracketSelected = false;
@@ -1225,16 +1286,26 @@ export class ManageTournamentComponent implements OnInit {
 
   addGuest() {
     if (!this.guestName.trim()) return;
-
     const newGuest = {
       name: this.guestName.trim(),
       team: this.guestTeam.trim() || '',
       avatar: 'assets/images/default-profile.png',
     };
-
     this.players.push(newGuest);
+    if (this.tournament) {
+      this.tournament.participants = this.players;
+      this.tournamentService.setTournament(this.tournament);
+    }
     this.guestName = '';
     this.guestTeam = '';
+  }
+
+  saveTournament() {
+    if (this.tournament) {
+      this.tournament.participants = this.players;
+      this.tournament.schedule = this.matchSchedule;
+      this.tournamentService.setTournament(this.tournament);
+    }
   }
 
   countPlayersWithoutTeam() {
@@ -1347,7 +1418,6 @@ export class ManageTournamentComponent implements OnInit {
 
   getTeamResults() {
     const teamMap = new Map<string, any[]>();
-
     for (const player of this.players) {
       const team = player.team || player.name;
       if (!teamMap.has(team)) {
@@ -1356,21 +1426,40 @@ export class ManageTournamentComponent implements OnInit {
       teamMap.get(team)!.push(player);
     }
 
-    const results = Array.from(teamMap.entries()).map(
-      ([teamName, players], i) => {
-        this.getTeamColor(teamName);
-        return {
-          teamName: teamName,
-          players: players,
-          matches: 5,
-          wins: 100 - i,
-          losses: i,
-          points: 300 - i * 10,
-        };
-      }
-    );
+    const results = Array.from(teamMap.entries()).map(([teamName, players]) => ({
+      teamName,
+      players,
+      matches: 0,
+      wins: 0,
+      losses: 0,
+      points: 0,
+    }));
 
-    return results.sort((a, b) => b.points - a.points);
+    const findResult = (team: string) => results.find(r => r.teamName === team);
+
+    for (const match of this.matchSchedule) {
+      if (!match.teamA || !match.teamB) continue;
+      const teamA = findResult(match.teamA);
+      const teamB = findResult(match.teamB);
+      if (!teamA || !teamB) continue;
+      if (typeof match.scoreA === 'number' && typeof match.scoreB === 'number') {
+        teamA.matches++;
+        teamB.matches++;
+        if (match.scoreA > match.scoreB) {
+          teamA.wins++;
+          teamB.losses++;
+          teamA.points += 3; 
+        } else if (match.scoreA < match.scoreB) {
+          teamB.wins++;
+          teamA.losses++;
+          teamB.points += 3;
+        } else {
+          teamA.points++;
+          teamB.points++;
+        }
+      }
+    }
+    return results.sort((a, b) => b.points - a.points || b.wins - a.wins);
   }
 
   dropListId = 'match-schedule-drop-list';
@@ -1381,6 +1470,9 @@ export class ManageTournamentComponent implements OnInit {
       teamA: this.getTeams()[0] || '',
       teamB: this.getTeams()[1] || '',
       fieldIdx: this.hallFields.length > 0 ? 0 : -1,
+      scoreA: null,
+      scoreB: null,
+      confirmed: false,
     };
   }
 
@@ -1396,9 +1488,9 @@ export class ManageTournamentComponent implements OnInit {
     this.matchSchedule.splice(index, 1);
   }
 
-  onMatchChange(index: number) {}
+  onMatchChange(index: number) { }
 
-  onDragStart(index: number) {}
+  onDragStart(index: number) { }
 
   onDrop(event: any) {
     if (event.previousIndex === event.currentIndex) return;
@@ -1431,17 +1523,25 @@ export class ManageTournamentComponent implements OnInit {
 
   moveMatchUp(idx: number) {
     if (idx > 0) {
-      const temp = this.matchSchedule[idx - 1];
-      this.matchSchedule[idx - 1] = this.matchSchedule[idx];
-      this.matchSchedule[idx] = temp;
+      const a = this.matchSchedule[idx];
+      const b = this.matchSchedule[idx - 1];
+      [a.teamA, b.teamA] = [b.teamA, a.teamA];
+      [a.teamB, b.teamB] = [b.teamB, a.teamB];
+      [a.fieldIdx, b.fieldIdx] = [b.fieldIdx, a.fieldIdx];
+      [a.scoreA, b.scoreA] = [b.scoreA, a.scoreA];
+      [a.scoreB, b.scoreB] = [b.scoreB, a.scoreB];
     }
   }
 
   moveMatchDown(idx: number) {
     if (idx < this.matchSchedule.length - 1) {
-      const temp = this.matchSchedule[idx + 1];
-      this.matchSchedule[idx + 1] = this.matchSchedule[idx];
-      this.matchSchedule[idx] = temp;
+      const a = this.matchSchedule[idx];
+      const b = this.matchSchedule[idx + 1];
+      [a.teamA, b.teamA] = [b.teamA, a.teamA];
+      [a.teamB, b.teamB] = [b.teamB, a.teamB];
+      [a.fieldIdx, b.fieldIdx] = [b.fieldIdx, a.fieldIdx];
+      [a.scoreA, b.scoreA] = [b.scoreA, a.scoreA];
+      [a.scoreB, b.scoreB] = [b.scoreB, a.scoreB];
     }
   }
 
@@ -1532,26 +1632,27 @@ export class ManageTournamentComponent implements OnInit {
   }
 
   selectPhase(phase: string) {
+    localStorage.setItem('selectedPhase', phase);
     this.phaseNotSelected = false;
     this.onlyGroupSelected = false;
     this.onlyKoPhaseSelected = false;
     this.groupAndKoSelected = false;
-    if (phase === 'Group') {
-      this.onlyGroupSelected = true;
-      this.generateGroups();
-      this.generateGroupMatches();
-      this.updateGroupTables();
-    }
-    if (phase === 'Ko') {
-      this.onlyKoPhaseSelected = true;
-    }
-    if (phase === 'groupAndKo') {
-      this.groupAndKoSelected = true;
-      this.generateGroups();
-      this.generateGroupMatches();
-      this.updateGroupTables();
-    }
+
+    if (phase === 'Group') this.onlyGroupSelected = true;
+    if (phase === 'Ko') this.onlyKoPhaseSelected = true;
+    if (phase === 'groupAndKo') this.groupAndKoSelected = true;
+
+    this.applyPhaseLogic();
   }
+  
+  changePhase() {
+    localStorage.removeItem('selectedPhase');
+    this.phaseNotSelected = true;
+    this.onlyGroupSelected = false;
+    this.onlyKoPhaseSelected = false;
+    this.groupAndKoSelected = false;
+  }
+  
 
   getRounds(participantCount: number) {
     let rounds = [];
@@ -1604,8 +1705,8 @@ export class ManageTournamentComponent implements OnInit {
           name,
           games: 0,
           points: 0,
-          throws: 0,
-          hits: 0,
+          wins: 0,
+          losses: 0,
           accuracy: 0,
           diff: 0,
         }));
@@ -1708,8 +1809,8 @@ export class ManageTournamentComponent implements OnInit {
           name: 'Team 1',
           games: 3,
           points: 6,
-          throws: 50,
-          hits: 30,
+          wins: 50,
+          losses: 30,
           accuracy: 60,
           diff: 10,
         },
@@ -1717,8 +1818,8 @@ export class ManageTournamentComponent implements OnInit {
           name: 'Team 2',
           games: 3,
           points: 4,
-          throws: 48,
-          hits: 28,
+          wins: 48,
+          losses: 28,
           accuracy: 58,
           diff: 5,
         },
@@ -1731,8 +1832,8 @@ export class ManageTournamentComponent implements OnInit {
           name: 'Team 3',
           games: 3,
           points: 5,
-          throws: 52,
-          hits: 29,
+          wins: 52,
+          losses: 29,
           accuracy: 56,
           diff: 7,
         },
@@ -1814,13 +1915,6 @@ export class ManageTournamentComponent implements OnInit {
       confirmed: false,
     };
   }
-  resetPhaseFlags() {
-    this.phaseNotSelected = true;
-    this.onlyGroupSelected = false;
-    this.groupAndKoSelected = false;
-    this.onlyKoPhaseSelected = false;
-  }
-
   showTournamentMenu: boolean = false;
 
   savedTournaments: any[] = [];
@@ -1866,5 +1960,256 @@ export class ManageTournamentComponent implements OnInit {
     const updated = all.filter((t: any) => t.id !== tournamentId);
     localStorage.setItem('tournaments', JSON.stringify(updated));
     this.loadSavedTournaments();
+  }
+
+  isPresentFullscreen: boolean = false;
+  presentMode: 'presentation' | 'results' | 'resultsView' | 'playing' =
+    'presentation';
+  currentSlide: number = 0;
+  slides = [
+    { title: 'Slide 1', content: '' },
+    { title: 'Slide 2', content: '' },
+    { title: 'Slide 3', content: '' },
+  ];
+
+  setPresentMode(mode: 'presentation' | 'results' | 'resultsView' | 'playing') {
+    this.presentMode = mode;
+  }
+
+  enterPresentMode() {
+    setTimeout(() => {
+      this.isPresentFullscreen = true;
+      const elem = document.documentElement;
+      if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+      } else if ((elem as any).webkitRequestFullscreen) {
+        (elem as any).webkitRequestFullscreen();
+      } else if ((elem as any).msRequestFullscreen) {
+        (elem as any).msRequestFullscreen();
+      }
+    }, 0);
+  }
+
+  ngDoCheck() {
+    if (this.presentSelected && !this.isPresentFullscreen) {
+      this.enterPresentMode();
+    }
+  }
+
+  togglePresentFullscreen() {
+    this.isPresentFullscreen = !this.isPresentFullscreen;
+    if (this.isPresentFullscreen) {
+      const elem = document.documentElement;
+      if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+      } else if ((elem as any).webkitRequestFullscreen) {
+        (elem as any).webkitRequestFullscreen();
+      } else if ((elem as any).msRequestFullscreen) {
+        (elem as any).msRequestFullscreen();
+      }
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if ((document as any).webkitExitFullscreen) {
+        (document as any).webkitExitFullscreen();
+      } else if ((document as any).msExitFullscreen) {
+        (document as any).msExitFullscreen();
+      }
+    }
+  }
+
+  nextSlide() {
+    if (this.currentSlide < this.slides.length - 1) {
+      this.currentSlide++;
+    }
+  }
+
+  prevSlide() {
+    if (this.currentSlide > 0) {
+      this.currentSlide--;
+    }
+  }
+
+  exitPresentModus() {
+    this.presentSelected = false;
+    this.isPresentFullscreen = false;
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if ((document as any).webkitExitFullscreen) {
+      (document as any).webkitExitFullscreen();
+    } else if ((document as any).msExitFullscreen) {
+      (document as any).msExitFullscreen();
+    }
+  }
+
+  saveMatchResult(idx: number) {
+    const match = this.matchSchedule[idx];
+    if (typeof match.scoreA === 'number' && typeof match.scoreB === 'number') {
+      match.confirmed = true;
+    }
+    // Optional: Hier könntest du noch persistieren/speichern
+  }
+
+  saveGroupMatchResult(group: any, gIdx: number) {
+    const match = group.matches[gIdx];
+    if (typeof match.scoreA === 'number' && typeof match.scoreB === 'number') {
+      match.confirmed = true;
+    }
+    // Optional: Hier könntest du noch persistieren/speichern
+  }
+
+  updateResultsFromSchedule() { }
+
+  getTopTeamsPerGroup(count: number = 3) {
+    return this.groupTables.map((groupTable: any) =>
+      groupTable.table.slice(0, count).map((entry: any, idx: number) => ({
+        ...entry.team,
+        group: groupTable.groupName,
+        rank: idx + 1,
+      }))
+    );
+  }
+
+  koPairings: any[] = [];
+
+  generateKoBracketFromGroups() {
+    const topTeams = this.getTopTeamsPerGroup(3); 
+    const koTeams: any[] = [];
+
+    for (let i = 0; i < topTeams.length; i++) {
+      const groupA = topTeams[i];
+      const groupB = topTeams[(i + 1) % topTeams.length];
+
+      if (groupA[0] && groupB[2]) {
+        koTeams.push({
+          teamA: groupA[0],
+          teamB: groupB[2],
+          label: `Gewinner ${groupA[0].group} vs Dritter ${groupB[2].group}`,
+        });
+      }
+      if (groupA[1] && groupB[1]) {
+        koTeams.push({
+          teamA: groupA[1],
+          teamB: groupB[1],
+          label: `Zweiter ${groupA[1].group} vs Zweiter ${groupB[1].group}`,
+        });
+      }
+      if (groupA[2] && groupB[0]) {
+        koTeams.push({
+          teamA: groupA[2],
+          teamB: groupB[0],
+          label: `Dritter ${groupA[2].group} vs Gewinner ${groupB[0].group}`,
+        });
+      }
+    }
+
+    this.rounds = [];
+    let currentRound = koTeams.map(pair => [pair.teamA, pair.teamB]);
+    this.rounds.push(currentRound);
+
+    this.koPairings = koTeams;
+
+    while (currentRound.length > 1) {
+      const nextRound = [];
+      for (let i = 0; i < currentRound.length; i += 2) {
+        nextRound.push([
+          { name: 'TBD', team: '', avatar: '', group: '', rank: null },
+          { name: 'TBD', team: '', avatar: '', group: '', rank: null },
+        ]);
+      }
+      this.rounds.push(nextRound);
+      currentRound = nextRound;
+    }
+  }
+
+  generateGroupSchedule() {
+    let schedule: any[] = [];
+    let timeMinutes = 10 *  60;
+    const matchDuration = 45;
+    const fieldCount = this.hallFields.length || 1;
+    let fieldIdx = 0;
+
+    for (const group of this.groupMatches) {
+      for (const match of group.matches) {
+        const time =
+          Math.floor(timeMinutes / 60).toString().padStart(2, '0') +
+          ':' +
+          (timeMinutes % 60).toString().padStart(2, '0');
+        schedule.push({
+          time,
+          teamA: match.teamA.name,
+          teamB: match.teamB.name,
+          fieldIdx: fieldIdx % fieldCount,
+          scoreA: match.scoreA,
+          scoreB: match.scoreB,
+          group: group.groupName,
+          phase: 'GROUP',
+          label: group.groupName,
+        });
+        timeMinutes += matchDuration;
+        fieldIdx++;
+      }
+    }
+    return schedule;
+  }
+
+  generateKoSchedule() {
+    let schedule: any[] = [];
+    let timeMinutes = 16 * 60; 
+    const matchDuration = 45;
+    const fieldCount = this.hallFields.length || 1;
+    let fieldIdx = 0;
+
+    for (const pair of this.koPairings) {
+      const time =
+        Math.floor(timeMinutes / 60).toString().padStart(2, '0') +
+        ':' +
+        (timeMinutes % 60).toString().padStart(2, '0');
+      schedule.push({
+        time,
+        teamA: pair.teamA.name,
+        teamB: pair.teamB.name,
+        fieldIdx: fieldIdx % fieldCount,
+        scoreA: null,
+        scoreB: null,
+        label: pair.label,
+        phase: 'KO',
+      });
+      timeMinutes += matchDuration;
+      fieldIdx++;
+    }
+    return schedule;
+  }
+
+  applyPhaseLogic() {
+    if (this.onlyGroupSelected) {
+      this.generateGroups();
+      this.generateGroupMatches();
+      this.updateGroupTables();
+      this.rounds = [];
+      this.koPairings = [];
+      this.matchSchedule = this.generateGroupSchedule();
+    }
+    else if (this.onlyKoPhaseSelected) {
+      const teams = this.getTeamsFromPlayers(this.players);
+      this.rounds = this.generateRounds(teams);
+      this.koPairings = this.rounds[0].map(([teamA, teamB]: any) => ({
+        teamA,
+        teamB,
+        label: `${teamA.team || 'TBD'} vs ${teamB.team || 'TBD'}`,
+      }));
+      this.matchSchedule = this.generateKoSchedule();
+      this.groupMatches = [];
+    }
+    else if (this.groupAndKoSelected) {
+      this.generateGroups();
+      this.generateGroupMatches();
+      this.updateGroupTables();
+      this.generateKoBracketFromGroups();
+      this.matchSchedule = [
+        ...this.generateGroupSchedule(),
+        ...this.generateKoSchedule(),
+      ];
+    }
   }
 }

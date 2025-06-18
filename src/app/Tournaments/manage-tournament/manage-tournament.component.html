@@ -1,4 +1,4 @@
-<div id="HeaderContainer">
+<div id="HeaderContainer" *ngIf="!presentSelected">
   <header>
     <button type="button" routerLink="/">
       <img
@@ -47,7 +47,7 @@
     </div>
   </header>
 
-  <nav>
+  <nav *ngIf="!presentSelected">
     <div class="navbar-toggle" (click)="toggleNav()">
       <span></span>
       <span></span>
@@ -633,6 +633,7 @@
               <span
                 *ngIf="!editNotes && tournament?.notes"
                 class="edit-value note-text"
+                style="white-space: pre-line; word-break: break-word"
                 >{{ tournament.notes }}</span
               >
               <textarea
@@ -644,6 +645,41 @@
               <button class="edit-btn" (click)="editNotes = !editNotes">
                 <span class="material-icons">{{
                   editNotes ? "check" : "edit"
+                }}</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="edit-row bio-row">
+            <span class="edit-label">{{ t.editRulestitle }}</span>
+            <div
+              *ngIf="editRules"
+              class="rules-hint"
+              style="font-size: 0.97em; color: #aaa; margin-bottom: 0.3em"
+            >
+              <span>
+                {{ t.ruleHint }}
+              </span>
+            </div>
+            <div class="value-btn-wrapper">
+              <ul
+                *ngIf="!editRules && tournament?.rules"
+                class="edit-value rules-list"
+                style="margin: 0; padding-left: 1.2em"
+              >
+                <li *ngFor="let rule of tournament.rules.split('\n')">
+                  {{ rule }}
+                </li>
+              </ul>
+              <textarea
+                *ngIf="editRules"
+                [(ngModel)]="tournament.rules"
+                class="bio-input"
+                [placeholder]="tournament?.rules"
+              ></textarea>
+              <button class="edit-btn" (click)="editRules = !editRules">
+                <span class="material-icons">{{
+                  editRules ? "check" : "edit"
                 }}</span>
               </button>
             </div>
@@ -854,6 +890,7 @@
     </div>
 
     <div class="tournament-bracket-container" *ngIf="bracketSelected">
+      <button id="changePhaseBtn" (click)="changePhase()">Change Phase</button>
       <div class="selection-container" *ngIf="phaseNotSelected">
         <h2 class="selection-title">{{ t.choosePhase }}</h2>
         <div class="options">
@@ -1229,9 +1266,9 @@
                     </div>
                   </td>
                   <td>{{ team.games }}</td>
+                  <td>{{ team.wins }}</td>
+                  <td>{{ team.losses }}</td>
                   <td>{{ team.points }}</td>
-                  <td>{{ team.throws }}</td>
-                  <td>{{ team.hits }}</td>
                   <td>{{ team.accuracy }}%</td>
                   <td>{{ team.diff }}</td>
                 </tr>
@@ -1258,6 +1295,14 @@
                 <div class="match">
                   <span class="team">{{ match[0]?.team || "TBD" }}</span>
                   <span class="team">{{ match[1]?.team || "TBD" }}</span>
+                  <!-- Label für die erste KO-Runde anzeigen -->
+                  <div
+                    class="ko-label"
+                    *ngIf="roundIndex === 0 && koPairings?.[matchIndex]?.label"
+                  >
+                    {{ koPairings[matchIndex].label }}
+                  </div>
+                  <div class="score-input"></div>
                 </div>
                 <div *ngIf="roundIndex < rounds.length - 1" class="lines">
                   <div class="vert-line top"></div>
@@ -1275,82 +1320,82 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="group-container">
-      <div
-        class="groupandko-container"
-        *ngIf="!phaseNotSelected && groupAndKoSelected"
-      >
-        <h1 id="phaseTitleboth">{{ t.groupandko }}</h1>
-        <div *ngFor="let group of groups">
-          <table class="cornhole-group-table">
-            <h2>{{ group.name }}</h2>
-            <thead>
-              <tr>
-                <th>{{ t.Team }}</th>
-                <th>{{ t.Games }}</th>
-                <th>{{ t.Points }}</th>
-                <th>{{ t.Throws }}</th>
-                <th>{{ t.Hits }}</th>
-                <th>{{ t.Accuracy }}</th>
-                <th>{{ t.Diff }}</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let team of group.teams">
-                <td>
-                  {{ team.name }}
-                  <div class="players-list">
-                    <div
-                      class="player-entry"
-                      *ngFor="let player of getPlayersForTeam(team.name)"
-                    >
-                      <img
-                        [src]="player.avatar"
-                        alt="avatar"
-                        width="20"
-                        height="20"
-                      />
-                      {{ player.name }}
+      <div class="group-container">
+        <div
+          class="groupandko-container"
+          *ngIf="!phaseNotSelected && groupAndKoSelected"
+        >
+          <h1 id="phaseTitleboth">{{ t.groupandko }}</h1>
+          <div *ngFor="let group of groups">
+            <table class="cornhole-group-table">
+              <h2>{{ group.name }}</h2>
+              <thead>
+                <tr>
+                  <th>{{ t.Team }}</th>
+                  <th>{{ t.Games }}</th>
+                  <th>{{ t.Points }}</th>
+                  <th>{{ t.Throws }}</th>
+                  <th>{{ t.Hits }}</th>
+                  <th>{{ t.Accuracy }}</th>
+                  <th>{{ t.Diff }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let team of group.teams">
+                  <td>
+                    {{ team.name }}
+                    <div class="players-list">
+                      <div
+                        class="player-entry"
+                        *ngFor="let player of getPlayersForTeam(team.name)"
+                      >
+                        <img
+                          [src]="player.avatar"
+                          alt="avatar"
+                          width="20"
+                          height="20"
+                        />
+                        {{ player.name }}
+                      </div>
                     </div>
-                  </div>
-                </td>
-                <td>{{ team.games }}</td>
-                <td>{{ team.points }}</td>
-                <td>{{ team.throws }}</td>
-                <td>{{ team.hits }}</td>
-                <td>{{ team.accuracy }}%</td>
-                <td>{{ team.diff }}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="bracket">
-          <div
-            class="round"
-            *ngFor="let round of rounds; let roundIndex = index"
-          >
+                  </td>
+                  <td>{{ team.games }}</td>
+                  <td>{{ team.points }}</td>
+                  <td>{{ team.wins }}</td>
+                  <td>{{ team.losses }}</td>
+                  <td>{{ team.accuracy }}%</td>
+                  <td>{{ team.diff }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="bracket">
             <div
-              class="match-container"
-              *ngFor="let match of round; let matchIndex = index"
+              class="round"
+              *ngFor="let round of rounds; let roundIndex = index"
             >
-              <div class="match">
-                <span class="team">{{ match[0]?.team || "TBD" }}</span>
-                <span class="team">{{ match[1]?.team || "TBD" }}</span>
-                <div class="score-input"></div>
-              </div>
-              <div *ngIf="roundIndex < rounds.length - 1" class="lines">
-                <div class="vert-line top"></div>
-                <div class="horiz-line"></div>
-                <div class="vert-line bottom"></div>
+              <div
+                class="match-container"
+                *ngFor="let match of round; let matchIndex = index"
+              >
+                <div class="match">
+                  <span class="team">{{ match[0]?.team || "TBD" }}</span>
+                  <span class="team">{{ match[1]?.team || "TBD" }}</span>
+                  <div class="score-input"></div>
+                </div>
+                <div *ngIf="roundIndex < rounds.length - 1" class="lines">
+                  <div class="vert-line top"></div>
+                  <div class="horiz-line"></div>
+                  <div class="vert-line bottom"></div>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="champion" *ngIf="rounds.length">
-            <h2>Champion 🏆</h2>
-            <span class="team">{{
-              rounds[rounds.length - 1][0][0]?.team || "TBD"
-            }}</span>
+            <div class="champion" *ngIf="rounds.length">
+              <h2>Champion 🏆</h2>
+              <span class="team">{{
+                rounds[rounds.length - 1][0][0]?.team || "TBD"
+              }}</span>
+            </div>
           </div>
         </div>
       </div>
@@ -1586,10 +1631,7 @@
                 (touchstart)="onHallMouseDown(idx, $event)"
                 (click)="selectField(idx)"
               >
-                <div class="cornhole-board">
-                  <div class="board-hole"></div>
-                  <div class="field-label">{{ t.field }} {{ idx + 1 }}</div>
-                </div>
+                <div class="field-label">{{ t.field }} {{ idx + 1 }}</div>
                 <button
                   class="delete-field-btn"
                   (click)="removeField(idx); $event.stopPropagation()"
@@ -1664,18 +1706,17 @@
 
     <div *ngIf="resultsSelected" class="tournament-results">
       <h2>{{ t.tournamentResultsTitle }}</h2>
-      <div class="results-header">
+      <div class="results-head">
         <span>{{ t.rank }}</span>
         <span>{{ t.team }}</span>
         <span>{{ t.players }}</span>
         <span>{{ t.matches }}</span>
         <span>{{ t.wins }}</span>
         <span>{{ t.losses }}</span>
-        <span>{{ t.points }}</span>
       </div>
 
       <div
-        class="results-row"
+        class="results-rows"
         *ngFor="let team of getTeamResults(); let i = index"
         [ngStyle]="{
           '--team-color': getTeamColor(team.teamName)
@@ -1695,13 +1736,297 @@
         <span>{{ team.matches }}</span>
         <span>{{ team.wins }}</span>
         <span>{{ team.losses }}</span>
-        <span>{{ team.points }}</span>
       </div>
+    </div>
+  </section>
+
+  <section
+    *ngIf="presentSelected"
+    class="present-section"
+    [class.fullscreen]="isPresentFullscreen"
+  >
+    <div class="present-overlay">
+      <div class="mode-switch">
+        <button
+          [class.active]="presentMode === 'presentation'"
+          (click)="setPresentMode('presentation')"
+          title="{{ t.presentModePresentation }}"
+        >
+          <span class="material-icons">slideshow</span>
+        </button>
+        <button
+          [class.active]="presentMode === 'results'"
+          (click)="setPresentMode('results')"
+          title="{{ t.presentModeResults }}"
+        >
+          <span class="material-icons">edit</span>
+        </button>
+        <button
+          [class.active]="presentMode === 'resultsView'"
+          (click)="setPresentMode('resultsView')"
+          title="{{ t.presentModeResultsView || 'Ergebnisse anzeigen' }}"
+        >
+          <span class="material-icons">visibility</span>
+        </button>
+        <button
+          [class.active]="presentMode === 'playing'"
+          (click)="setPresentMode('playing')"
+          title="{{ t.presentModePlaying }}"
+        >
+          <span class="material-icons">play_circle</span>
+        </button>
+      </div>
+      <button
+        class="exit-present"
+        (click)="exitPresentModus()"
+        title="{{ t.exitPresent }}"
+      >
+        <span class="material-icons">close</span>
+      </button>
+    </div>
+    <div class="present-content">
+      <ng-container [ngSwitch]="presentMode">
+        <div
+          *ngSwitchCase="'presentation'"
+          class="slide-container present-slide"
+        >
+          <div class="slide-content present-slide-content">
+            <span class="slide-icon"
+              ><span class="material-icons">slideshow</span></span
+            >
+            <h2>{{ t.presentationSlide + " " + (currentSlide + 1) }}</h2>
+            <div class="slide-placeholder">
+              {{ t.slideContent }}
+            </div>
+          </div>
+          <div class="slide-controls">
+            <button (click)="prevSlide()" [disabled]="currentSlide === 0">
+              <span class="material-icons">arrow_back</span>
+            </button>
+            <span>{{ currentSlide + 1 }} / {{ slides.length }}</span>
+            <button
+              (click)="nextSlide()"
+              [disabled]="currentSlide === slides.length - 1"
+            >
+              <span class="material-icons">arrow_forward</span>
+            </button>
+          </div>
+        </div>
+        <div
+          *ngSwitchCase="'results'"
+          class="results-entry-container present-results"
+        >
+          <div class="results-icon">
+            <span class="material-icons">edit</span>
+          </div>
+          <h2>{{ t.enterResults }}</h2>
+          <div class="results-entry-list">
+            <div *ngIf="matchSchedule && matchSchedule.length">
+              <h3>{{ t.matchSchedule }}</h3>
+              <div
+                class="results-entry-match"
+                *ngFor="let match of matchSchedule; let idx = index"
+              >
+                <span class="results-entry-time">{{ match.time }}</span>
+                <span class="results-entry-teams"
+                  >{{ match.teamA }} vs {{ match.teamB }}</span
+                >
+                <input
+                  type="number"
+                  min="0"
+                  [(ngModel)]="match.scoreA"
+                  class="results-entry-score styled-score-input"
+                  placeholder="A"
+                />
+                <span class="results-entry-sep">:</span>
+                <input
+                  type="number"
+                  min="0"
+                  [(ngModel)]="match.scoreB"
+                  class="results-entry-score styled-score-input"
+                  placeholder="B"
+                />
+                <button
+                  class="results-entry-save styled-confirm-btn"
+                  [ngClass]="{ confirmed: match.confirmed }"
+                  (click)="saveMatchResult(idx)"
+                  [disabled]="match.confirmed"
+                  title="{{
+                    match.confirmed ? t.resultConfirmed : t.confirmResult
+                  }}"
+                >
+                  <span class="material-icons">
+                    {{
+                      match.confirmed ? "check_circle" : "check_circle_outline"
+                    }}
+                  </span>
+                </button>
+              </div>
+            </div>
+            <div *ngIf="groupMatches && groupMatches.length">
+              <h3>{{ t.groupPhase }}</h3>
+              <div *ngFor="let group of groupMatches">
+                <div class="results-entry-group">{{ group.groupName }}</div>
+                <div
+                  class="results-entry-match"
+                  *ngFor="let match of group.matches; let gIdx = index"
+                >
+                  <span class="results-entry-teams"
+                    >{{ match.teamA.name }} vs {{ match.teamB.name }}</span
+                  >
+                  <input
+                    type="number"
+                    min="0"
+                    [(ngModel)]="match.scoreA"
+                    class="results-entry-score styled-score-input"
+                    placeholder="A"
+                  />
+                  <span class="results-entry-sep">:</span>
+                  <input
+                    type="number"
+                    min="0"
+                    [(ngModel)]="match.scoreB"
+                    class="results-entry-score styled-score-input"
+                    placeholder="B"
+                  />
+                  <button
+                    class="results-entry-save styled-confirm-btn"
+                    (click)="saveGroupMatchResult(group, gIdx)"
+                  >
+                    <span class="material-icons">check_circle</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          *ngSwitchCase="'resultsView'"
+          class="results-entry-container present-results"
+        >
+          <div class="results-icon">
+            <span class="material-icons">visibility</span>
+          </div>
+          <h2>{{ t.Results }}</h2>
+          <div class="results-entry-list">
+            <div *ngIf="matchSchedule && matchSchedule.length">
+              <h3>{{ t.matchSchedule }}</h3>
+              <div
+                class="results-entry-match"
+                *ngFor="let match of matchSchedule"
+              >
+                <span class="results-entry-time">{{ match.time }}</span>
+                <span class="results-entry-teams">
+                  <ng-container *ngIf="match as m">
+                    <span
+                      class="results-entry-teams"
+                      [ngClass]="{
+                        winner:
+                          m.scoreA != null &&
+                          m.scoreB != null &&
+                          m.scoreA > m.scoreB,
+                        loser:
+                          m.scoreA != null &&
+                          m.scoreB != null &&
+                          m.scoreA < m.scoreB
+                      }"
+                    >
+                      {{ m.teamA || "-" }}
+                    </span>
+                    <span class="results-entry-score results-entry-score-view">
+                      {{ m.scoreA != null ? m.scoreA : "-" }}
+                    </span>
+                    <span class="results-entry-score-sep"> - </span>
+                    <span class="results-entry-score results-entry-score-view">
+                      {{ m.scoreB != null ? m.scoreB : "-" }}
+                    </span>
+                    <span
+                      class="results-entry-teams"
+                      [ngClass]="{
+                        winner:
+                          m.scoreA != null &&
+                          m.scoreB != null &&
+                          m.scoreB > m.scoreA,
+                        loser:
+                          m.scoreA != null &&
+                          m.scoreB != null &&
+                          m.scoreB < m.scoreA
+                      }"
+                    >
+                      {{ m.teamB || "-" }}
+                    </span>
+                  </ng-container>
+                </span>
+              </div>
+            </div>
+            <div *ngIf="groupMatches && groupMatches.length">
+              <h3>{{ t.groupPhase }}</h3>
+              <div *ngFor="let group of groupMatches">
+                <div class="results-entry-group">{{ group.groupName }}</div>
+                <div
+                  class="results-entry-match"
+                  *ngFor="let match of group.matches"
+                >
+                  <span class="results-entry-teams"
+                    >{{ match.teamA.name }} vs {{ match.teamB.name }}</span
+                  >
+                  <span class="results-entry-score"
+                    >{{ match.scoreA != null ? match.scoreA : "-" }} :
+                    {{ match.scoreB != null ? match.scoreB : "-" }}</span
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="results-head">
+              <span>{{ t.rank }}</span>
+              <span>{{ t.team }}</span>
+              <span>{{ t.players }}</span>
+              <span>{{ t.matches }}</span>
+              <span>{{ t.wins }}</span>
+              <span>{{ t.losses }}</span>
+            </div>
+
+            <div
+              class="results-rows"
+              *ngFor="let team of getTeamResults(); let i = index"
+              [ngStyle]="{
+                '--team-color': getTeamColor(team.teamName)
+              }"
+            >
+              <span>{{ i + 1 }}</span>
+              <span>{{ team.teamName }}</span>
+              <div class="avatars">
+                <img
+                  *ngFor="let player of team.players"
+                  [src]="player.avatar"
+                  [alt]="player.name"
+                  class="avatar"
+                  draggable="false"
+                />
+              </div>
+              <span>{{ team.matches }}</span>
+              <span>{{ team.wins }}</span>
+              <span>{{ team.losses }}</span>
+            </div>
+          </div>
+        </div>
+        <div
+          *ngSwitchCase="'playing'"
+          class="playing-mode-container present-playing"
+        >
+          <div class="playing-message">{{ t.gameOn }}</div>
+          <div class="pulse-animation">
+            <div class="pulse-circle"></div>
+            <div class="pulse-circle"></div>
+            <div class="pulse-circle"></div>
+          </div>
+        </div>
+      </ng-container>
     </div>
   </section>
 </main>
 
-<footer>
+<footer *ngIf="!presentSelected">
   <p>&copy; 2025 KCA Cornhole Tournaments | All Rights Reserved</p>
   <div class="footer-links">
     <a routerLink="/PrivacyPolicy">{{ t.privacyPolicy }}</a> |
