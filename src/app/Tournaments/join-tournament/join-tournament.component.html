@@ -86,7 +86,21 @@
       <ng-container *ngIf="globalAuth.isLoggedIn">
         <div class="auth-row">
           <div class="user-info">
-            <p id="username">{{ globalAuth.username }}</p>
+            <div
+              class="username-wrapper"
+              *ngIf="globalAuth?.username as username"
+            >
+              <p id="username" class="username">
+                {{
+                  username.length > 16
+                    ? (username | slice : 0 : 14) + ".."
+                    : username
+                }}
+                <span *ngIf="username.length > 16" class="tooltip">
+                  {{ username }}
+                </span>
+              </p>
+            </div>
             <button
               id="profileBtn"
               class="profile-btn"
@@ -381,6 +395,38 @@
         <div>
           <strong>{{ t.notes }}:</strong> {{ selectedTournament.notes }}
         </div>
+        <div *ngIf="selectedTournament.league">
+          <strong>{{ t.leagueLabel || "League" }}:</strong>
+          {{ selectedTournament.league }}
+        </div>
+        <div *ngIf="selectedTournament.skillLevel">
+          <strong>{{ t.skillLevelLabel || "Skill Level" }}:</strong>
+          {{ selectedTournament.skillLevel }}
+        </div>
+        <div *ngIf="selectedTournament.prize">
+          <strong>{{ t.prizesLabel || "Prizes" }}:</strong>
+          {{ selectedTournament.prize }}
+        </div>
+        <div *ngIf="selectedTournament.ageGroup">
+          <strong>{{ t.ageGroupsLabel || "Age Group" }}:</strong>
+          {{ selectedTournament.ageGroup }}
+        </div>
+        <div *ngIf="selectedTournament.sponsors?.length">
+          <strong>{{ t.sponsorsLabel || "Sponsors" }}:</strong>
+          <span
+            *ngFor="let sponsor of selectedTournament.sponsors; let last = last"
+          >
+            {{ sponsor.name }}<span *ngIf="!last">, </span>
+          </span>
+        </div>
+        <div *ngIf="selectedTournament.partners?.length">
+          <strong>{{ t.partnersLabel || "Partners" }}:</strong>
+          <span
+            *ngFor="let partner of selectedTournament.partners; let last = last"
+          >
+            {{ partner.name }}<span *ngIf="!last">, </span>
+          </span>
+        </div>
       </div>
       <div class="single-tournament-actions">
         <button
@@ -404,18 +450,39 @@
           {{ t.loginToJoin }}
         </button>
       </div>
-      <div class="participants-section">
-        <h3 class="participants-title">{{ t.Particitant }}</h3>
+      <div class="participants-section" *ngIf="selectedTournament">
+        <h3>{{ t.Participant }}</h3>
         <div class="participants-list">
-          <div class="participant" *ngFor="let player of players">
+          <div
+            class="participant"
+            *ngFor="let player of selectedTournament.participants"
+          >
             <img
-              [src]="player.image"
-              alt="{{ player.name }}"
+              [src]="player.avatar || 'assets/images/default-profile.png'"
+              [alt]="player.name"
               class="participant-image"
             />
             <div class="participant-info">
-              <span class="participant-name">{{ player.name }}</span>
-              <span class="participant-team">{{ player.team }}</span>
+              <span
+                class="participant-name"
+                #nameEl
+                (mouseenter)="checkOverflow(nameEl, 'name', player)"
+              >
+                {{ player.name }}
+              </span>
+              <span class="tooltip-text" *ngIf="player.showNameTooltip">
+                {{ player.name }}
+              </span>
+              <span
+                class="participant-team"
+                #teamEl
+                (mouseenter)="checkOverflow(teamEl, 'team', player)"
+              >
+                {{ player.team }}
+              </span>
+              <span class="tooltip-text" *ngIf="player.showTeamTooltip">
+                {{ player.team }}
+              </span>
             </div>
           </div>
         </div>
@@ -488,7 +555,7 @@
           <button
             *ngIf="globalAuth.isLoggedIn"
             class="tButton"
-            (click)="$event.stopPropagation(); openDetails(tour.id)"
+            (click)="openTournamentView(tour)"
           >
             {{ t.details }}
           </button>
@@ -498,30 +565,6 @@
             (click)="$event.stopPropagation(); globalAuth.openLoginModal()"
           >
             {{ t.loginToJoin }}
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div
-      id="detailsModal"
-      class="details-modal"
-      [class.visible]="detailsModalVisible"
-    >
-      <div class="details-overlay"></div>
-      <div class="details-content">
-        <div id="DetailsPage">
-          <h2 id="DetailsTitle">
-            {{ t.detailsFor }} {{ selectedTournament?.name }}
-          </h2>
-          <h3 id="RulesTitle">{{ t.rules }}</h3>
-          <ul id="RuleList">
-            <li>{{ selectedTournament?.rules }}</li>
-          </ul>
-          <h3 id="NotesTitle">{{ t.notes }}</h3>
-          <p>{{ selectedTournament?.notes }}</p>
-          <button class="tButton" (click)="closeDetails()">
-            {{ t.close }}
           </button>
         </div>
       </div>

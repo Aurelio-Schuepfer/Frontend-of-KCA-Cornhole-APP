@@ -1,0 +1,31 @@
+@media (max-width: 1200px) {
+    .about-page {
+      padding: 2rem 1rem;
+  
+      .about-header h1 {
+        font-size: 2rem;
+      }
+  
+      .founders h2,
+      .mission h2,
+      .community h2 {
+        font-size: 1.6rem;
+      }
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .about-page {
+      padding: 1.5rem;
+    }
+  
+    .about-header h1 {
+      font-size: 1.8rem;
+    }
+  
+    .founders h2,
+    .mission h2,
+    .community h2 {
+      font-size: 1.4rem;
+    }
+  }

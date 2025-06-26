@@ -87,8 +87,14 @@
       <ng-container *ngIf="globalAuth.isLoggedIn">
         <div class="auth-row">
           <div class="user-info">
-            <p id="username">{{ globalAuth.username }}</p>
-            <button
+            <div class="username-wrapper" *ngIf="globalAuth?.username as username">
+              <p id="username" class="username">
+                {{ username.length > 16 ? (username | slice:0:14) + '..' : username }}
+                <span *ngIf="username.length > 16" class="tooltip">
+                  {{ username }}
+                </span>
+              </p>
+            </div>             <button
               id="profileBtn"
               class="profile-btn"
               (click)="goToProfile()"
@@ -346,7 +352,6 @@
   </section>
 
   <section class="insight-cards">
-    <!-- Total Players -->
     <div class="insight-card total-players">
       <div class="icon">
         <i class="fa fa-users"></i>
@@ -355,8 +360,6 @@
       <span class="value">{{ totalPlayers }}</span>
       <p class="description">{{ t.totalPlayersDesc }}</p>
     </div>
-
-    <!-- Total Tournaments -->
     <div class="insight-card total-tournaments">
       <div class="icon">
         <i class="fa fa-trophy"></i>
@@ -365,8 +368,6 @@
       <span class="value">{{ totalTournaments }}</span>
       <p class="description">{{ t.totalTournamentsDesc }}</p>
     </div>
-
-    <!-- Matches Played -->
     <div class="insight-card matches-played">
       <div class="icon">
         <i class="fa fa-gamepad"></i>
@@ -375,8 +376,6 @@
       <span class="value">{{ matchesPlayed }}</span>
       <p class="description">{{ t.matchesPlayedDesc }}</p>
     </div>
-
-    <!-- Top Player -->
     <div class="insight-card top-player">
       <div class="icon">
         <i class="fa fa-star"></i>
@@ -385,8 +384,6 @@
       <span class="value">{{ topPlayer }}</span>
       <p class="description">{{ t.topPlayerDesc }}</p>
     </div>
-
-    <!-- Avg Participants -->
     <div class="insight-card avg-participants">
       <div class="icon">
         <i class="fa fa-users"></i>
@@ -395,8 +392,6 @@
       <span class="value">{{ avgParticipants }}</span>
       <p class="description">{{ t.avgParticipantsDesc }}</p>
     </div>
-
-    <!-- Trusted Users -->
     <div class="insight-card trusted-users">
       <div class="icon">
         <i class="fa fa-thumbs-up"></i>

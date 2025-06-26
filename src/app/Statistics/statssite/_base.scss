@@ -1,0 +1,73 @@
+@use "sass:color";
+
+.website-insights {
+  padding: 50px 20px;
+  text-align: center;
+}
+
+.insight-header {
+  margin-bottom: 40px;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--accent);
+}
+
+.insight-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+  gap: 40px;
+  justify-items: center;
+  padding: 0 20px;
+}
+
+.insight-card {
+  background-color: var(--bg);
+  padding: 40px 30px;
+  border-radius: 15px;
+  text-align: center;
+  width: 100%;
+  max-width: 500px;
+  border: 3px solid var(--accent);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.insight-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.insight-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+}
+
+.insight-card .icon {
+  font-size: 4rem;
+  color: var(--accent);
+  margin-bottom: 20px;
+}
+
+.insight-card .label {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: var(--fg);
+}
+
+.insight-card .value {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+
+.insight-card .description {
+  font-size: 1rem;
+  color: var(--fg);
+}

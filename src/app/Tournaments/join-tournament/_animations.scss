@@ -1,0 +1,29 @@
+
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+@keyframes join-feedback-pop {
+    0% {
+      opacity: 0;
+      transform: translateX(-50%) scale(0.7);
+      filter: blur(2px);
+    }
+    60% {
+      opacity: 1;
+      transform: translateX(-50%) scale(1.08);
+      filter: blur(0);
+    }
+    100% {
+      opacity: 0.98;
+      transform: translateX(-50%) scale(1);
+      filter: blur(0);
+    }
+  }

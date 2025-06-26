@@ -43,7 +43,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     FormsModule, 
     HttpClientModule,
     CommonModule,
-    DragDropModule, // <-- Added for Angular CDK drag-and-drop
+    DragDropModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

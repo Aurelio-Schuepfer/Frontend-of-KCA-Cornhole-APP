@@ -1,0 +1,47 @@
+//Floating Ball Media Queries
+@media (max-width: 1200px) {
+  .kca-decoration {
+    width: 250px;
+    height: 250px;
+  }
+
+  .kca-decoration::before {
+    font-size: 4rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .kca-decoration {
+    width: 180px;
+    height: 180px;
+    margin-top: 4rem;
+  }
+
+  h2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .kca-decoration::before {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .kca-decoration {
+    width: 140px;
+    height: 140px;
+    margin-top: 4rem;
+  }
+
+  h2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .kca-decoration::before {
+    font-size: 1.5rem;
+  }
+}

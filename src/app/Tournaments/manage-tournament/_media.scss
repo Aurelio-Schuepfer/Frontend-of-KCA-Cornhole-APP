@@ -1,0 +1,1742 @@
+@media (min-width: 900px) and (max-width: 1100px) {
+  .create-tournament-container {
+    height: 100vh;
+    overflow-y: hidden;
+  }
+}
+
+@media (max-width: 1879px) {
+  .edit-dropdown {
+    position: fixed;
+    left: -20rem;
+  }
+  .participants-dropdown {
+    position: fixed;
+    left: -19rem;
+  }
+  .bracket-dropdown {
+    position: fixed;
+    left: -21rem;
+  }
+  .schedule-dropdown {
+    position: fixed;
+    left: -17rem;
+  }
+  .advanced-dropdown {
+    position: fixed;
+    left: -16rem;
+  }
+  .start-dropdown {
+    position: fixed;
+    left: -15rem;
+  }
+  .results-dropdown {
+    position: fixed;
+    left: -14rem;
+  }
+  .edit-container,
+  .participants-container {
+    top: -3rem;
+  }
+}
+
+@media (max-width: 1850px) {
+  .bracket-dropdown {
+    position: fixed;
+    left: -20rem;
+  }
+  .schedule-dropdown {
+    position: fixed;
+    left: -16rem;
+  }
+  .advanced-dropdown {
+    position: fixed;
+    left: -15rem;
+  }
+  .start-dropdown {
+    position: fixed;
+    left: -14rem;
+  }
+  .results-dropdown {
+    position: fixed;
+    left: -13rem;
+  }
+}
+
+@media (max-width: 1800px) {
+  .edit-dropdown {
+    position: fixed;
+    left: -18rem;
+  }
+  .participants-dropdown {
+    position: fixed;
+    left: -17rem;
+  }
+  .bracket-dropdown {
+    position: fixed;
+    left: -19rem;
+  }
+  .schedule-dropdown {
+    position: fixed;
+    left: -15rem;
+  }
+  .advanced-dropdown {
+    position: fixed;
+    left: -14rem;
+  }
+  .start-dropdown {
+    position: fixed;
+    left: -13rem;
+  }
+  .results-dropdown {
+    position: fixed;
+    left: -12rem;
+  }
+}
+
+@media (max-width: 1730px) {
+  .edit-dropdown {
+    position: fixed;
+    left: -16rem;
+  }
+  .bracket-dropdown {
+    position: fixed;
+    top: 0;
+    left: -16rem;
+  }
+  .participants-dropdown {
+    position: fixed;
+    left: -15rem;
+  }
+  .schedule-dropdown {
+    position: fixed;
+    left: -13rem;
+  }
+  .advanced-dropdown {
+    position: fixed;
+    left: -12rem;
+  }
+  .start-dropdown {
+    position: fixed;
+    left: -11rem;
+  }
+  .results-dropdown {
+    position: fixed;
+    left: -10rem;
+  }
+}
+
+@media (max-width: 1675px) {
+  .edit-dropdown {
+    position: fixed;
+    left: -14rem;
+  }
+  .bracket-dropdown {
+    position: fixed;
+    top: 0;
+    left: -12rem;
+  }
+  .participants-dropdown {
+    position: fixed;
+    left: -13rem;
+  }
+  .schedule-dropdown {
+    position: fixed;
+    left: -11rem;
+  }
+  .advanced-dropdown {
+    position: fixed;
+    left: -10rem;
+  }
+  .start-dropdown {
+    position: fixed;
+    left: -9rem;
+  }
+  .results-dropdown {
+    position: fixed;
+    left: -8rem;
+  }
+}
+
+@media (max-width: 1625px) {
+  .edit-dropdown {
+    position: fixed;
+    left: -12rem;
+  }
+  .participants-dropdown {
+    position: fixed;
+    left: -12rem;
+  }
+  .bracket-dropdown {
+    position: fixed;
+    left: -10rem;
+  }
+  .schedule-dropdown {
+    position: fixed;
+    left: -9rem;
+  }
+  .advanced-dropdown {
+    position: fixed;
+    left: -8rem;
+  }
+  .start-dropdown {
+    position: fixed;
+    left: -7rem;
+  }
+  .results-dropdown {
+    position: fixed;
+    left: -6rem;
+  }
+}
+
+@media (max-width: 1540px) {
+  .edit-dropdown {
+    position: fixed;
+    left: -10rem;
+  }
+  .participants-dropdown {
+    position: fixed;
+    left: -12rem;
+  }
+  .bracket-dropdown {
+    position: fixed;
+    left: -8rem;
+  }
+  .schedule-dropdown {
+    position: fixed;
+    left: -7rem;
+  }
+  .advanced-dropdown {
+    position: fixed;
+    left: -6rem;
+  }
+  .start-dropdown {
+    position: fixed;
+    left: -5rem;
+  }
+  .results-dropdown {
+    position: fixed;
+    left: -4rem;
+  }
+}
+
+@media (max-width: 1470px) {
+  .edit-dropdown {
+    position: fixed;
+    left: -8rem;
+  }
+  .participants-dropdown {
+    position: fixed;
+    left: -12rem;
+  }
+  .bracket-dropdown {
+    position: fixed;
+    left: -6rem;
+  }
+  .schedule-dropdown {
+    position: fixed;
+    left: -5rem;
+  }
+  .advanced-dropdown {
+    position: fixed;
+    left: -4rem;
+  }
+  .start-dropdown {
+    position: fixed;
+    left: -3rem;
+  }
+  .results-dropdown {
+    position: fixed;
+    left: -2rem;
+  }
+}
+
+@media (max-width: 700px) {
+  .bracket {
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.2rem;
+    min-width: 0;
+    max-width: 100vw;
+    overflow-x: auto;
+  }
+  .bracket .round {
+    min-width: 0;
+    width: 100%;
+    gap: 0.5rem;
+  }
+  .bracket .match-container {
+    width: 100%;
+    min-width: 0;
+    align-items: stretch;
+  }
+  .bracket .match {
+    padding: 0.5rem 0.5rem;
+    min-width: 0;
+    font-size: 0.95rem;
+    gap: 0.3rem;
+  }
+  .bracket .team {
+    font-size: 0.95rem;
+    padding: 0.2rem 0.3rem;
+  }
+  .bracket .champion {
+    left: 50%;
+    top: unset;
+    transform: translate(-50%, 0);
+    min-width: 100px;
+    font-size: 0.9rem;
+    padding: 0.5rem 0.7rem;
+  }
+}
+
+.edit-container {
+  @media (max-width: 600px) {
+    flex-direction: column;
+    padding: 2rem 1.5rem;
+    gap: 1.5rem;
+    min-height: auto;
+    max-width: 100%;
+    top: -20rem;
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 400px) {
+    padding: 1.5rem 1rem;
+    gap: 1rem;
+    font-size: 0.9rem;
+    border-radius: 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .button-group {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 0rem;
+  }
+}
+
+@media (max-width: 1200px) {
+  .advanced-settings-container {
+    transform: scaleX(1);
+  }
+}
+
+@media (max-width: 768px) {
+  .sponsor-partner-row {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .sponsor-partner-item {
+    max-width: 100%;
+    padding: 1rem;
+  }
+  .sponsor-partner-item .upload-entry {
+    padding: 0.8rem;
+    gap: 0.75rem;
+  }
+
+  .sponsor-partner-item .upload-entry input[type="text"] {
+    font-size: 1.1rem;
+    padding: 0.6rem 1rem;
+  }
+
+  .sponsor-partner-item .file-label {
+    width: 100%;
+    justify-content: center;
+    font-size: 1rem;
+    padding: 0.6rem 1rem;
+  }
+
+  .sponsor-partner-item .logo-preview img {
+    max-width: 100%;
+    max-height: 150px;
+  }
+
+  .delete-button {
+    right: -2rem;
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 1200px) {
+  .results-header,
+  .results-row {
+    grid-template-columns: 40px 1fr 100px 60px 60px 60px 60px;
+    gap: 0.5rem;
+    min-width: auto;
+    padding: 0.5rem;
+  }
+  .avatar {
+    width: 30px;
+    height: 30px;
+  }
+  .avatars {
+    gap: 0.2rem;
+  }
+  .tournament-results {
+    padding: 1rem 0.5rem 6rem 0.5rem;
+  }
+}
+
+@media (max-width: 530px) {
+  .results-header {
+    display: none;
+  }
+
+  .results-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding: 1rem;
+    border-radius: 1rem;
+  }
+
+  .results-row::before {
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 6px;
+    border-radius: 1rem 0 0 1rem;
+  }
+
+  .results-row > span {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
+    font-size: 1rem;
+    position: relative;
+    padding-left: 0;
+  }
+
+  .results-row > span:nth-child(1)::before {
+    content: "Rank: ";
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .results-row > span:nth-child(2)::before {
+    content: "Team: ";
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .results-row > span:nth-child(3)::before {
+    content: "Players: ";
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .results-row > span:nth-child(4)::before {
+    content: "Matches: ";
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .results-row > span:nth-child(5)::before {
+    content: "Wins: ";
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .results-row > span:nth-child(6)::before {
+    content: "Losses: ";
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .results-row > span:nth-child(7)::before {
+    content: "Points: ";
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .avatars {
+    justify-content: flex-end;
+  }
+
+  .avatar {
+    width: 30px;
+    height: 30px;
+  }
+  .move-up-btn {
+    display: none;
+  }
+  .move-down-btn {
+    display: none;
+  }
+}
+
+@media (max-width: 920px) {
+  .edit-hall-btn {
+    margin-left: -6rem;
+  }
+}
+
+@media (max-width: 800px) {
+  .match-schedule-container {
+    top: -40rem;
+  }
+}
+
+@media (max-width: 1500px) {
+  .cornhole-hall-bg {
+    width: 95vw;
+    height: 45vw;
+    min-height: 180px;
+    min-width: 180px;
+  }
+  .randomizer-btn {
+    width: 15%;
+    align-items: center;
+    margin-left: -5rem;
+  }
+  .btn-text {
+    display: none;
+  }
+}
+
+@media (max-width: 920px) {
+  .add-match-btn {
+    margin-left: 3rem;
+    margin-bottom: -3rem;
+  }
+}
+
+.options {
+  @media (max-width: 1024px) {
+    right: 0;
+    top: -5rem;
+
+    .selection-title {
+      font-size: 2.4rem;
+    }
+
+    .options {
+      gap: 2rem;
+
+      .option {
+        width: 300px;
+        padding: 1.5rem 2rem 2.5rem;
+
+        .icon {
+          width: 250px;
+          height: 250px;
+        }
+
+        span {
+          font-size: 1.3rem;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 900px) {
+    right: 0;
+    top: -5rem;
+
+    .selection-title {
+      font-size: 2.4rem;
+    }
+
+    .options {
+      gap: 2rem;
+
+      .option {
+        width: 250px;
+        padding: 1.5rem 2rem 2.5rem;
+
+        .icon {
+          width: 250px;
+          height: 250px;
+        }
+
+        span {
+          font-size: 1.3rem;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 760px) {
+    right: 0;
+    top: -5rem;
+
+    .selection-title {
+      font-size: 2.4rem;
+    }
+
+    .options {
+      gap: 2rem;
+
+      .option {
+        width: 200px;
+        padding: 1.5rem 2rem 2.5rem;
+
+        .icon {
+          width: 200px;
+          height: 200px;
+        }
+
+        span {
+          font-size: 1.3rem;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 680px) {
+    right: 0;
+    top: -5rem;
+
+    .selection-title {
+      font-size: 2rem;
+    }
+
+    .options {
+      gap: 2rem;
+
+      .option {
+        width: 160px;
+        height: 350px;
+        padding: 1.5rem 2rem 2.5rem;
+
+        .icon {
+          width: 150px;
+          height: 150px;
+        }
+
+        span {
+          font-size: 1rem;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 600px) {
+    top: -3rem;
+    padding: 0 1rem;
+
+    .selection-title {
+      font-size: 2rem;
+    }
+
+    .options {
+      flex-direction: column;
+      align-items: center;
+
+      .option {
+        width: 100%;
+        max-width: 280px;
+        padding: 1.2rem 1.5rem 2rem;
+
+        .icon {
+          width: 200px;
+          height: 200px;
+        }
+
+        span {
+          font-size: 1.1rem;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 1200px) {
+  #phaseTitleboth,
+  #phaseTitle,
+  #koTitle {
+    font-size: 2rem;
+    top: -30rem;
+    left: 10%;
+    right: 10%;
+    position: static;
+    margin: 2rem 0 1rem 0;
+  }
+  .bracket {
+    gap: 2rem;
+    padding: 1rem;
+    top: 0;
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+@media (max-width: 900px) {
+  #phaseTitleboth,
+  #phaseTitle,
+  #koTitle {
+    font-size: 1.3rem;
+    margin: 1.5rem 0 1rem 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    position: static;
+    text-align: center;
+  }
+  .bracket {
+    gap: 1rem;
+    padding: 0.5rem;
+    flex-direction: column;
+    align-items: stretch;
+    top: 0;
+    right: 0;
+    min-width: unset;
+    overflow-x: auto;
+  }
+  .bracket .champion {
+    left: 50%;
+    top: unset;
+    transform: translate(-50%, 0);
+    min-width: 160px;
+    font-size: 1rem;
+    padding: 0.7rem 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  #phaseTitleboth,
+  #phaseTitle,
+  #koTitle {
+    font-size: 1.1rem;
+    margin: 1rem 0 0.5rem 0;
+  }
+  .bracket {
+    gap: 0.5rem;
+    padding: 0.2rem;
+  }
+  .bracket .champion {
+    min-width: 120px;
+    font-size: 0.9rem;
+    padding: 0.5rem 0.7rem;
+  }
+}
+
+@media (max-width: 1850px) {
+  .tournament-select-menu {
+    right: -15rem;
+  }
+}
+@media (max-width: 1690px) {
+  .tournament-select-menu {
+    right: -8rem;
+  }
+}
+@media (max-width: 1500px) {
+  .tournament-select-menu {
+    right: -6rem;
+  }
+}
+@media (max-width: 1400px) {
+  .tournament-select-menu {
+    right: 0rem;
+    margin-right: 0rem;
+    top: 2rem;
+  }
+}
+@media (max-width: 1000px) {
+  .tournament-select-menu {
+    right: 37%;
+    margin-right: 0rem;
+    top: 2rem;
+  }
+}
+
+@media (max-width: 920px) {
+  .add-match-btn {
+    margin-left: 3rem;
+    margin-bottom: -3rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .match-schedule-container {
+    top: 6rem;
+  }
+  .schedule-actions {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 3rem;
+    width: 100%;
+  }
+  .randomizer-controls {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin: 0;
+    padding: 0.4rem 0.1rem;
+    background: none;
+    box-shadow: none;
+    border-radius: 0.5rem;
+    gap: 0.3rem;
+  }
+  .randomizer-label {
+    font-size: 0.98rem;
+    margin-bottom: 0.1rem;
+    text-align: center;
+    width: 100%;
+  }
+  .randomizer-time-input,
+  .field-select,
+  select,
+  input[type="time"],
+  input[type="number"] {
+    width: 100%;
+    min-width: 0;
+    font-size: 0.98rem;
+    margin: 0.08rem 0;
+    padding: 0.3rem 0.4rem;
+    box-sizing: border-box;
+  }
+  .add-match-btn,
+  .edit-hall-btn,
+  .randomizer-btn {
+    width: 100%;
+    min-width: 0;
+    font-size: 0.98rem;
+    padding: 0.5rem 0.4rem;
+    margin: 0;
+    left: 0;
+    border-radius: 1rem;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+  }
+  .schedule-title {
+    font-size: 1.05rem;
+    margin-bottom: 0.7rem;
+    text-align: center;
+  }
+  .match-schedule-container {
+    padding: 0.7rem 0.05rem 0.7rem 0.05rem;
+    max-width: 100vw;
+    min-width: 0;
+    margin: 0.7rem auto 0.7rem auto;
+    border-radius: 0.7rem;
+    margin-bottom: 2rem;
+  }
+}
+
+@media (max-width: 1163px), (orienstart: portrait) {
+  .edit-main {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .edit-info-block {
+    gap: 1rem;
+  }
+
+  .participants-left,
+  .participants-right {
+    min-width: 0;
+    width: 100%;
+    padding: 0.5rem;
+  }
+}
+
+@media (orienstart: portrait) and (max-width: 900px) {
+  .edit-container,
+  .participants-container,
+  .advanced-settings-wrapper,
+  .match-schedule-container,
+  .tournament-results {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+#changePhaseBtn {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  color: var(--fg);
+  background-color: var(--accent);
+  transition: all 0.3s ease;
+  position: relative;
+  top: -40rem;
+  left: 30rem;
+
+  &:hover {
+    filter: brightness(1.1);
+    transform: scale(1.02);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+@media (max-width: 1450px) {
+  .participants-dropdown {
+    position: relative;
+    top: 0;
+    left: -10%;
+    width: 100px;
+    max-width: 10%;
+    height: 600px;
+    padding: 0;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    overflow: visible;
+    z-index: 1000;
+  }
+
+  .participants-sidebar {
+    width: 100%;
+    height: auto;
+    margin: 0;
+    background: var(--bg, #181c24);
+    border-radius: 1.5rem;
+    box-shadow: 0 0 18px 2px var(--accent);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    position: sticky;
+    top: 2.5rem;
+    left: 0;
+    z-index: 30;
+  }
+
+  .participants-sidebar nav ul {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    width: 100%;
+    overflow-x: visible;
+  }
+
+  .participants-sidebar nav ul li {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+  }
+
+  .participants-sidebar nav ul li button {
+    width: 3rem;
+    height: 3rem;
+    padding: 0;
+    margin: 0;
+    box-shadow: 0 0 18px 2px var(--accent);
+    border: none;
+    border-radius: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .participants-sidebar nav ul li .label {
+    display: none;
+  }
+  .participants-container {
+    left: 10%;
+  }
+}
+
+@media (max-width: 1400px) {
+  .participants-dropdown {
+    position: relative;
+    top: 0;
+    left: 0%;
+    width: 100px;
+    max-width: 10%;
+    height: 600px;
+    padding: 0;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    overflow: visible;
+    z-index: 1000;
+  }
+}
+@media (max-width: 1350px) {
+  .edit-dropdown {
+    position: relative;
+    top: 0;
+    left: 0%;
+    width: 100px;
+    max-width: 10%;
+    height: 600px;
+    padding: 0;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    overflow: visible;
+    z-index: 1000;
+  }
+
+  .edit-sidebar {
+    width: 100%;
+    height: auto;
+    margin: 0;
+    background: var(--bg, #181c24);
+    border-radius: 1.5rem;
+    box-shadow: 0 0 18px 2px var(--accent);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    position: sticky;
+    top: 2.5rem;
+    left: 0;
+    z-index: 30;
+  }
+
+  .edit-sidebar nav ul {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    width: 100%;
+    overflow-x: visible;
+  }
+
+  .edit-sidebar nav ul li {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+  }
+
+  .edit-sidebar nav ul li button {
+    width: 3rem;
+    height: 3rem;
+    padding: 0;
+    margin: 0;
+    box-shadow: 0 0 18px 2px var(--accent);
+    border: none;
+    border-radius: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .edit-sidebar nav ul li .label {
+    display: none;
+  }
+  .edit-container {
+    top: 3rem;
+  }
+}
+
+@media (max-width: 1163px) {
+  .participants-container {
+    left: 0%;
+  }
+  .Dropdown-Container {
+    position: fixed;
+    top: 2.5rem;
+    left: 2.5rem;
+    margin-left: 25rem;
+    width: 100px;
+    height: auto;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    background: transparent;
+    pointer-events: auto;
+  }
+
+  .sidebar {
+    height: 3.5rem;
+    width: auto;
+    margin: 0;
+    padding: 0 1rem;
+    background: var(--bg, #181c24);
+    border-radius: 1.5rem;
+    box-shadow: 0 0 18px 2px var(--accent);
+    z-index: 1000;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    background: transparent;
+    border-radius: 1.5rem;
+    box-shadow: none;
+  }
+
+  .sidebar nav ul {
+    display: flex;
+    flex-direction: row;
+    gap: 1.2rem;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .sidebar nav ul li {
+    width: auto;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+  }
+
+  .sidebar nav ul li button {
+    width: 3rem;
+    height: 3rem;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 8px 2px var(--accent);
+    border: none;
+    border-radius: 0.5rem;
+  }
+
+  .sidebar nav ul li .label {
+    display: none;
+  }
+  .selection-container {
+    scale: (0.9);
+    top: -3rem;
+  }
+}
+.edit-main {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.edit-avatar-block {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 300px;
+  margin-right: auto;
+}
+
+.imgContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.edit-info-block {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 1rem;
+}
+
+@media (max-width: 1000px) {
+  .Dropdown-Container {
+    margin-left: 25rem;
+    position: absolute;
+  }
+}
+@media (max-width: 940px) {
+  .Dropdown-Container {
+    margin-left: 22rem;
+  }
+}
+@media (max-width: 830px) {
+  .Dropdown-Container {
+    margin-left: 20rem;
+  }
+}
+@media (max-width: 770px) {
+  .Dropdown-Container {
+    margin-left: 15rem;
+  }
+}
+@media (max-width: 610px) {
+  .Dropdown-Container {
+    margin-left: 10em;
+  }
+}
+@media (max-width: 528px) {
+  .Dropdown-Container {
+    margin-left: 8rem;
+  }
+}
+@media (max-width: 500px) {
+  .Dropdown-Container {
+    margin-left: 6rem;
+  }
+}
+@media (max-width: 480px) {
+  .Dropdown-Wrapper {
+    transform: scale(0.9);
+    margin-left: 0rem;
+  }
+}
+@media (max-width: 450px) {
+  .Dropdown-Wrapper {
+    margin-left: -1.4rem;
+  }
+}
+@media (max-width: 430px) {
+  .Dropdown-Wrapper {
+    transform: scale(0.8);
+    margin-left: -2rem;
+  }
+}
+@media (max-width: 400px) {
+  .Dropdown-Wrapper {
+    transform: scale(0.8);
+    margin-left: -2.3rem;
+  }
+}
+@media (max-width: 386px) {
+  .Dropdown-Wrapper {
+    transform: scale(0.7);
+    margin-left: -2.6rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .participants-container {
+    flex-direction: column;
+    padding: 1.5rem;
+    gap: 1.5rem;
+    width: 95%;
+  }
+
+  .participants-left,
+  .participants-right {
+    flex: 1 1 auto;
+    min-width: 0;
+    width: 100%;
+  }
+
+  .participants-left {
+    h2 {
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+    }
+
+    .search-input {
+      padding: 0.5rem 0.75rem;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .players-grid {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+
+      .player-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+        padding: 0.6rem;
+
+        .button-group {
+          width: 100%;
+          justify-content: space-between;
+          margin-top: 0.5rem;
+        }
+
+        .player-avatar {
+          width: 40px;
+          height: 40px;
+        }
+
+        .player-info {
+          width: 100%;
+
+          .player-name {
+            font-size: 0.95rem;
+          }
+
+          .player-team {
+            font-size: 0.75rem;
+          }
+        }
+
+        .edit-input {
+          font-size: 0.85rem;
+          padding: 0.25rem 0.4rem;
+        }
+
+        .edit-btn,
+        .kick-btn {
+          font-size: 1.1rem;
+        }
+      }
+    }
+  }
+
+  .participants-right {
+    padding: 1rem;
+    h3 {
+      font-size: 1.2rem;
+    }
+
+    input {
+      padding: 0.5rem;
+      font-size: 0.9rem;
+    }
+
+    button {
+      font-size: 0.9rem;
+      padding: 0.5rem;
+    }
+  }
+
+  .statistics {
+    padding: 0.75rem 1rem;
+    font-size: 0.85rem;
+
+    div {
+      padding-bottom: 0.2rem;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .participants-container {
+    top: -5rem;
+    padding: 1rem;
+  }
+
+  .participants-left {
+    .players-grid {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+
+      .player-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+        padding: 0.6rem;
+
+        .button-group {
+          width: 100%;
+          justify-content: space-between;
+          margin-top: 0.5rem;
+        }
+
+        .player-avatar {
+          width: 40px;
+          height: 40px;
+        }
+
+        .player-info {
+          width: 100%;
+
+          .player-name {
+            font-size: 0.95rem;
+          }
+
+          .player-team {
+            font-size: 0.75rem;
+          }
+        }
+
+        .edit-input {
+          font-size: 0.85rem;
+          padding: 0.25rem 0.4rem;
+        }
+
+        .edit-btn,
+        .kick-btn {
+          font-size: 1.1rem;
+        }
+      }
+    }
+  }
+
+  .participants-right {
+    input,
+    button {
+      font-size: 0.85rem;
+      padding: 0.4rem 0.5rem;
+    }
+  }
+  s .statistics {
+    font-size: 0.8rem;
+    padding: 0.5rem 0.75rem;
+  }
+}
+@media (max-width: 1730px) {
+  .bracket-dropdown {
+    position: relative;
+    top: 0;
+    left: -22%;
+    width: 5px;
+    height: 600px;
+    background: transparent;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    z-index: 1000;
+  }
+
+  .bracket-sidebar {
+    width: 10%;
+    height: auto;
+    margin: 0;
+    background: var(--bg, #181c24);
+    border-radius: 1.5rem;
+    box-shadow: 0 0 18px 2px var(--accent);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    position: sticky;
+    top: 2.5rem;
+    left: 0;
+    z-index: 30;
+    flex: 0 50px 0;
+  }
+
+  .bracket-sidebar nav ul {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    width: 100%;
+  }
+
+  .bracket-sidebar nav ul li {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+  }
+
+  .bracket-sidebar nav ul li button {
+    width: 3rem;
+    height: 3rem;
+    padding: 0;
+    margin: 0;
+    box-shadow: 0 0 18px 2px var(--accent);
+    border: none;
+    border-radius: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .bracket-sidebar nav ul li .label {
+    display: none;
+  }
+  .selection-container {
+    position: relative;
+    left: 0%;
+  }
+}
+@media (max-width: 1675px) {
+  .bracket-dropdown {
+    position: fixed;
+    left: -12rem;
+  }
+}
+@media (max-width: 1600px) {
+  .bracket-dropdown {
+    position: fixed;
+    left: -10rem;
+  }
+}
+@media (max-width: 1540px) {
+  .tournament-bracket-container {
+    margin-top: 10rem;
+  }
+
+  .bracket-dropdown {
+    position: fixed;
+    top: 2.5rem;
+    left: 2.5rem;
+    margin-left: 25rem;
+    width: 100px;
+    height: auto;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    background: transparent;
+    pointer-events: auto;
+  }
+
+  .bracket-sidebar {
+    height: 3.5rem;
+    width: auto;
+    margin: 0;
+    padding: 0 1rem;
+    background: var(--bg, #181c24);
+    border-radius: 1.5rem;
+    box-shadow: 0 0 18px 2px var(--accent);
+    z-index: 1000;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    background: transparent;
+    border-radius: 1.5rem;
+    box-shadow: none;
+  }
+
+  .bracket-sidebar nav ul {
+    display: flex;
+    flex-direction: row;
+    gap: 1.2rem;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .bracket-sidebar nav ul li {
+    width: auto;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+  }
+
+  .bracket-sidebar nav ul li button {
+    width: 3rem;
+    height: 3rem;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 8px 2px var(--accent);
+    border: none;
+    border-radius: 0.5rem;
+  }
+
+  .bracket-sidebar nav ul li .label {
+    display: none;
+  }
+}
+@media (max-width: 1000px) {
+  .bracket-dropdown {
+    margin-left: 25rem;
+    position: absolute;
+  }
+}
+@media (max-width: 940px) {
+  .bracket-dropdown {
+    margin-left: 22rem;
+  }
+}
+@media (max-width: 830px) {
+  .bracket-dropdown {
+    margin-left: 20rem;
+  }
+}
+@media (max-width: 770px) {
+  .bracket-dropdown {
+    margin-left: 15rem;
+  }
+}
+@media (max-width: 610px) {
+  .bracket-dropdown {
+    margin-left: 13rem;
+  }
+}
+@media (max-width: 528px) {
+  .bracket-dropdown {
+    margin-left: 11.5rem;
+  }
+}
+@media (max-width: 480px) {
+  .bracket-dropdown {
+    transform: scale(0.9);
+    margin-left: 0rem;
+  }
+}
+@media (max-width: 450px) {
+  .bracket-dropdown {
+    margin-left: -1.4rem;
+  }
+}
+@media (max-width: 430px) {
+  .bracket-dropdown {
+    transform: scale(0.8);
+    margin-left: -2rem;
+  }
+}
+@media (max-width: 400px) {
+  .bracket-dropdown {
+    transform: scale(0.8);
+    margin-left: -2.3rem;
+  }
+}
+@media (max-width: 386px) {
+  .bracket-dropdown {
+    transform: scale(0.7);
+    margin-left: -2.6rem;
+  }
+}
+@media (max-width: 700px) {
+  .bracket-dropdown {
+    margin-left: 12rem;
+  }
+}
+@media (max-width: 650px) {
+  .bracket-dropdown {
+    margin-left: 8rem;
+  }
+}
+
+@media (max-width: 1163px) {
+  .edit-container,
+  .participants-container,
+  .match-schedule-container,
+  .start-section,
+  .tournament-results {
+    top: 10rem;
+  }
+}
+@media (max-width: 1163px) {
+  .tournament-bracket-container,
+  .match-schedule-container {
+    top: 13rem;
+  }
+  footer {
+    margin-top: 10rem;
+  }
+  .advanced-settings-container {
+    margin-top: 10rem;
+  }
+}
+@media (max-width: 480px) {
+  .advanced-dropdown {
+    top: -10rem;
+  }
+  .advanced-settings-container {
+    min-width: 380px;
+    margin-left: -1rem;
+  }
+}
+@media (max-width: 400px) {
+  .advanced-settings-container {
+    min-width: 300px;
+    margin-left: -1rem;
+  }
+}
+@media (max-width: 380px) {
+  .Dropdown-Container {
+    margin-left: 4rem;
+  }
+}
+@media (max-width: 1750px) {
+  .results-dropdown {
+    left: -12rem;
+  }
+}
+
+@media (min-width: 1163px) {
+  .tournament-results {
+    top: -35rem;
+  }
+}
+@media (max-width: 1524px) {
+  .results-dropdown {
+    position: absolute;
+    top: 2.5rem;
+    left: 2.5rem;
+    margin-left: 25rem;
+    width: 100px;
+    height: auto;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    background: transparent;
+    pointer-events: auto;
+  }
+
+  .results-sidebar {
+    height: 3.5rem;
+    width: auto;
+    margin: 0;
+    padding: 0 1rem;
+    background: var(--bg, #181c24);
+    border-radius: 1.5rem;
+    box-shadow: 0 0 18px 2px var(--accent);
+    z-index: 1000;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100%;
+    background: transparent;
+    border-radius: 1.5rem;
+    box-shadow: none;
+  }
+
+  .results-sidebar nav ul {
+    display: flex;
+    flex-direction: row;
+    gap: 1.2rem;
+    list-style: none;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .results-sidebar nav ul li {
+    width: auto;
+    display: flex;
+    justify-content: center;
+  }
+
+  .results-sidebar nav ul li button {
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 8px 2px var(--accent);
+    border: none;
+    border-radius: 0.5rem;
+  }
+
+  .results-sidebar nav ul li .label {
+    display: none;
+  }
+}

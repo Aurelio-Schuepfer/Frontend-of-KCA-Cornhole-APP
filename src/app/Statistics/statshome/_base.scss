@@ -1,0 +1,89 @@
+@use "sass:color";
+
+.statistics-container {
+  padding: 2rem;
+  max-width: 1100px;
+  margin: auto;
+  font-family: var(--font);
+  background-color: var(--bg);
+  color: var(--fg);
+  transition: background-color var(--transition), color var(--transition);
+}
+
+#statisticsTitle {
+  font-size: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rem;
+  margin-top: -1rem;
+}
+
+.statistics-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.stat-card {
+  background: var(--btn-bg);
+  border: 2px solid var(--accent);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  transition: transform var(--transition), box-shadow var(--transition);
+  color: var(--fg);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 0 10px var(--accent);
+
+  h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    font-size: 0.95rem;
+    color: #aaa;
+  }
+
+  &:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 20px var(--accent);
+  }
+}
+
+footer {
+  margin-top: 1rem;
+}
+
+.kca-decoration {
+  width: 325px;
+  height: 325px;
+  margin-top: 5rem;
+  margin-left: auto;
+  margin-right: auto;
+  background: radial-gradient(circle at center, cyan, transparent 70%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font);
+  font-size: 1.2rem;
+  color: var(--fg);
+  box-shadow: 0 0 20px cyan;
+  animation: floaty 3s ease-in-out infinite;
+  transition: all 0.3s ease-in-out;
+}
+
+.kca-decoration::before {
+  content: "KCA";
+  font-weight: bold;
+  font-size: 4.5rem;
+  letter-spacing: 0.1rem;
+}
+
+.kca-decoration:hover {
+  box-shadow: 0 0 30px cyan;
+}

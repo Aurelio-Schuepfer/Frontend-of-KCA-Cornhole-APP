@@ -4,6 +4,7 @@ import { UserProfileService } from '../../Services/user-profile.service';
 import { Router } from '@angular/router';
 import { TournamentService } from '../../Services/tournament.service';
 import { Tournament } from '../../tournament.interface';
+import { HttpErrorResponse } from '@angular/common/http';
 
 type LanguageCode = 'de' | 'en' | 'fr' | 'es';
 
@@ -754,37 +755,45 @@ export class CreateTournamentComponent implements OnInit {
       return;
     }
 
-    if (!this.tournament.id) {
-      this.tournament.id =
-        't_' + Date.now() + '_' + Math.floor(Math.random() * 10000);
-    }
-
-    // Initialisiere alle Felder
-    const tournamentObj = {
-      ...this.tournament,
-      participants: [],
-      bracket: null,
-      results: [],
-      schedule: [],
-      rules: this.tournament.rules || '',
+    const tournamentObj: any = {
+      name: this.tournament.name,
+      organizer: this.tournament.organizer || null,
+      location: this.tournament.location,
+      meetingPoint: null,
+      date: this.tournament.date,
+      maxTeams: this.tournament.teams ? Number(this.tournament.teams) : null,
+      entryFee: this.tournament.fee ? Number(this.tournament.fee) : null,
+      private: this.tournament.private ?? false,
+      format: this.tournament.format,
+      rules: this.tournament.rules || null,
+      notes: this.tournament.notes || null,
+      ageGroup: this.advancedSettings.ageGroup || null,
+      skillLevel: this.advancedSettings.skillLevel || null,
+      prize: this.advancedSettings.prizes || null,
+      league: this.advancedSettings.league || null,
+      sponsors: [],
+      partners: [],
+      teams: [],
+      administrator: this.userProfile?.name || "",
+      matches: [],
+      stats: null
     };
 
-    const all = JSON.parse(localStorage.getItem('tournaments') || '[]');
-    const idx = all.findIndex((t: any) => t.id === tournamentObj.id);
-    if (idx >= 0) {
-      all[idx] = tournamentObj;
-    } else {
-      all.push(tournamentObj);
-    }
-    localStorage.setItem('tournaments', JSON.stringify(all));
-
-    this.tournamentService.setTournament(tournamentObj);
-    this.showSuccess = true;
-
-    setTimeout(() => {
-      this.showSuccess = false;
-      this.router.navigate(['/manage']);
-    }, 3000);
+    this.tournamentService.createTournament(tournamentObj).subscribe({
+      next: (created) => {
+        this.tournamentService.setTournament(created);
+        this.showSuccess = true;
+        setTimeout(() => {
+          this.showSuccess = false;
+          this.router.navigate(['/manage']);
+        }, 2000);
+      },
+      error: (err: HttpErrorResponse) => {
+        let msg = 'Failed to create tournament.';
+        if (err.error && err.error.message) msg += ' ' + err.error.message;
+        alert(msg);
+      }
+    });
   }
 
   toggleLangDropdown() {

@@ -1,0 +1,36 @@
+@media (max-width: 700px) {
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .insight-card {
+    padding: 30px 20px;
+  }
+
+  .insight-card .icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+  }
+
+  .insight-card .label {
+    font-size: 1.25rem;
+    margin-bottom: 8px;
+  }
+
+  .insight-card .value {
+    font-size: 2.2rem;
+    margin-bottom: 8px;
+  }
+
+  .insight-card .description {
+    font-size: 0.95rem;
+  }
+  .insight-cards {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+
+  .insight-card {
+    max-width: 100%;
+    padding: 30px 20px;
+  }
+}

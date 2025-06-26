@@ -87,8 +87,14 @@
       <ng-container *ngIf="globalAuth.isLoggedIn">
         <div class="auth-row">
           <div class="user-info">
-            <p id="username">{{ globalAuth.username }}</p>
-            <button
+            <div class="username-wrapper" *ngIf="globalAuth?.username as username">
+              <p id="username" class="username">
+                {{ username.length > 16 ? (username | slice:0:14) + '..' : username }}
+                <span *ngIf="username.length > 16" class="tooltip">
+                  {{ username }}
+                </span>
+              </p>
+            </div>             <button
               id="profileBtn"
               class="profile-btn"
               (click)="goToProfile()"

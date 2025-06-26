@@ -10,6 +10,7 @@ import { GlobalAuth } from '../../global-auth';
 import { UserProfileService } from '../../Services/user-profile.service';
 import { Router } from '@angular/router';
 import { TournamentService } from '../../Services/tournament.service';
+import { Tournament } from '../../tournament.interface';
 type LanguageCode = 'de' | 'en' | 'fr' | 'es';
 
 @Component({
@@ -506,24 +507,20 @@ export class JoinTournamentComponent
         JSON.stringify(joinedTournaments)
       );
 
-      // Teilnehmer zum Turnierobjekt hinzufügen
-      const all = JSON.parse(localStorage.getItem('tournaments') || '[]');
-      const idx = all.findIndex(
-        (t: any) => t.id === this.selectedTournamentForJoin
-      );
-      if (idx >= 0) {
-        if (!all[idx].participants) all[idx].participants = [];
-        all[idx].participants.push({
-          name: this.userProfile?.name || 'Gast',
-          team: this.teamNameValue || '',
-          avatar:
-            this.userProfile?.imageUrl || 'assets/images/default-profile.png',
+      const tournamentId = this.selectedTournamentForJoin;
+      if (!this.userProfile) {
+        this.userProfileService.getProfile().subscribe({
+          next: (profile) => {
+            this.userProfile = profile;
+            this.addParticipantToTournament(tournamentId);
+          },
+          error: () => {
+            this.addParticipantToTournament(tournamentId);
+          }
         });
-        localStorage.setItem('tournaments', JSON.stringify(all));
-        this.tournamentService.setTournament(all[idx]);
+      } else {
+        this.addParticipantToTournament(tournamentId);
       }
-      this.loadJoinedTournaments();
-      this.loadAllTournaments();
     }
     this.joinFeedback = {
       message: this.t.joinSuccess || 'Successfully joined!',
@@ -538,6 +535,32 @@ export class JoinTournamentComponent
       this.showTournamentListFade = true;
     }, 3000);
     setTimeout(() => this.startConfetti(), 50);
+  }
+
+  private addParticipantToTournament(tournamentId: string) {
+    this.tournamentService.getTournamentById(Number(tournamentId)).subscribe({
+      next: (tournament) => {
+        if (!tournament.participants) tournament.participants = [];
+        tournament.participants.push({
+          name: this.userProfile?.name || this.globalAuth.username || 'Gast',
+          team: this.teamNameValue || '',
+          avatar: this.userProfile?.imageUrl || this.globalAuth.profileImageUrl || 'assets/images/default-profile.png',
+          tournamentId: tournament.id
+        });
+        this.tournamentService.updateTournament(Number(tournament.id), tournament).subscribe({
+          next: () => {
+            this.tournamentService.getTournamentById(Number(tournament.id)).subscribe({
+              next: (fresh) => {
+                this.selectedTournament = fresh;
+                this.tournamentService.setTournament(fresh);
+                this.loadJoinedTournaments();
+                this.loadAllTournaments();
+              }
+            });
+          }
+        });
+      }
+    });
   }
 
   openDetails(tournamentId: string): void {
@@ -764,17 +787,31 @@ export class JoinTournamentComponent
   }
 
   private loadAllTournaments(): void {
-    // Nur noch gespeicherte Turniere aus dem Local Storage laden (keine statischen mehr)
-    const savedTournaments = JSON.parse(
-      localStorage.getItem('tournaments') || '[]'
-    ).filter((t: any) => !t.private);
-
-    this.tournaments = savedTournaments;
-    this.filteredTournaments = savedTournaments;
+    this.tournamentService.getTournaments().subscribe({
+      next: (tournaments) => {
+        this.tournaments = tournaments.filter((t: any) => !t.private);
+        this.filteredTournaments = this.tournaments;
+        this.hasTournament = this.tournaments.length > 0;
+      },
+      error: () => {
+        this.tournaments = [];
+        this.filteredTournaments = [];
+        this.hasTournament = false;
+      },
+    });
   }
 
-  // 2. Zeige Teilnehmer eines Turniers immer aus tournament.participants an
   getCurrentParticipants(tournament: any) {
     return tournament?.participants?.length ? tournament.participants : [];
   }
+
+  checkOverflow(element: HTMLElement, type: 'name' | 'team', player: any): void {
+    const isOverflowing = element.offsetWidth < element.scrollWidth;
+    if (type === 'name') {
+      player.showNameTooltip = isOverflowing;
+    } else {
+      player.showTeamTooltip = isOverflowing;
+    }
+  }
+  
 }

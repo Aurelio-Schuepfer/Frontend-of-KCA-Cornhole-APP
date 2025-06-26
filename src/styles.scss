@@ -401,7 +401,6 @@ footer {
     }
     &:hover {
       transform: translateY(-3px);
-      
     }
   }
 }
@@ -410,7 +409,7 @@ footer {
   #loginBtn {
     position: absolute;
     position: absolute;
-     top: -4.3rem;
+    top: -4.3rem;
     right: 63rem;
     margin-right: 2rem;
   }
@@ -425,7 +424,7 @@ footer {
   #loginBtn {
     position: absolute;
     position: absolute;
-     top: -4.3rem;
+    top: -4.3rem;
     right: 60rem;
     margin-right: 2rem;
   }
@@ -440,7 +439,7 @@ footer {
   #loginBtn {
     position: absolute;
     position: absolute;
-     top: -4.3rem;
+    top: -4.3rem;
     right: 57rem;
     margin-right: 2rem;
   }
@@ -455,7 +454,7 @@ footer {
   #loginBtn {
     position: absolute;
     position: absolute;
-     top: -4.3rem;
+    top: -4.3rem;
     right: 51rem;
     margin-right: 2rem;
   }
@@ -479,7 +478,7 @@ footer {
   }
   #registerBtn {
     position: absolute;
-     top: -3.3rem;
+    top: -3.3rem;
     margin-top: -1rem;
     right: -1rem;
   }
@@ -498,7 +497,7 @@ footer {
   }
   #registerBtn {
     position: absolute;
-     top: -3.3rem;
+    top: -3.3rem;
     margin-top: -1rem;
     right: -1rem;
   }
@@ -518,7 +517,7 @@ footer {
   }
   #registerBtn {
     position: absolute;
-     top: -3.3rem;
+    top: -3.3rem;
     margin-top: -1rem;
     right: -1rem;
   }
@@ -538,7 +537,7 @@ footer {
   }
   #registerBtn {
     position: absolute;
-     top: -3.3rem;
+    top: -3.3rem;
     margin-top: -1rem;
     right: 0rem;
   }
@@ -562,12 +561,10 @@ footer {
     right: 7rem;
     margin-top: 1rem;
   }
-  h1
-  {
+  h1 {
     margin-top: 2rem;
   }
 }
-
 
 @media (max-width: 527px) {
   .sign-buttons {
@@ -943,7 +940,7 @@ footer {
 }
 
 .custom-checkbox::after {
-  content: '';
+  content: "";
   position: absolute;
   display: none;
 }
@@ -960,7 +957,7 @@ footer {
   border: solid #fff;
   border-width: 0 0.2rem 0.2rem 0;
   transform: rotate(45deg);
-  content: '';
+  content: "";
   position: absolute;
 }
 
@@ -980,37 +977,37 @@ button[routerLink="/"] {
   position: absolute;
   top: 1rem;
   left: 1rem;
-  height: 4rem; 
+  height: 4rem;
 }
 @media (max-width: 1250px) {
   #logo {
-    height: 3rem; 
+    height: 3rem;
   }
 }
 @media (max-width: 1000px) {
   #logo {
-    height: 2.5rem; 
+    height: 2.5rem;
     top: 5.5rem;
     left: 42%;
   }
 }
 @media (max-width: 768px) {
   #logo {
-    height: 2.5rem; 
+    height: 2.5rem;
     top: 1rem;
     left: 1rem;
   }
 }
 @media (max-width: 527px) {
   #logo {
-    height: 2.5rem; 
+    height: 2.5rem;
     top: 11rem;
     left: 42%;
   }
 }
 @media (max-width: 500px) {
   #logo {
-    height: 2.5rem; 
+    height: 2.5rem;
     top: 11rem;
     left: 30%;
   }
@@ -1041,9 +1038,8 @@ button[routerLink="/"] {
   }
 }
 
-.LogButton
-{
-margin-right: 2.7rem;
+.LogButton {
+  margin-right: 2.7rem;
 }
 
 .profile-btn {
@@ -1075,120 +1071,97 @@ margin-right: 2.7rem;
   display: block;
 }
 
-@media (max-width: 1400px) {
-   .user-info
-  {
+@media (max-width: 1550px) {
+  .user-info {
     top: -3.5rem;
     left: -7rem;
-}
+  }
 }
 @media (max-width: 1250px) {
-   .user-info
-  {
+  .user-info {
     top: -3.5rem;
     left: -74rem;
-}
+  }
 }
 @media (max-width: 1200px) {
-   .user-info
-  {
+  .user-info {
     top: -3.5rem;
     left: -68rem;
-}
+  }
 }
 @media (max-width: 1150px) {
-   .user-info
-  {
+  .user-info {
     top: -3.5rem;
     left: -65rem;
-}
-}
-@media (max-width: 1100px) {
-   .user-info
-  {
-    top: -0rem;
-    left: -12rem;
-}
+  }
 }
 @media (max-width: 1050px) {
-   .user-info
-  {
+  .user-info {
     top: -3.5rem;
     left: -60rem;
-}
+  }
 }
 @media (max-width: 1000px) {
-   .user-info
-  {
+  .user-info {
     top: -8.5rem;
     left: -59rem;
-}
+  }
 }
 @media (max-width: 975px) {
-   .user-info
-  {
+  .user-info {
     top: -3.5rem;
     left: -55rem;
-}
+  }
 }
 @media (max-width: 915px) {
-   .user-info
-  {
+  .user-info {
     top: -3.5rem;
     left: -52rem;
-}
+  }
 }
 @media (max-width: 875px) {
-   .user-info
-  {
+  .user-info {
     top: -3.5rem;
     left: -48rem;
-}
+  }
 }
 @media (max-width: 800px) {
-   .user-info
-  {
+  .user-info {
     top: -3.5rem;
     left: -44rem;
-}
+  }
 }
 @media (max-width: 768px) {
-   .user-info
-  {
+  .user-info {
     top: 0rem;
     left: -27.5rem;
-}
+  }
 }
 @media (max-width: 527px) {
-   .user-info
-  {
+  .user-info {
     top: -0rem;
     left: -23rem;
-}
+  }
 }
 
 @media (max-width: 500px) {
-   .user-info
-   {
+  .user-info {
     top: -0rem;
     left: -20rem;
-}
+  }
 }
 @media (max-width: 450px) {
-   .user-info
-  {
+  .user-info {
     top: -0rem;
     left: -18rem;
-}
+  }
 }
 @media (max-width: 425px) {
-   .user-info
-  {
+  .user-info {
     top: -0rem;
     left: -18rem;
+  }
 }
-}
-
 
 .auth-error {
   color: var(--accent);
@@ -1214,9 +1187,14 @@ margin-right: 2.7rem;
 
 .reset-modal {
   position: fixed;
-  top: 0; left: 0; width: 100vw; height: 100vh;
-  background: rgba(0,0,0,0.7);
-  display: flex; align-items: center; justify-content: center;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   z-index: 2000;
 }
 .reset-modal-content {
@@ -1226,7 +1204,7 @@ margin-right: 2.7rem;
   padding: 2.5rem 2rem 2rem 2rem;
   min-width: 320px;
   max-width: 95vw;
-  box-shadow: 0 0 30px rgba(0,0,0,0.4);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
   text-align: center;
   position: relative;
 }
@@ -1265,7 +1243,6 @@ margin-right: 2.7rem;
   justify-content: center;
 }
 
-
 .input-wrapper {
   position: relative;
   width: 100%;
@@ -1293,4 +1270,67 @@ margin-right: 2.7rem;
 .eye-register {
   right: 12px;
   top: 22%;
+}
+
+.tooltip {
+  position: absolute;
+  bottom: 100%;
+  left: 38%;
+  transform: translateX(-50%);
+  background-color: var(--bg);
+  color: var(--accent);
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 20;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.user-info:hover .tooltip {
+  opacity: 1;
+}
+
+.player-tooltip {
+  position: absolute;
+  bottom: 50%;
+  left: 69%;
+  transform: translateX(-50%);
+  background-color: var(--bg);
+  color: var(--accent);
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 20;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+.team-tooltip {
+  position: absolute;
+  bottom: 25%;
+  left: 52%;
+  transform: translateX(-50%);
+  background-color: var(--bg);
+  color: var(--accent);
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 20;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+.player-info:hover .team-tooltip {
+  opacity: 1;
+}
+.player-info:hover .player-tooltip {
+  opacity: 1;
 }

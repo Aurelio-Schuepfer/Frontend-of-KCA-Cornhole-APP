@@ -3,6 +3,10 @@ import { GlobalAuth } from '../../global-auth';
 import { UserProfileService } from '../../Services/user-profile.service';
 import { Router } from '@angular/router';
 import { TournamentService } from '../../Services/tournament.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
+import {HostListener} from '@angular/core';
 
 type LanguageCode = 'de' | 'en' | 'fr' | 'es';
 
@@ -13,9 +17,14 @@ type LanguageCode = 'de' | 'en' | 'fr' | 'es';
   standalone: false,
 })
 export class ManageTournamentComponent implements OnInit {
+
+  private autoSaveSubject = new Subject<void>();
+
   isNavOpen: boolean = false;
   expandedId: number | null = null;
   hasTournament = false;
+
+  showHint = false;
 
   showPassword = false;
   showConfirmPassword = false;
@@ -26,7 +35,7 @@ export class ManageTournamentComponent implements OnInit {
   scheduleSelected = false;
   extendedSelected = false;
   resultsSelected = false;
-  presentSelected = false;
+  startSelected = false;
   selectedImage: File | undefined = undefined;
   editName = false;
   editDate = false;
@@ -56,7 +65,6 @@ export class ManageTournamentComponent implements OnInit {
   groupAndKoSelected = false;
   onlyKoPhaseSelected = false;
   tournament: any;
-  showMobileWarning = false;
 
   rounds: any[][] = [];
 
@@ -69,290 +77,10 @@ export class ManageTournamentComponent implements OnInit {
 
   players = [
     {
-      name: 'Olivia Müller',
-      team: 'Team 1',
-      avatar: 'https://randomuser.me/api/portraits/women/25.jpg',
-    },
-    {
-      name: 'David Hoffmann',
-      team: 'Team 1',
-      avatar: 'https://randomuser.me/api/portraits/men/1.jpg',
-    },
-    {
-      name: 'Greta Wagner',
-      team: 'Team 2',
-      avatar: 'https://randomuser.me/api/portraits/men/12.jpg',
-    },
-    {
-      name: 'Clara Schmidt',
-      team: 'Team 2',
-      avatar: 'https://randomuser.me/api/portraits/women/39.jpg',
-    },
-    {
-      name: 'Anna Schmidt',
-      team: 'Team 3',
-      avatar: 'https://randomuser.me/api/portraits/women/48.jpg',
-    },
-    {
-      name: 'Olivia Weber',
-      team: 'Team 3',
-      avatar: 'https://randomuser.me/api/portraits/women/82.jpg',
-    },
-    {
-      name: 'Lukas König',
-      team: 'Team 4',
-      avatar: 'https://randomuser.me/api/portraits/men/53.jpg',
-    },
-    {
-      name: 'Isabel Schulz',
-      team: 'Team 4',
-      avatar: 'https://randomuser.me/api/portraits/men/39.jpg',
-    },
-    {
-      name: 'Jonas Müller',
-      team: 'Team 5',
-      avatar: 'https://randomuser.me/api/portraits/men/99.jpg',
-    },
-    {
-      name: 'Noah König',
-      team: 'Team 5',
-      avatar: 'https://randomuser.me/api/portraits/men/21.jpg',
-    },
-    {
-      name: 'Quirin König',
-      team: 'Team 6',
-      avatar: 'https://randomuser.me/api/portraits/men/25.jpg',
-    },
-    {
-      name: 'Rosa Hoffmann',
-      team: 'Team 6',
-      avatar: 'https://randomuser.me/api/portraits/men/10.jpg',
-    },
-    {
-      name: 'Simon Müller',
-      team: 'Team 7',
-      avatar: 'https://randomuser.me/api/portraits/men/55.jpg',
-    },
-    {
-      name: 'Mia Schmidt',
-      team: 'Team 7',
-      avatar: 'https://randomuser.me/api/portraits/women/90.jpg',
-    },
-    {
-      name: 'Anna Becker',
-      team: 'Team 8',
-      avatar: 'https://randomuser.me/api/portraits/women/72.jpg',
-    },
-    {
-      name: 'Noah Weber',
-      team: 'Team 8',
-      avatar: 'https://randomuser.me/api/portraits/men/98.jpg',
-    },
-    {
-      name: 'Olivia Schneider',
-      team: 'Team 9',
-      avatar: 'https://randomuser.me/api/portraits/men/34.jpg',
-    },
-    {
-      name: 'Isabel Schulz',
-      team: 'Team 9',
-      avatar: 'https://randomuser.me/api/portraits/women/1.jpg',
-    },
-    {
-      name: 'Henry Müller',
-      team: 'Team 10',
-      avatar: 'https://randomuser.me/api/portraits/men/33.jpg',
-    },
-    {
-      name: 'David Weber',
-      team: 'Team 10',
-      avatar: 'https://randomuser.me/api/portraits/women/71.jpg',
-    },
-    {
-      name: 'Klara Schulz',
-      team: 'Team 11',
-      avatar: 'https://randomuser.me/api/portraits/women/83.jpg',
-    },
-    {
-      name: 'Lukas Schulz',
-      team: 'Team 11',
-      avatar: 'https://randomuser.me/api/portraits/women/57.jpg',
-    },
-    {
-      name: 'Quirin Müller',
-      team: 'Team 12',
-      avatar: 'https://randomuser.me/api/portraits/women/99.jpg',
-    },
-    {
-      name: 'Klara Becker',
-      team: 'Team 12',
-      avatar: 'https://randomuser.me/api/portraits/women/70.jpg',
-    },
-    {
-      name: 'Rosa Schmidt',
-      team: 'Team 13',
-      avatar: 'https://randomuser.me/api/portraits/men/83.jpg',
-    },
-    {
-      name: 'Paul Schneider',
-      team: 'Team 13',
-      avatar: 'https://randomuser.me/api/portraits/men/69.jpg',
-    },
-    {
-      name: 'Simon Müller',
-      team: 'Team 14',
-      avatar: 'https://randomuser.me/api/portraits/men/63.jpg',
-    },
-    {
-      name: 'Henry Weber',
-      team: 'Team 14',
-      avatar: 'https://randomuser.me/api/portraits/women/30.jpg',
-    },
-    {
-      name: 'Tina Weber',
-      team: 'Team 15',
-      avatar: 'https://randomuser.me/api/portraits/women/63.jpg',
-    },
-    {
-      name: 'Anna Müller',
-      team: 'Team 15',
-      avatar: 'https://randomuser.me/api/portraits/men/15.jpg',
-    },
-    {
-      name: 'Henry Weber',
-      team: 'Team 16',
-      avatar: 'https://randomuser.me/api/portraits/women/65.jpg',
-    },
-    {
-      name: 'Ben Weber',
-      team: 'Team 16',
-      avatar: 'https://randomuser.me/api/portraits/men/76.jpg',
-    },
-    {
-      name: 'David Müller',
-      team: 'Team 17',
-      avatar: 'https://randomuser.me/api/portraits/men/6.jpg',
-    },
-    {
-      name: 'Greta König',
-      team: 'Team 17',
-      avatar: 'https://randomuser.me/api/portraits/men/60.jpg',
-    },
-    {
-      name: 'Noah König',
-      team: 'Team 18',
-      avatar: 'https://randomuser.me/api/portraits/men/92.jpg',
-    },
-    {
-      name: 'Anna Schmidt',
-      team: 'Team 18',
-      avatar: 'https://randomuser.me/api/portraits/men/51.jpg',
-    },
-    {
-      name: 'Isabel Weber',
-      team: 'Team 19',
-      avatar: 'https://randomuser.me/api/portraits/women/14.jpg',
-    },
-    {
-      name: 'Greta Schmidt',
-      team: 'Team 19',
-      avatar: 'https://randomuser.me/api/portraits/women/55.jpg',
-    },
-    {
-      name: 'Jonas Schulz',
-      team: 'Team 20',
-      avatar: 'https://randomuser.me/api/portraits/men/82.jpg',
-    },
-    {
-      name: 'Isabel König',
-      team: 'Team 20',
-      avatar: 'https://randomuser.me/api/portraits/women/22.jpg',
-    },
-    {
-      name: 'Paul Hoffmann',
-      team: 'Team 21',
-      avatar: 'https://randomuser.me/api/portraits/men/45.jpg',
-    },
-    {
-      name: 'Emma Schulz',
-      team: 'Team 21',
-      avatar: 'https://randomuser.me/api/portraits/women/12.jpg',
-    },
-    {
-      name: 'Ben Becker',
-      team: 'Team 22',
-      avatar: 'https://randomuser.me/api/portraits/men/77.jpg',
-    },
-    {
-      name: 'Tina Becker',
-      team: 'Team 22',
-      avatar: 'https://randomuser.me/api/portraits/women/77.jpg',
-    },
-    {
-      name: 'Felix Schneider',
-      team: 'Team 23',
-      avatar: 'https://randomuser.me/api/portraits/men/44.jpg',
-    },
-    {
-      name: 'Emma Becker',
-      team: 'Team 23',
-      avatar: 'https://randomuser.me/api/portraits/women/88.jpg',
-    },
-    {
-      name: 'Jonas Schneider',
-      team: 'Team 24',
-      avatar: 'https://randomuser.me/api/portraits/men/33.jpg',
-    },
-    {
-      name: 'Mia Hoffmann',
-      team: 'Team 24',
-      avatar: 'https://randomuser.me/api/portraits/women/99.jpg',
-    },
-    {
-      name: 'Paul König',
-      team: 'Team 25',
-      avatar: 'https://randomuser.me/api/portraits/men/45.jpg',
-    },
-    {
-      name: 'Clara Becker',
-      team: 'Team 25',
-      avatar: 'https://randomuser.me/api/portraits/women/66.jpg',
-    },
-    {
-      name: 'Felix Hoffmann',
-      team: 'Team 26',
-      avatar: 'https://randomuser.me/api/portraits/men/88.jpg',
-    },
-    {
-      name: 'Emma Wagner',
-      team: 'Team 26',
-      avatar: 'https://randomuser.me/api/portraits/women/11.jpg',
-    },
-    {
-      name: 'Ben Schulz',
-      team: 'Team 27',
-      avatar: 'https://randomuser.me/api/portraits/men/11.jpg',
-    },
-    {
-      name: 'Greta Schulz',
-      team: 'Team 27',
-      avatar: 'https://randomuser.me/api/portraits/women/33.jpg',
-    },
-    {
-      name: 'Jonas Becker',
-      team: 'Team 28',
-      avatar: 'https://randomuser.me/api/portraits/men/66.jpg',
-    },
-    {
-      name: 'Tina Schulz',
-      team: 'Team 28',
-      avatar: 'https://randomuser.me/api/portraits/women/44.jpg',
-    },
-    {
-      name: 'Simon Schulz',
-      team: 'Team 29',
-      avatar: 'https://randomuser.me/api/portraits/men/22.jpg',
-    },
+      name: '',
+      team: '',
+      avatar: '',
+    }
   ];
 
   selectedLang: LanguageCode = 'en';
@@ -394,7 +122,7 @@ export class ManageTournamentComponent implements OnInit {
       bracket: 'Turnierbaum',
       schedule: 'Spielplan',
       Advanced: 'Erweitert',
-      present: 'Präsentieren',
+      start: 'Starten',
       results: 'Ergebnisse',
       cancelTournament: 'Turnier abbrechen',
       cancelButton: 'Turnier abbrechen',
@@ -456,12 +184,14 @@ export class ManageTournamentComponent implements OnInit {
       wins: 'Siege',
       losses: 'Niederlagen',
       points: 'Punkte',
+      addMatch: 'Match hinzufügen',
       editHallFields: 'Halle bearbeiten',
       hallEditorTitle: 'Hallenfeld-Editor',
       addField: 'Feld hinzufügen',
       field: 'Feld',
       clickFieldToSelect: 'Klicke auf ein Feld, um es auszuwählen',
       randomizer: 'Zufallsgenerator',
+      timePeriod: 'Zeitraum',
       editFeetitle: 'Startgeld bearbeiten',
       choosePhase: 'Wähle deine Phase',
       onlygroup: 'nur Gruppenphase',
@@ -475,14 +205,12 @@ export class ManageTournamentComponent implements OnInit {
       Accuracy: 'Trefferrate',
       Diff: 'Differenz',
       Group: 'Gruppe',
-      mobileWarning:
-        'Die Turnierverwaltung ist auf dem Desktop empfohlen, da sie auf Mobilgeräten nicht optimal funktioniert.',
-      presentModePresentation: 'Präsentation',
-      presentModeResults: 'Ergebnisse',
-      presentModeResultsView: 'Ergebnisse anzeigen',
-      presentModePlaying: 'Spielen',
-      exitPresent: 'Präsentationsmodus verlassen',
-      presentationSlide: 'Präsentations-Slide',
+      startModestart: 'Präsenstart',
+      startModeResults: 'Ergebnisse',
+      startModeResultsView: 'Ergebnisse anzeigen',
+      startModePlaying: 'Spielen',
+      exitstart: 'Präsenstartsmodus verlassen',
+      startSlide: 'Präsenstarts-Slide',
       slideContent: 'Inhalt für Slide',
       enterResults: 'Ergebnisse eintragen',
       Results: 'Ergebnisse',
@@ -490,7 +218,10 @@ export class ManageTournamentComponent implements OnInit {
       groupPhase: 'Gruppenphase',
       gameOn: 'Es wird gespielt!',
       ruleHint:
-        'Hinweis: Für jede Regel bitte eine neue Zeile verwenden (Enter drücken), damit sie als eigener Listenpunkt erscheint.',
+        'Hinweis: Für jede Regel bitte eine neue Zeile verwenden (Enter drücken), damit sie als eigener Listenpunkt erscheint. Wenn du es trotzdem versuchen möchtest aktiviere am besten die Desktopansicht in den Einstellungen und rauszoomen kann helfen.',
+      noSavedTournaments: 'Keine gespeicherten  Turniere',
+      mySavedTournaments: 'Meine gespeicherten Turniere',
+      Hint: 'Für das Managen der Turniere empfehlen wir die Nutzung eines Desktop-Computers. Auf kleinen Bildschirmen kann es schwierig sein.',
     },
     en: {
       home: 'Home',
@@ -527,7 +258,7 @@ export class ManageTournamentComponent implements OnInit {
       bracket: 'Bracket',
       schedule: 'Fixture',
       Advanced: 'Advanced',
-      present: 'Present',
+      start: 'Start',
       results: 'Results',
       cancelTournament: 'Cancel Tournament',
       cancelButton: 'Cancel Tournament',
@@ -588,12 +319,14 @@ export class ManageTournamentComponent implements OnInit {
       wins: 'Wins',
       losses: 'Losses',
       points: 'Points',
+      addMatch: 'Add match',
       editHallFields: 'Edit Hall Fields',
       hallEditorTitle: 'Hall Field Editor',
       addField: 'Add Field',
       field: 'Field',
       clickFieldToSelect: 'Click a field to select',
       randomizer: 'Randomizer',
+      timePeriod: 'Time period',
       editFeetitle: 'Edit fee',
       choosePhase: 'Choose your phase',
       onlygroup: 'Group stage only',
@@ -607,9 +340,7 @@ export class ManageTournamentComponent implements OnInit {
       Accuracy: 'Hit Rate',
       Diff: 'Difference',
       Group: 'Group',
-      mobileWarning:
-        'Managing tournaments is recommended on desktop, as the experience on mobile is not optimal.',
-      presentationSlide: 'Presentation Slide',
+      startSlide: 'Presenstart Slide',
       slideContent: 'Slide Content',
       enterResults: 'Enter Results',
       Results: 'Results',
@@ -618,6 +349,9 @@ export class ManageTournamentComponent implements OnInit {
       gameOn: 'Game On!',
       ruleHint:
         'Note: Please press Enter after each rule so it appears as a separate item in the list.',
+      noSavedTournaments: 'No saved tournaments',
+      mySavedTournaments: 'My saved tournaments',
+      Hint: 'For managing tournaments, we recommend using a desktop computer. It can be difficult on small screens. If you still want to give it a try, its best to enable desktop view in the settings, and zooming out might help.  ',
     },
     fr: {
       home: 'Accueil',
@@ -654,7 +388,7 @@ export class ManageTournamentComponent implements OnInit {
       bracket: 'Tableau',
       schedule: 'Calendrier',
       Advanced: 'Avancé',
-      present: 'Présenter',
+      start: 'Lancer',
       results: 'Résultats',
       cancelTournament: 'Annuler le tournoi',
       cancelButton: 'Annuler le tournoi',
@@ -716,12 +450,14 @@ export class ManageTournamentComponent implements OnInit {
       wins: 'Victoires',
       losses: 'Défaites',
       points: 'Points',
+      addMatch: 'Ajouter un match',
       editHallFields: 'Modifier les terrains',
       hallEditorTitle: 'Éditeur de terrains',
       addField: 'Ajouter un terrain',
       field: 'Terrain',
       clickFieldToSelect: 'Cliquez sur un terrain pour le sélectionner',
       randomizer: 'Randomiseur',
+      timePeriod: '	Période de temps',
       editFeetitle: 'Modifier les frais',
       choosePhase: 'Choisis ta phase',
       onlygroup: 'Phase de groupes uniquement',
@@ -735,9 +471,7 @@ export class ManageTournamentComponent implements OnInit {
       Accuracy: 'Précision',
       Diff: 'Différence',
       Group: 'Groupe',
-      mobileWarning:
-        'La gestion du tournoi est recommandée sur ordinateur, car l’expérience mobile n’est pas optimale.',
-      presentationSlide: 'Diapositive de présentation',
+      startSlide: 'Diapositive de présenstart',
       slideContent: 'Contenu de la diapositive',
       enterResults: 'Saisir les résultats',
       Results: 'Résultats',
@@ -746,6 +480,9 @@ export class ManageTournamentComponent implements OnInit {
       gameOn: 'C’est parti !',
       ruleHint:
         'Remarque : Veuillez appuyer sur Entrée après chaque règle afin quelle apparaisse comme un élément distinct dans la liste.',
+      noSavedTournaments: 'Aucun tournoi enregistré',
+      mySavedTournaments: 'Mes tournois enregistrés',
+      Hint: 'Pour gérer les tournois, nous recommandons dutiliser un ordinateur de bureau. Cela peut être difficile sur les petits écrans. Si tu veux quand même essayer, il vaut mieux activer la vue ordinateur dans les paramètres, et dézoomer peut aider.  ',
     },
     es: {
       home: 'Inicio',
@@ -782,7 +519,7 @@ export class ManageTournamentComponent implements OnInit {
       bracket: 'Cuadro',
       schedule: 'Calendario',
       Advanced: 'Avanzado',
-      present: 'Presentar',
+      start: 'Iniciar',
       results: 'Resultados',
       cancelTournament: 'Cancelar torneo',
       cancelButton: 'Cancelar torneo',
@@ -843,12 +580,14 @@ export class ManageTournamentComponent implements OnInit {
       wins: 'Victorias',
       losses: 'Derrotas',
       points: 'Puntos',
+      addMatch: 'Agregar partido',
       editHallFields: 'Editar campos de la sala',
       hallEditorTitle: 'Editor de campos',
       addField: 'Agregar campo',
       field: 'Campo',
       clickFieldToSelect: 'Haz clic en un campo para seleccionarlo',
       randomizer: 'Aleatorizador',
+      timePeriod: 'Período de tiempo',
       editFeetitle: 'Modificar cuota',
       choosePhase: 'Elige tu fase',
       onlygroup: 'Solo fase de grupos',
@@ -862,9 +601,7 @@ export class ManageTournamentComponent implements OnInit {
       Accuracy: 'Aciertos',
       Diff: 'Diferencia',
       Group: 'Grupo',
-      mobileWarning:
-        'Se recomienda gestionar el torneo en escritorio, ya que la experiencia en móvil no es óptima.',
-      presentationSlide: 'Diapositiva de presentación',
+      startSlide: 'Diapositiva de presentación',
       slideContent: 'Contenido de la diapositiva',
       enterResults: 'Registrar resultados',
       Results: 'Resultados',
@@ -873,12 +610,15 @@ export class ManageTournamentComponent implements OnInit {
       gameOn: 'A jugar!',
       ruleHint:
         'Nota: Por favor, presiona Enter después de cada regla para que aparezca como un elemento separado en la lista.',
+      noSavedTournaments: 'No hay torneos guardados',
+      mySavedTournaments: 'Mis torneos guardados',
+      Hint: 'Pour gérer les tournois, nous recommandons dutiliser un ordinateur de bureau. Cela peut être difficile sur les petits écrans. Si aún así quieres intentarlo, lo mejor es activar la vista de escritorio en los ajustes, y alejar el zoom puede ayudar.',
     },
   };
 
   t = {
     ...this.translations[this.selectedLang],
-    presentModeResultsView: 'Ergebnisse anzeigen',
+    startModeResultsView: 'Ergebnisse anzeigen',
   };
 
   userProfile: any = null;
@@ -914,8 +654,6 @@ export class ManageTournamentComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.checkMobileWarning();
-    window.addEventListener('resize', this.checkMobileWarning);
     this.setInitialTheme();
     const saved = localStorage.getItem('lang');
     if (saved && ['de', 'en', 'fr', 'es'].includes(saved)) {
@@ -937,19 +675,18 @@ export class ManageTournamentComponent implements OnInit {
 
     this.loadSavedTournaments();
 
-    const savedPhase = localStorage.getItem('selectedPhase');
-    if (savedPhase) {
-      this.selectPhase(savedPhase);
+    const lastId = localStorage.getItem('selectedTournamentId');
+    if (lastId) {
+      this.selectTournament(lastId);
     }
-  }
 
-  ngOnDestroy() {
-    window.removeEventListener('resize', this.checkMobileWarning);
+    this.autoSaveSubject.pipe(
+      debounceTime(500)
+    ).subscribe(() => {
+      this.saveAdvancedSettings();
+    });
+    this.checkWindowSize();
   }
-
-  checkMobileWarning = () => {
-    this.showMobileWarning = window.innerWidth < 900;
-  };
 
   loadUserProfile() {
     this.isProfileLoading = true;
@@ -1053,7 +790,7 @@ export class ManageTournamentComponent implements OnInit {
   applyTranslations() {
     this.t = {
       ...this.translations[this.selectedLang],
-      presentModeResultsView: 'Ergebnisse anzeigen',
+      startModeResultsView: 'Ergebnisse anzeigen',
     };
   }
 
@@ -1158,7 +895,7 @@ export class ManageTournamentComponent implements OnInit {
     this.scheduleSelected = false;
     this.extendedSelected = false;
     this.resultsSelected = false;
-    this.presentSelected = false;
+    this.startSelected = false;
   }
 
   participantsSelect() {
@@ -1168,7 +905,7 @@ export class ManageTournamentComponent implements OnInit {
     this.scheduleSelected = false;
     this.extendedSelected = false;
     this.resultsSelected = false;
-    this.presentSelected = false;
+    this.startSelected = false;
   }
   bracketSelect() {
     this.editSelected = false;
@@ -1177,7 +914,7 @@ export class ManageTournamentComponent implements OnInit {
     this.scheduleSelected = false;
     this.extendedSelected = false;
     this.resultsSelected = false;
-    this.presentSelected = false;
+    this.startSelected = false;
   }
   scheduleSelect() {
     this.editSelected = false;
@@ -1186,7 +923,7 @@ export class ManageTournamentComponent implements OnInit {
     this.scheduleSelected = true;
     this.extendedSelected = false;
     this.resultsSelected = false;
-    this.presentSelected = false;
+    this.startSelected = false;
   }
   extendedSelect() {
     this.editSelected = false;
@@ -1195,16 +932,16 @@ export class ManageTournamentComponent implements OnInit {
     this.scheduleSelected = false;
     this.extendedSelected = true;
     this.resultsSelected = false;
-    this.presentSelected = false;
+    this.startSelected = false;
   }
-  presentSelect() {
+  startSelect() {
     this.editSelected = false;
     this.participantsSelected = false;
     this.bracketSelected = false;
     this.scheduleSelected = false;
     this.extendedSelected = false;
     this.resultsSelected = false;
-    this.presentSelected = true;
+    this.startSelected = true;
   }
   resultsSelect() {
     this.editSelected = false;
@@ -1213,7 +950,7 @@ export class ManageTournamentComponent implements OnInit {
     this.scheduleSelected = false;
     this.extendedSelected = false;
     this.resultsSelected = true;
-    this.presentSelected = false;
+    this.startSelected = false;
   }
 
   onImageChange(event: any) {
@@ -1229,17 +966,20 @@ export class ManageTournamentComponent implements OnInit {
       reader.readAsDataURL(file);
     }
   }
+  
   confirmCancel() {
     const correctPassword = 'Passwort123';
+  
     if (this.confirmPassword.trim() === '') {
       this.passwordInvalid = true;
       this.cancelSuccess = false;
       return;
     }
-
+  
     if (this.confirmPassword === correctPassword) {
-      this.passwordInvalid = false;
+      this.cancelTournament(this.tournament.id);
       this.cancelSuccess = true;
+      this.passwordInvalid = false;
     } else {
       this.passwordInvalid = true;
       this.cancelSuccess = false;
@@ -1304,7 +1044,33 @@ export class ManageTournamentComponent implements OnInit {
     if (this.tournament) {
       this.tournament.participants = this.players;
       this.tournament.schedule = this.matchSchedule;
-      this.tournamentService.setTournament(this.tournament);
+      this.tournament.sponsors = this.sponsors.map(s => ({
+        ...s,
+        logoUrl: s.logoUrl || null
+      }));
+      this.tournament.partners = this.partners.map(p => ({
+        ...p,
+        logoUrl: p.logoUrl || null
+      }));
+      this.tournament.league = this.tournament.league || '';
+      this.tournament.skillLevel = this.tournament.skillLevel || '';
+      this.tournament.prize = this.tournament.prize || '';
+      this.tournament.ageGroup = this.tournament.ageGroup || '';
+
+      this.tournamentService.updateTournament(this.tournament.id, this.tournament).subscribe({
+        next: () => {
+          this.tournamentService.getTournamentById(this.tournament.id).subscribe({
+            next: (fresh) => {
+              this.tournament = fresh;
+              this.tournamentService.setTournament(fresh);
+              this.loadSavedTournaments();
+            }
+          });
+        },
+        error: (err: HttpErrorResponse) => {
+          alert('Fehler beim Speichern: ' + (err.error?.message || err.message));
+        }
+      });
     }
   }
 
@@ -1364,18 +1130,30 @@ export class ManageTournamentComponent implements OnInit {
 
   addSponsor() {
     this.sponsors.push({ name: '', logoUrl: null });
+    if (this.tournament) {
+      this.tournament.sponsors = this.sponsors;
+    }
   }
 
   addPartner() {
     this.partners.push({ name: '', logoUrl: null });
+    if (this.tournament) {
+      this.tournament.partners = this.partners;
+    }
   }
 
   deleteSponsor(index: number) {
     this.sponsors.splice(index, 1);
+    if (this.tournament) {
+      this.tournament.sponsors = this.sponsors;
+    }
   }
 
   deletePartner(index: number) {
     this.partners.splice(index, 1);
+    if (this.tournament) {
+      this.tournament.partners = this.partners;
+    }
   }
 
   isValidImage(file: File): boolean {
@@ -1390,11 +1168,18 @@ export class ManageTournamentComponent implements OnInit {
       alert('Nur JPG, PNG, GIF, WebP erlaubt!');
       return;
     }
-
-    const objectUrl = URL.createObjectURL(file);
-    this.sponsors[index].logoUrl = objectUrl;
+  
+    const reader = new FileReader();
+    reader.onload = (e: any) => {
+      this.sponsors[index].logoUrl = e.target.result;
+      if (this.tournament) {
+        this.tournament.sponsors = this.sponsors;
+      }
+      this.onAdvancedSettingChanged(); 
+    };
+    reader.readAsDataURL(file);
   }
-
+  
   onPartnerFileSelected(event: Event, index: number) {
     const input = event.target as HTMLInputElement;
     const file = input.files?.[0];
@@ -1402,10 +1187,18 @@ export class ManageTournamentComponent implements OnInit {
       alert('Nur JPG, PNG, GIF, WebP erlaubt!');
       return;
     }
-
-    const objectUrl = URL.createObjectURL(file);
-    this.partners[index].logoUrl = objectUrl;
+  
+    const reader = new FileReader();
+    reader.onload = (e: any) => {
+      this.partners[index].logoUrl = e.target.result;
+      if (this.tournament) {
+        this.tournament.partners = this.partners;
+      }
+      this.onAdvancedSettingChanged(); 
+    };
+    reader.readAsDataURL(file);
   }
+  
 
   openFullscreen(imageUrl: string) {
     this.fullscreenImageUrl = imageUrl;
@@ -1602,8 +1395,7 @@ export class ManageTournamentComponent implements OnInit {
     const fieldW = 120,
       fieldH = 60;
     newX = Math.max(0, Math.min(newX, this.hallRect.width - fieldW));
-    newY = Math.max(0, Math.min(newY, this.hallRect.height - fieldH));
-    const percentX = (newX / this.hallRect.width) * 100;
+    newY = Math.max(0, Math.min(newY, this.hallHeight));    const percentX = (newX / this.hallRect.width) * 100;
     const percentY = (newY / this.hallRect.height) * 100;
     this.hallFields[this.draggedFieldIdx] = { x: percentX, y: percentY };
   };
@@ -1934,37 +1726,74 @@ export class ManageTournamentComponent implements OnInit {
   }
 
   loadSavedTournaments() {
-    this.savedTournaments = JSON.parse(
-      localStorage.getItem('tournaments') || '[]'
-    );
+    this.tournamentService.getTournaments().subscribe({
+      next: (tournaments) => {
+        this.savedTournaments = tournaments;
+      },
+      error: (err: HttpErrorResponse) => {
+        this.savedTournaments = [];
+        alert('Fehler beim Laden der Turniere: ' + (err.error?.message || err.message));
+      }
+    });
   }
 
   selectTournament(id: string) {
-    const found = this.savedTournaments.find((t) => t.id === id);
-    if (found) {
-      this.tournament = found;
-      this.selectedTournamentId = id;
-    }
+    this.tournamentService.getTournamentById(Number(id)).subscribe({
+      next: (tournament) => {
+        this.tournament = tournament;
+        this.selectedTournamentId = id;
+        this.tournamentService.setTournament(tournament);
+        localStorage.setItem('selectedTournamentId', id);
+      },
+      error: (err: HttpErrorResponse) => {
+        alert('Fehler beim Laden des Turniers: ' + (err.error?.message || err.message));
+      }
+    });
   }
 
   createOrUpdateTournament() {
     if (!this.tournament) return;
     if (!this.tournament.id) {
-      this.tournament.id = 't_' + Date.now();
+      this.tournamentService.createTournament(this.tournament).subscribe({
+        next: (created) => {
+          this.tournament = created;
+          this.loadSavedTournaments();
+        },
+        error: (err: HttpErrorResponse) => {
+          alert('Fehler beim Erstellen des Turniers: ' + (err.error?.message || err.message));
+        }
+      });
+    } else {
+      this.tournamentService.updateTournament(this.tournament.id, this.tournament).subscribe({
+        next: () => {
+          this.loadSavedTournaments();
+        },
+        error: (err: HttpErrorResponse) => {
+          alert('Fehler beim Aktualisieren des Turniers: ' + (err.error?.message || err.message));
+        }
+      });
     }
-    this.saveTournamentToStorage(this.tournament);
   }
 
   cancelTournament(tournamentId: string) {
-    const all = JSON.parse(localStorage.getItem('tournaments') || '[]');
-    const updated = all.filter((t: any) => t.id !== tournamentId);
-    localStorage.setItem('tournaments', JSON.stringify(updated));
-    this.loadSavedTournaments();
+    this.tournamentService.deleteTournament(Number(tournamentId)).subscribe({
+      next: () => {
+        this.loadSavedTournaments();
+        if (this.selectedTournamentId === tournamentId) {
+          this.tournament = null;
+          this.selectedTournamentId = null;
+          localStorage.removeItem('selectedTournamentId');
+        }
+      },
+      error: (err: HttpErrorResponse) => {
+        alert('Fehler beim Löschen des Turniers: ' + (err.error?.message || err.message));
+      }
+    });
   }
 
-  isPresentFullscreen: boolean = false;
-  presentMode: 'presentation' | 'results' | 'resultsView' | 'playing' =
-    'presentation';
+  isstartFullscreen: boolean = false;
+  startMode: 'starstart' | 'results' | 'resultsView' | 'playing' =
+    'starstart';
   currentSlide: number = 0;
   slides = [
     { title: 'Slide 1', content: '' },
@@ -1972,13 +1801,13 @@ export class ManageTournamentComponent implements OnInit {
     { title: 'Slide 3', content: '' },
   ];
 
-  setPresentMode(mode: 'presentation' | 'results' | 'resultsView' | 'playing') {
-    this.presentMode = mode;
+  setstartMode(mode: 'starstart' | 'results' | 'resultsView' | 'playing') {
+    this.startMode = mode;
   }
 
-  enterPresentMode() {
+  enterstartMode() {
     setTimeout(() => {
-      this.isPresentFullscreen = true;
+      this.isstartFullscreen = true;
       const elem = document.documentElement;
       if (elem.requestFullscreen) {
         elem.requestFullscreen();
@@ -1991,14 +1820,14 @@ export class ManageTournamentComponent implements OnInit {
   }
 
   ngDoCheck() {
-    if (this.presentSelected && !this.isPresentFullscreen) {
-      this.enterPresentMode();
+    if (this.startSelected && !this.isstartFullscreen) {
+      this.enterstartMode();
     }
   }
 
-  togglePresentFullscreen() {
-    this.isPresentFullscreen = !this.isPresentFullscreen;
-    if (this.isPresentFullscreen) {
+  togglestartFullscreen() {
+    this.isstartFullscreen = !this.isstartFullscreen;
+    if (this.isstartFullscreen) {
       const elem = document.documentElement;
       if (elem.requestFullscreen) {
         elem.requestFullscreen();
@@ -2025,14 +1854,15 @@ export class ManageTournamentComponent implements OnInit {
   }
 
   prevSlide() {
-    if (this.currentSlide > 0) {
+    if ( this.currentSlide > 0) {
       this.currentSlide--;
     }
   }
 
-  exitPresentModus() {
-    this.presentSelected = false;
-    this.isPresentFullscreen = false;
+  exitstartModus() {
+    this.startSelected = false;
+    this.editSelected = true;
+    this.isstartFullscreen = false;
     if (document.exitFullscreen) {
       document.exitFullscreen();
     } else if ((document as any).webkitExitFullscreen) {
@@ -2047,15 +1877,15 @@ export class ManageTournamentComponent implements OnInit {
     if (typeof match.scoreA === 'number' && typeof match.scoreB === 'number') {
       match.confirmed = true;
     }
-    // Optional: Hier könntest du noch persistieren/speichern
   }
+
+
 
   saveGroupMatchResult(group: any, gIdx: number) {
     const match = group.matches[gIdx];
     if (typeof match.scoreA === 'number' && typeof match.scoreB === 'number') {
       match.confirmed = true;
     }
-    // Optional: Hier könntest du noch persistieren/speichern
   }
 
   updateResultsFromSchedule() { }
@@ -2081,13 +1911,15 @@ export class ManageTournamentComponent implements OnInit {
       const groupB = topTeams[(i + 1) % topTeams.length];
 
       if (groupA[0] && groupB[2]) {
+              
+
         koTeams.push({
           teamA: groupA[0],
           teamB: groupB[2],
           label: `Gewinner ${groupA[0].group} vs Dritter ${groupB[2].group}`,
         });
       }
-      if (groupA[1] && groupB[1]) {
+      if ( groupA[1] && groupB[1]) {
         koTeams.push({
           teamA: groupA[1],
           teamB: groupB[1],
@@ -2211,5 +2043,89 @@ export class ManageTournamentComponent implements OnInit {
         ...this.generateKoSchedule(),
       ];
     }
+  }
+
+  saveField(field: string) {
+    if (!this.tournament || !this.tournament.id) return;
+
+    if (field === 'maxTeams') this.tournament.maxTeams = Number(this.tournament.maxTeams) || null;
+    if (field === 'entryFee') this.tournament.entryFee = Number(this.tournament.entryFee) || null;
+    if (field === 'private') this.tournament.private = !!this.tournament.private;
+    if (field === 'date' && typeof this.tournament.date === 'string') this.tournament.date = this.tournament.date;
+  
+    this.tournamentService.updateTournament(this.tournament.id, this.tournament).subscribe({
+      next: () => {
+        this.tournamentService.getTournamentById(this.tournament.id).subscribe({
+          next: (fresh) => {
+            this.tournament = fresh;
+            this.tournamentService.setTournament(fresh);
+            this.loadSavedTournaments();
+            const editFlag = 'edit' + field.charAt(0).toUpperCase() + field.slice(1);
+            if (editFlag in this) (this as any)[editFlag] = false;
+          }
+        });
+      },
+      error: (err: HttpErrorResponse) => {
+        alert('Fehler beim Speichern: ' + (err.error?.message || err.message));
+      }
+    });
+  }
+
+  saveAdvancedSettings() {
+    if (!this.tournament) return;
+
+    const ageGroupInput = (document.getElementById('ageGroup') as HTMLSelectElement);
+    const skillLevelInput = (document.getElementById('skillLevel') as HTMLSelectElement);
+    const prizesInput = (document.getElementById('prizes') as HTMLInputElement);
+    const leagueInput = (document.getElementById('league') as HTMLInputElement);
+
+    this.tournament.ageGroup = ageGroupInput?.value || '';
+    this.tournament.skillLevel = skillLevelInput?.value || '';
+    this.tournament.prize = prizesInput?.value || '';
+    this.tournament.league = leagueInput?.value || '';
+
+    this.tournament.sponsors = this.sponsors.map(s => ({
+      ...s,
+      logoUrl: s.logoUrl || null
+    }));
+    this.tournament.partners = this.partners.map(p => ({
+      ...p,
+      logoUrl: p.logoUrl || null
+    }));
+
+    this.tournamentService.updateTournament(this.tournament.id, this.tournament).subscribe({
+      next: () => {
+        this.tournamentService.getTournamentById(this.tournament.id).subscribe({
+          next: (fresh) => {
+            this.tournament = fresh;
+            this.tournamentService.setTournament(fresh);
+            this.loadSavedTournaments();
+          }
+        });
+      },
+      error: (err: HttpErrorResponse) => {
+        alert('Fehler beim Speichern der erweiterten Einstellungen: ' + (err.error?.message || err.message));
+      }
+    });
+  }
+  onAdvancedSettingChanged() {
+    this.autoSaveSubject.next();
+  }
+  @HostListener('window:resize')
+  onResize() {
+    this.checkWindowSize();
+  }
+
+  checkWindowSize() {
+    if (window.innerWidth < 1200 && !sessionStorage.getItem('manageHintClosed')) {
+      this.showHint = true;
+    } else {
+      this.showHint = false;
+    }
+  }
+
+  closeHint() {
+    this.showHint = false;
+    sessionStorage.setItem('manageHintClosed', 'true');
   }
 }
